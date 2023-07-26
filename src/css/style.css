@@ -1,8 +1,10 @@
+*{
+  margin: 0;
+  padding: 0;
+}
 body {
-    margin: 0;;
-    padding:0;
     background-color: #000;
-    animation: animate 5s linear infinite;
+    animation: animate 20s linear infinite;
   }
 header{
     color: white;
@@ -43,11 +45,14 @@ footer a {
     text-decoration: none;
   }
   
-footer a:hover {
-    background-color: black;
-    color:white;
+footer a:hover{
+    background-color: white;
+    color:black;
 }
-  
+a::hover{
+  background-color: white;
+  color:black;
+}
 img{
     width: 55px;
 }
@@ -57,11 +62,11 @@ section {
 /*Animaciones*/
   @keyframes animate {
     0% {
-      background-color: rgb(88, 87, 87);
+      background-color: rgb(58, 57, 57);
       background-position: top left;
     }
     50% {
-      background-color: rgb(69, 68, 68);
+      background-color: rgb(37, 36, 36);
       background-position: center;
     }
     100% {
