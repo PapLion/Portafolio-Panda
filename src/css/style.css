@@ -1,78 +1,389 @@
-*{
-  margin: 0;
-  padding: 0;
-}
+/*Fuentes*/
+@import url('https://fonts.googleapis.com/css?family=Silkscreen:700|Silkscreen:400');
+
 body {
-    background-color: #000;
-    animation: animate 20s linear infinite;
-  }
+  font-family: 'Silkscreen';
+  font-weight: 400;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Silkscreen';
+  font-weight: 700;
+}
+
+html {font-size: 100%;} /* 16px */
+
+h1 {font-size: 4.210rem; /* 67.36px */}
+
+h2 {font-size: 3.158rem; /* 50.56px */}
+
+h3 {font-size: 2.369rem; /* 37.92px */}
+
+h4 {font-size: 1.777rem; /* 28.48px */}
+
+h5 {font-size: 1.333rem; /* 21.28px */}
+
+small {font-size: 0.750rem; /* 12px */}
+
+/*Colors*/
+:root {
+  --text: #000000;
+  --background: #ffffff;
+  --primary: #0d0d0d;
+  --secondary: #4f4f4f;
+  --accent: #e42121;
+}
+
+
+/*Añade estilos específicos para todo*/
+*{
+  list-style: none;
+  text-decoration: none;
+  color:#ffffff;
+}
+
+body{
+  background-color: #000000;
+}
+
+/*Añade estilos específicos para el head*/
 header{
-    color: white;
-    background-color: #1f1e1e;
-    top: 100%;
+  display: flex;
+  justify-content: space-between;
 }
-nav ul li a {
-    display: inline-block;
-    padding: 10px;
-    text-decoration: none;
-    color: white;
-    background-color: #1f1e1e;
+
+.logo {
+  font-size: 1rem; /* Tamaño del logo más pequeño */
+  color: #ffffff;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-right: 1px; /* Reducción del margen derecho */
+  transition: transform 0.3s ease, color 0.3s ease; /* Efecto de transformación y cambio de color al hacer hover */
 }
-ul {
-    list-style: none;
-}  
-nav ul li a:hover {
-    background-color: white;
-    color: black;
-}  
-main{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    color: white;
+
+
+/* Efecto de logo al hacer hover */
+.logo:hover {
+  transform: scale(1.1); /* Escalado al hacer hover para un efecto más suave */
+  color: var(--secondary); /* Cambio de color al hacer hover */
 }
-footer{
-    background-color: #1f1e1e;
-    color: white;
-    text-align: center;
-    bottom: 0%;
+
+
+ul{
+  display: flex;
 }
-footer a {
-    display: inline-block;
-    margin: 0 10px;
-    color: white;
-    text-decoration: none;
-  }
-  
-footer a:hover{
-    background-color: white;
-    color:black;
+
+header ul li a {
+  color: var(--background);
+  background-color: transparent;
+  padding: 10px;
+  border-radius: 5px;
+  transition: color 0.3s ease, background-color 0.3s ease;
 }
-a::hover{
-  background-color: white;
-  color:black;
+
+header ul li a:hover {
+  color: var(--primary);
+  background-color: var(--background);
 }
-img{
-    width: 55px;
+
+/*Añade estilos específicos para el body*/
+#About, #Conocimientos{
+  background-color: var(--primary);
 }
-section {
-    margin-bottom: 50px;
-  }
-/*Animaciones*/
-  @keyframes animate {
-    0% {
-      background-color: rgb(58, 57, 57);
-      background-position: top left;
-    }
-    50% {
-      background-color: rgb(37, 36, 36);
-      background-position: center;
-    }
-    100% {
-      background-color: rgb(34, 32, 32);
-      background-position: bottom left;
-    }
-  }
-  
-  
+
+#Proyectos a {
+  color: var(--accent);
+  text-decoration: underline;
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+#Proyectos a:hover {
+  color: var(--secondary);
+  text-decoration: none;
+}
+
+#Tecnologias h4 {
+  background-color: var(--accent);
+  color: var(--background);
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+#Home {
+  background-image: url('ruta-de-tu-imagen.jpg'); /* Reemplaza con la ruta de tu imagen de fondo */
+  background-size: cover;
+  background-position: center;
+  color: var(--background);
+  text-align: center;
+  padding: 100px 20px; /* Ajusta el relleno según sea necesario */
+}
+
+#Home h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+#Home p {
+  font-size: 1.5rem;
+  margin-bottom: 40px;
+}
+
+#Home a {
+  display: inline-block;
+  background-color: var(--accent);
+  color: var(--background);
+  padding: 15px 30px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#Home a{
+  color: #ffffff;
+  text-decoration: underline;
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+#Home a:hover{
+  color: black;
+  text-decoration: none;
+}
+
+#Tecnologias .tecnologia a {
+  color: var(--accent);
+  text-decoration: underline;
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+#Tecnologias .tecnologia a:hover {
+  color: var(--secondary);
+  text-decoration: none;
+}
+
+#About {
+  padding: 50px;
+  text-align: center;
+  background-color: var(--primary);
+  color: var(--background);
+}
+
+#About h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+#About p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+#About div {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+#About img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-top: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Agrega sombra alrededor de la imagen */
+}
+
+/* Añade estilos específicos para la sección de proyectos */
+#Proyectos {
+  padding: 50px;
+  color: var(--background);
+}
+
+#Proyectos h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.proyecto {
+  background-color: var(--secondary);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  overflow: hidden; /* Asegura que cualquier desbordamiento de contenido se oculte */
+  position: relative;
+}
+
+.proyecto img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.proyecto h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.proyecto p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+/* Estilo para hacer que las tarjetas se extiendan de izquierda a derecha */
+.proyecto::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 30%; /* Ajusta según sea necesario */
+  background-color: var(--accent);
+  z-index: -1;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+#Conocimientos {
+  background-color: var(--primary);
+  padding: 50px;
+  color: var(--background);
+}
+
+#Conocimientos h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table, th, td {
+  border: 1px solid var(--accent);
+}
+
+th, td {
+  padding: 15px;
+  text-align: left;
+}
+
+th {
+  background-color: var(--accent);
+  color: var(--background);
+}
+
+/* Aplica estilo a las filas impares */
+tr:nth-child(odd) {
+  background-color: var(--secondary);
+}
+
+/* Añade un ligero sombreado a las celdas al pasar el mouse sobre ellas */
+tr:hover td {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+#Tecnologias {
+  padding: 50px;
+  color: var(--background);
+}
+
+#Tecnologias h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+/* Alinea las cajas de tecnologías en una línea */
+.tecnologia {
+  display: inline-block;
+  width: 200px; /* Ajusta el ancho según tus preferencias */
+  margin-right: 20px; /* Espacio entre las cajas */
+  margin-bottom: 20px;
+  border: 2px solid var(--accent);
+  border-radius: 10px;
+  padding: 15px;
+}
+
+/* Estilo adicional para resaltar al pasar el mouse */
+.tecnologia:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+}
+
+/* Añade un poco de espacio adicional al texto en las cajas */
+.tecnologia h3,
+.tecnologia p {
+  margin-top: 10px;
+}
+
+/* Alinea el texto al centro en las cajas */
+.tecnologia h3,
+.tecnologia p,
+.tecnologia a {
+  text-align: center;
+}
+
+/* Añade un estilo diferente para las tecnologías de Frontend y Backend */
+.frontend-dev .tecnologia,
+.backend-dev .tecnologia {
+  border-color: var(--secondary);
+}
+
+.frontend-dev .tecnologia:hover,
+.backend-dev .tecnologia:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+
+/* Añade estilos específicos para el footer */
+footer {
+  background-color: var(--primary);
+  color: var(--text);
+  padding: 20px;
+  text-align: center;
+}
+
+.about-section, .contact-section, .bottom-section {
+  margin-bottom: 20px;
+}
+
+hr {
+  border: 1px solid var(--text);
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fot-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  margin: 10px;
+  background-color: var(--secondary);
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.fot-icons:hover {
+  background-color: var(--accent);
+}
+
+.fot-icons i {
+  font-size: 24px;
+  color: var(--text);
+}
+
+.bottom-section h3 {
+  margin-top: 20px;
+}
+
+/* Añade cualquier estilo adicional según tus preferencias */
