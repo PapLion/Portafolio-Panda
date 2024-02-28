@@ -1,13 +1,13 @@
-/*Fuentes*/
-@import url('https://fonts.googleapis.com/css?family=Silkscreen:700|Silkscreen:400');
+/*fuente*/
+@import url('https://fonts.googleapis.com/css?family=Wix%20Madefor%20Display:700|Wix%20Madefor%20Display:400');
 
 body {
-  font-family: 'Silkscreen';
+  font-family: 'Wix Madefor Display';
   font-weight: 400;
 }
 
 h1, h2, h3, h4, h5 {
-  font-family: 'Silkscreen';
+  font-family: 'Wix Madefor Display';
   font-weight: 700;
 }
 
@@ -68,28 +68,25 @@ body{
   }
   
   .logo {
-    font-size: 1rem; /* Tamaño del logo más pequeño */
+    font-size: 1rem;
     color: #ffffff;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
-    margin-right: 1px; /* Reducción del margen derecho */
-    transition: transform 0.3s ease, color 0.3s ease; /* Efecto de transformación y cambio de color al hacer hover */
+    margin-right: 1px;
+    transition: transform 0.3s ease, color 0.3s ease;
   }
   
-  
-  /* Efecto de logo al hacer hover */
   .logo:hover {
-    transform: scale(1.1); /* Escalado al hacer hover para un efecto más suave */
-    color: var(--secondary); /* Cambio de color al hacer hover */
+    transform: scale(1.1); 
+    color: var(--secondary);
   }
   
-  
-  ul{
+  .header-ul{
     display: flex;
   }
   
-  header ul li a {
+  .header-link {
     color: var(--background);
     background-color: transparent;
     padding: 10px;
@@ -97,7 +94,7 @@ body{
     transition: color 0.3s ease, background-color 0.3s ease;
   }
   
-  header ul li a:hover {
+  .header-link:hover {
     color: var(--primary);
     background-color: var(--background);
   }
