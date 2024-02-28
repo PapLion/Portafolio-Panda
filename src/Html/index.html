@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,16 +13,17 @@
     <header>
         <p class="logo">Dani.Dev</p>
         <nav>
-            <ul>
+            <ul class="header-ul">
                 <li>
-                    <a href="#Home">Home</a>
-                    <a href="#About">About me</a>
-                    <a href="#Conocimientos">Conocimientos</a>
-                    <a href="#">Contactame!</a>
+                    <a href="#Home" class="header-link">Home</a>
+                    <a href="#About" class="header-link">About me</a>
+                    <a href="#Conocimientos" class="header-link">Conocimientos</a>
+                    <a href="#Tecnologias" class="header-link">Tecnologías</a>
+                    <a href="./contact.html" class="header-link">Contactame!</a>
                 </li>
             </ul>
         </nav>
-        <input type="checkbox" id="tog">
+        <i class="header-icon fa-solid fa-code"></i>
     </header> 
 
     <hr>
@@ -31,19 +32,19 @@
         <article>
 
             <section id="Home"> 
-            <h2>Danilo</h2>
-            <h1>López</h1>
-            <p>Estudiante de Programación Freelancer</p>
-            <p>Desarrollador Web, Bot, Android e IA</p>
-            <a>Contactame!</a>
+            <h1 class="home-h1">Danilo</h2hom>
+            <h2 class="home-h2">López</h2>
+            <p class="home-p">Estudiante de Programación Freelancer</p>
+            <p class="home-p">Desarrollador Web, Bot, Android e IA</p>
+            <a class="home-link">Contactame!</a>
             </section>
 
             <hr>
 
             <section id="About">
-                <div>
-                    <h1>About Me</h1>
-                    <p>Mi nombre es Danilo, también conocido como Panda o Pap. Soy un estudiante que anteriormente trabajaba como editor de video, pero encontré mi pasión en la programación con tan solo 1 año y medio en este mundo. He descubierto varias cosas que me apasionan, pero mi sueño es poder vivir trabajando en línea y así tener la posibilidad de viajar por el mundo mientras trabajo. Me gustaría enfocarme principalmente en BackEnd, pero también tengo interés en aprender GameDev, BotDev, IaDev, FrontEnd, Desarrollo Android y todo lo demás que encuentre en mi camino. Actualmente, mis habilidades más destacadas son BotDev y FrontEnd, ¡aunque sigo aprendiendo!
+                <div class="about-div">
+                    <h1 class="about-h1">About Me</h1>
+                    <p class="about-p">Mi nombre es Danilo, también conocido como Panda o Pap. Soy un estudiante que anteriormente trabajaba como editor de video, pero encontré mi pasión en la programación con tan solo 1 año y medio en este mundo. He descubierto varias cosas que me apasionan, pero mi sueño es poder vivir trabajando en línea y así tener la posibilidad de viajar por el mundo mientras trabajo. Me gustaría enfocarme principalmente en BackEnd, pero también tengo interés en aprender GameDev, BotDev, IaDev, FrontEnd, Desarrollo Android y todo lo demás que encuentre en mi camino. Actualmente, mis habilidades más destacadas son BotDev y FrontEnd, ¡aunque sigo aprendiendo!
                     </p>
                 </div>
             </section>
@@ -51,61 +52,65 @@
             <hr>
 
             <section id="Proyectos">
-                <h2>Mis Proyectos</h2>
+                <h2 class="proyect-h2">Mis Proyectos</h2>
             
                 <div class="proyecto">
                     <img src="proyecto1.jpg" alt="Proyecto 1">
                     <h3>Proyecto 1</h3>
                     <p>Descripción breve del proyecto 1.</p>
-                    <a href="enlace_proyecto1.html" target="_blank">Ver más</a>
+                    <a class="proyect-a" href="enlace_proyecto1.html" target="_blank">Ver más</a>
                 </div>
             
                 <div class="proyecto">
                     <img src="proyecto2.jpg" alt="Proyecto 2">
                     <h3>Proyecto 2</h3>
                     <p>Descripción breve del proyecto 2.</p>
-                    <a href="enlace_proyecto2.html" target="_blank">Ver más</a>
+                    <a class="proyect-a" href="enlace_proyecto2.html" target="_blank">Ver más</a>
                 </div>
             
                 <div class="proyecto">
                     <img src="proyecto3.jpg" alt="Proyecto 3">
                     <h3>Proyecto 2</h3>
                     <p>Descripción breve del proyecto 3.</p>
-                    <a href="enlace_proyecto3.html" target="_blank">Ver más</a>
+                    <a class="proyect-a" href="enlace_proyecto3.html" target="_blank">Ver más</a>
                 </div>
         </section>
 
         <hr>
 
             <section id="Conocimientos">
-                <h1>Mis Conocimientos</h1>
+                <h1 class="skills-h1">Mis Conocimientos</h1>
                 <table>
                     <tr>
-                        <td>Java/Kotlin</td>
+                        <td><i class="fa-brands fa-java"></i> Java/Kotlin <i class="fa-brands fa-android"></i></td>
                         <td>2 Meses</td>
                     </tr>
                     <tr>
-                        <td>Python</td>
+                        <td><i class="fa-brands fa-python"></i> Python <i class="fa-solid fa-robot"></i></td>
                         <td>3 meses</td>
                     </tr>
                     <tr>
-                        <td>JavaScript</td>
+                        <td><i class="fa-brands fa-square-js"></i> JavaScript <i class="fa-solid fa-window-maximize"></i></td>
                         <td>1 Año</td>
                     </tr>
                     <tr>
-                        <td>HTML y Css</td>
+                        <td> <i class="fa-brands fa-html5"></i> HTML y Css <i class="fa-brands fa-css3-alt"></i> </td>
                         <td>1 Año</td>
                     </tr>
                     <tr>
-                        <td>lua</td>
+                        <td><i class="fa-solid fa-moon"></i> lua <i class="fa-solid fa-gamepad"></i></i></td>
                         <td>6 meses</td>
                     </tr>
                     <tr>
-                        <td>C++/C</td>
+                        <td><i class="fa-solid fa-c"></i> C++/C <i class="fa-solid fa-gamepad"></i></td>
                         <td>1 Año</td>
                     </tr>
                     <tr>
-                        <td>Edicion de Video</td>
+                        <td><i class="fa-solid fa-server"></i> Sql <i class="fa-solid fa-database"></i></td>
+                        <td>Recién iniciado</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa-solid fa-video"></i> Edicion de Video <i class="fa-solid fa-clapperboard"></i></td>
                         <td>5 Años</td>
                     </tr>
                 </table>
@@ -114,10 +119,10 @@
             <hr>
 
             <section id="Tecnologias">
-                <h2>Tecnologías Utilizadas</h2>
+                <h2 class="tecnology-h2">Tecnologías Utilizadas</h2>
             
                 <!-- Frontend Section -->
-                <h4 class="frontend-dev">Made by Dani</h4>
+                <a href="#" target="_blank"><h4 class="tecnology-h4" class="frontend-dev">Made by Dani</h4></a>
                 <div class="tecnologia frontend-dev">
                     <i class="fa-brands fa-css3-alt"></i>                    <h3>CSS</h3>
                     <p>Cascading Style Sheets</p>
@@ -137,7 +142,7 @@
                 </div>
             
                 <!-- Backend Section -->
-                <h4 class="backend-dev">Made by Isa</h4>
+                <a href="#" target="_blank"><h4 class="tecnology-h4" class="backend-dev">Made by Isa</h4></a>
                 <div class="tecnologia backend-dev">
                     <i class="fa-brands fa-python"></i>                    <h3>Python</h3>
                     <p>General-Purpose Programming Language</p>
@@ -147,7 +152,6 @@
                 <div class="tecnologia backend-dev">
                     <i class="fa-brands fa-python"></i>                    <h3>Flask</h3>
                     <p>Python Web Framework</p>
-                    <p>Made by Isa</p>
                     <a href="https://ejemplo.com/flask" target="_blank">Ejemplo de Proyecto</a>
                 </div>
             </section>
@@ -167,10 +171,10 @@
           <p>Contact Me<p>
           <hr>
           <div class="social-icons">
-            <a href="https://discord.gg/4zGbjav7Bn" class="fot-icons"><i class="fa-brands fa-discord"></i></a>
-            <a href="https://twitter.com/LionPap" class="fot-icons"><i class="fa-brands fa-twitter"></i></a>
-            <a href="https://github.com/PapLion" class="fot-icons"><i class="fa-brands fa-github"></i></a>
-            <a href="https://dev.to/paplion" class="fot-icons"><i class="fa-brands fa-dev"></i></a>
+            <a href="https://discord.gg/4zGbjav7Bn" target="_blank" class="fot-icons"><i class="fa-brands fa-discord"></i></a>
+            <a href="https://twitter.com/LionPap" target="_blank" class="fot-icons"><i class="fa-brands fa-twitter"></i></a>
+            <a href="https://github.com/PapLion" target="_blank" class="fot-icons"><i class="fa-brands fa-github"></i></a>
+            <a href="https://dev.to/paplion" target="_blank" class="fot-icons"><i class="fa-brands fa-dev"></i></a>
           </div>
         </div>
         <div class="bottom-section">

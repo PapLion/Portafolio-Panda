@@ -25,7 +25,7 @@ h5 {font-size: 1.333rem; /* 21.28px */}
 
 small {font-size: 0.750rem; /* 12px */}
 
-/*Colors*/
+/*Colores*/
 :root {
   --text: #000000;
   --background: #ffffff;
@@ -34,8 +34,7 @@ small {font-size: 0.750rem; /* 12px */}
   --accent: #e42121;
 }
 
-
-/*Añade estilos específicos para todo*/
+/*General*/
 *{
   list-style: none;
   text-decoration: none;
@@ -46,35 +45,32 @@ body{
   background-color: #000000;
 }
 
-/*Añade estilos específicos para el head*/
+/*Header*/
 header{
   display: flex;
   justify-content: space-between;
 }
 
 .logo {
-  font-size: 1rem; /* Tamaño del logo más pequeño */
+  font-size: 1rem;
   color: #ffffff;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
-  margin-right: 1px; /* Reducción del margen derecho */
-  transition: transform 0.3s ease, color 0.3s ease; /* Efecto de transformación y cambio de color al hacer hover */
+  margin-right: 1px;
+  transition: transform 0.3s ease, color 0.3s ease;
 }
 
-
-/* Efecto de logo al hacer hover */
 .logo:hover {
-  transform: scale(1.1); /* Escalado al hacer hover para un efecto más suave */
-  color: var(--secondary); /* Cambio de color al hacer hover */
+  transform: scale(1.1); 
+  color: var(--secondary);
 }
 
-
-ul{
+.header-ul{
   display: flex;
 }
 
-header ul li a {
+.header-link {
   color: var(--background);
   background-color: transparent;
   padding: 10px;
@@ -82,35 +78,23 @@ header ul li a {
   transition: color 0.3s ease, background-color 0.3s ease;
 }
 
-header ul li a:hover {
+.header-link:hover {
   color: var(--primary);
   background-color: var(--background);
 }
 
-/*Añade estilos específicos para el body*/
+.header-icon{
+  width: 50px;
+  margin-top: 17px;
+  margin-left: 70px;
+}
+
+/*Backgrounds distintivos*/
 #About, #Conocimientos{
   background-color: var(--primary);
 }
 
-#Proyectos a {
-  color: var(--accent);
-  text-decoration: underline;
-  transition: color 0.3s ease, text-decoration 0.3s ease;
-}
-
-#Proyectos a:hover {
-  color: var(--secondary);
-  text-decoration: none;
-}
-
-#Tecnologias h4 {
-  background-color: var(--accent);
-  color: var(--background);
-  padding: 5px;
-  border-radius: 5px;
-  margin-bottom: 10px;
-}
-
+/*Home*/
 #Home {
   background-image: url('ruta-de-tu-imagen.jpg'); /* Reemplaza con la ruta de tu imagen de fondo */
   background-size: cover;
@@ -120,17 +104,17 @@ header ul li a:hover {
   padding: 100px 20px; /* Ajusta el relleno según sea necesario */
 }
 
-#Home h1 {
+.home-h1 {
   font-size: 3rem;
   margin-bottom: 20px;
 }
 
-#Home p {
+.home-p {
   font-size: 1.5rem;
   margin-bottom: 40px;
 }
 
-#Home a {
+.home-link {
   display: inline-block;
   background-color: var(--accent);
   color: var(--background);
@@ -139,30 +123,15 @@ header ul li a:hover {
   border-radius: 5px;
   font-size: 1.2rem;
   transition: background-color 0.3s ease, color 0.3s ease;
+  cursor:pointer;
 }
 
-#Home a{
-  color: #ffffff;
-  text-decoration: underline;
-  transition: color 0.3s ease, text-decoration 0.3s ease;
-}
-
-#Home a:hover{
+.home-link:hover{
   color: black;
   text-decoration: none;
 }
 
-#Tecnologias .tecnologia a {
-  color: var(--accent);
-  text-decoration: underline;
-  transition: color 0.3s ease, text-decoration 0.3s ease;
-}
-
-#Tecnologias .tecnologia a:hover {
-  color: var(--secondary);
-  text-decoration: none;
-}
-
+/*About*/
 #About {
   padding: 50px;
   text-align: center;
@@ -170,38 +139,41 @@ header ul li a:hover {
   color: var(--background);
 }
 
-#About h1 {
+.about-h1 {
   font-size: 2.5rem;
   margin-bottom: 20px;
 }
 
-#About p {
+.about-p {
   font-size: 1.2rem;
   line-height: 1.6;
 }
 
-#About div {
+.about-div {
   max-width: 800px;
   margin: 0 auto;
 }
 
-#About img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 10px;
-  margin-top: 20px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Agrega sombra alrededor de la imagen */
-}
-
-/* Añade estilos específicos para la sección de proyectos */
+/*Proyectos*/
 #Proyectos {
   padding: 50px;
   color: var(--background);
 }
 
-#Proyectos h2 {
+.proyect-h2 {
   font-size: 2.5rem;
   margin-bottom: 20px;
+}
+
+.proyect-a {
+  color: var(--accent);
+  text-decoration: underline;
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.proyect-a:hover {
+  color: var(--secondary);
+  text-decoration: none;
 }
 
 .proyecto {
@@ -209,7 +181,7 @@ header ul li a:hover {
   border-radius: 10px;
   padding: 20px;
   margin-bottom: 20px;
-  overflow: hidden; /* Asegura que cualquier desbordamiento de contenido se oculte */
+  overflow: hidden;
   position: relative;
 }
 
@@ -230,27 +202,27 @@ header ul li a:hover {
   margin-bottom: 20px;
 }
 
-/* Estilo para hacer que las tarjetas se extiendan de izquierda a derecha */
 .proyecto::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
-  width: 30%; /* Ajusta según sea necesario */
+  width: 30%;
   background-color: var(--accent);
   z-index: -1;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
 }
 
+/*Conocimientos*/
 #Conocimientos {
   background-color: var(--primary);
   padding: 50px;
   color: var(--background);
 }
 
-#Conocimientos h1 {
+.skills-h1 {
   font-size: 2.5rem;
   margin-bottom: 20px;
 }
@@ -275,57 +247,63 @@ th {
   color: var(--background);
 }
 
-/* Aplica estilo a las filas impares */
 tr:nth-child(odd) {
   background-color: var(--secondary);
 }
 
-/* Añade un ligero sombreado a las celdas al pasar el mouse sobre ellas */
 tr:hover td {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
+/*Tecnologias*/
 #Tecnologias {
   padding: 50px;
   color: var(--background);
 }
 
-#Tecnologias h2 {
+.tecnology-h2 {
   font-size: 2.5rem;
   margin-bottom: 20px;
 }
 
-/* Alinea las cajas de tecnologías en una línea */
+.tecnology-h4 {
+  background-color: var(--accent);
+  color: var(--background);
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  text-align: center;
+}
 .tecnologia {
   display: inline-block;
-  width: 200px; /* Ajusta el ancho según tus preferencias */
-  margin-right: 20px; /* Espacio entre las cajas */
+  width: 200px;
+  margin-right: 20px;
   margin-bottom: 20px;
   border: 2px solid var(--accent);
   border-radius: 10px;
   padding: 15px;
 }
 
-/* Estilo adicional para resaltar al pasar el mouse */
 .tecnologia:hover {
   background-color: rgba(255, 255, 255, 0.1);
   cursor: pointer;
 }
 
-/* Añade un poco de espacio adicional al texto en las cajas */
 .tecnologia h3,
 .tecnologia p {
   margin-top: 10px;
 }
 
-/* Alinea el texto al centro en las cajas */
 .tecnologia h3,
 .tecnologia p,
 .tecnologia a {
   text-align: center;
 }
 
-/* Añade un estilo diferente para las tecnologías de Frontend y Backend */
+.backend-dev,.frontend-dev{
+  text-align: center;
+}
+
 .frontend-dev .tecnologia,
 .backend-dev .tecnologia {
   border-color: var(--secondary);
@@ -336,8 +314,12 @@ tr:hover td {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
+.frontend-dev .tecnologia:hover,
+.backend-dev .tecnologia:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
 
-/* Añade estilos específicos para el footer */
+/*Footer*/
 footer {
   background-color: var(--primary);
   color: var(--text);
@@ -385,5 +367,3 @@ hr {
 .bottom-section h3 {
   margin-top: 20px;
 }
-
-/* Añade cualquier estilo adicional según tus preferencias */

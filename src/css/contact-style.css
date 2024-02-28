@@ -1,0 +1,242 @@
+/*Fuentes*/
+@import url('https://fonts.googleapis.com/css?family=Silkscreen:700|Silkscreen:400');
+
+body {
+  font-family: 'Silkscreen';
+  font-weight: 400;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Silkscreen';
+  font-weight: 700;
+}
+
+html {font-size: 100%;} /* 16px */
+
+h1 {font-size: 4.210rem; /* 67.36px */}
+
+h2 {font-size: 3.158rem; /* 50.56px */}
+
+h3 {font-size: 2.369rem; /* 37.92px */}
+
+h4 {font-size: 1.777rem; /* 28.48px */}
+
+h5 {font-size: 1.333rem; /* 21.28px */}
+
+small {font-size: 0.750rem; /* 12px */}
+
+/*Colores*/
+:root {
+  --text: #000000;
+  --background: #ffffff;
+  --primary: #0d0d0d;
+  --secondary: #4f4f4f;
+  --accent: #e42121;
+}
+
+*{
+  list-style: none;
+  text-decoration: none;
+  color:#ffffff;
+}
+
+body{
+  background-color: #000000;
+}
+
+  /* Enlace común */
+  a {
+    color: var(--background);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  a:hover {
+    color: var(--primary);
+  }
+  
+  /* Contenedor principal */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  /*Añade estilos específicos para el head*/
+  header{
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .logo {
+    font-size: 1rem; /* Tamaño del logo más pequeño */
+    color: #ffffff;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-right: 1px; /* Reducción del margen derecho */
+    transition: transform 0.3s ease, color 0.3s ease; /* Efecto de transformación y cambio de color al hacer hover */
+  }
+  
+  
+  /* Efecto de logo al hacer hover */
+  .logo:hover {
+    transform: scale(1.1); /* Escalado al hacer hover para un efecto más suave */
+    color: var(--secondary); /* Cambio de color al hacer hover */
+  }
+  
+  
+  ul{
+    display: flex;
+  }
+  
+  header ul li a {
+    color: var(--background);
+    background-color: transparent;
+    padding: 10px;
+    border-radius: 5px;
+    transition: color 0.3s ease, background-color 0.3s ease;
+  }
+  
+  header ul li a:hover {
+    color: var(--primary);
+    background-color: var(--background);
+  }
+  
+  .header-icon{
+    width: 50px;
+    margin-top: 17px;
+    margin-left: 70px;
+  }
+  
+  
+  /* Sección de contacto */
+  .contact-section {
+    padding: 50px;
+    text-align: center;
+    background-color: var(--primary);
+    color: var(--background);
+  }
+  
+  .contact-section hr {
+    border: 1px solid var(--text);
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .social-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .social-icons a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    margin: 10px;
+    background-color: var(--secondary);
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+  }
+  
+  .social-icons a:hover {
+    background-color: var(--accent);
+  }
+  
+  .social-icons i {
+    font-size: 24px;
+    color: var(--text);
+  }
+  
+  /* Formulario de contacto */
+  /* Formulario de contacto */
+.contact-form {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+input,
+textarea {
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid var(--secondary);
+  border-radius: 5px;
+  color: #000000; /* Cambiar el color del texto a negro */
+}
+
+button {
+  background-color: var(--accent);
+  color: var(--background);
+  padding: 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--secondary);
+  color: var(--text);
+}
+  
+  /* Pie de página */
+/* Añade estilos específicos para el footer */
+footer {
+  background-color: var(--primary);
+  color: var(--text);
+  padding: 20px;
+  text-align: center;
+}
+
+.about-section, .contact-section, .bottom-section {
+  margin-bottom: 20px;
+}
+
+hr {
+  border: 1px solid var(--text);
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fot-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  margin: 10px;
+  background-color: var(--secondary);
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.fot-icons:hover {
+  background-color: var(--accent);
+}
+
+.fot-icons i {
+  font-size: 24px;
+  color: var(--text);
+}
+
+.bottom-section h3 {
+  margin-top: 20px;
+}
