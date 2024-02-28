@@ -1,13 +1,13 @@
-/*Fuentes*/
-@import url('https://fonts.googleapis.com/css?family=Silkscreen:700|Silkscreen:400');
+/*fuente*/
+@import url('https://fonts.googleapis.com/css?family=Wix%20Madefor%20Display:700|Wix%20Madefor%20Display:400');
 
 body {
-  font-family: 'Silkscreen';
+  font-family: 'Wix Madefor Display';
   font-weight: 400;
 }
 
 h1, h2, h3, h4, h5 {
-  font-family: 'Silkscreen';
+  font-family: 'Wix Madefor Display';
   font-weight: 700;
 }
 
