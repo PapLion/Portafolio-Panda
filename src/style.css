@@ -43,12 +43,22 @@ small {font-size: 0.750rem; /* 12px */}
 
 body{
   background-color: #000000;
+  padding-top: 80px;
 }
 
 /*Header*/
 header{
   display: flex;
   justify-content: space-between;
+}
+
+.sticky-header {
+  position: fixed;
+  top: 0;
+  right: 1px;
+  z-index: 100;
+  width: 100%;
+  background-color: #9b9b9b;
 }
 
 .logo {
