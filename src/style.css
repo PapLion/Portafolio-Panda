@@ -166,7 +166,6 @@ header{
 }
 
 /*Proyectos*/
-/*Proyectos*/
 #Proyectos {
   padding: 50px;
   color: var(--background);
@@ -407,4 +406,61 @@ hr {
 
 .bottom-section h3 {
   margin-top: 20px;
+}
+
+/* Media Query para pantallas más pequeñas */
+@media only screen and (max-width: 768px) {
+  body {
+    padding-top: 60px;
+  }
+
+  header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .logo {
+    margin-bottom: 10px;
+  }
+
+  .header-ul {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  .header-link {
+    margin-bottom: 10px;
+  }
+
+  .header-icon {
+    margin: 10px 0;
+  }
+}
+
+/* Media Query para pantallas aún más pequeñas */
+@media only screen and (max-width: 480px) {
+  h1 {
+    font-size: 2.8rem; /* Ajusta según sea necesario */
+  }
+
+  h2 {
+    font-size: 2.2rem; /* Ajusta según sea necesario */
+  }
+
+  h3 {
+    font-size: 1.8rem; /* Ajusta según sea necesario */
+  }
+
+  h4 {
+    font-size: 1.4rem; /* Ajusta según sea necesario */
+  }
+
+  h5 {
+    font-size: 1.2rem; /* Ajusta según sea necesario */
+  }
+
+  small {
+    font-size: 0.6rem; /* Ajusta según sea necesario */
+  }
 }
