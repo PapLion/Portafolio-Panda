@@ -4,7 +4,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
     base:"https://paplion.github.io/Portafolio-Panda/src/index.html",
-    input: 'src/index.html'
+    input: 'src/main.js'
     }
   }
 });
