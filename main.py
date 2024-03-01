@@ -8,8 +8,9 @@ from convert import contacts
 app = FastAPI()
 templates = Jinja2Templates(directory="src/templates")
 app.mount("/static", StaticFiles(directory="src/static"), name="Static")
-#pandi panda usa el chat de Live Share csm
-@app.get("/Home", response_class=HTMLResponse)
+
+
+@app.get("paplion.github.io/Portafolio-Panda/Home", response_class=HTMLResponse)
 async def root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
