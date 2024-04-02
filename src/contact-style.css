@@ -157,7 +157,6 @@ body{
   }
   
   /* Formulario de contacto */
-  /* Formulario de contacto */
 .contact-form {
   max-width: 600px;
   margin: 0 auto;
@@ -179,7 +178,7 @@ textarea {
   margin-bottom: 20px;
   border: 1px solid var(--secondary);
   border-radius: 5px;
-  color: #000000; /* Cambiar el color del texto a negro */
+  color: #000000;
 }
 
 button {
@@ -197,7 +196,6 @@ button:hover {
   color: var(--text);
 }
   
-  /* Pie de página */
 /* Añade estilos específicos para el footer */
 footer {
   background-color: var(--primary);

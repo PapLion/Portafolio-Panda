@@ -106,12 +106,11 @@ header{
 
 /*Home*/
 #Home {
-  background-image: url('ruta-de-tu-imagen.jpg'); /* Reemplaza con la ruta de tu imagen de fondo */
   background-size: cover;
   background-position: center;
   color: var(--background);
   text-align: center;
-  padding: 100px 20px; /* Ajusta el relleno según sea necesario */
+  padding: 100px 20px;
 }
 
 .home-h1 {
@@ -165,7 +164,6 @@ header{
   margin: 0 auto;
 }
 
-/*Proyectos*/
 /*Proyectos*/
 #Proyectos {
   padding: 50px;
