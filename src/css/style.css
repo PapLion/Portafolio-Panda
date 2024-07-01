@@ -44,10 +44,6 @@ body{
   min-height: 100vh;
 }
 
-#About{
-  height: 500px;
-}
-
 #About, #Proyects, .sticky-header, footer{
   background-color:var(--primary);
 }
@@ -155,4 +151,40 @@ a{
   background-color: #fff;
   color:#000;
   transition: color 0.5s ease-in-out;
+}
+
+.drop-li{
+  list-style: none;
+}
+
+.drop-iteam{
+  font-size:1.777rem;
+}
+
+@media (max-width: 850px) {
+  .header-ul {
+    display: none;
+  }
+  .dropdown-nav {
+    display: block;
+  }
+  .head-iteam{
+    display:none;
+  }
+  .proyect-h1{
+    font-size: 1.777rem;
+  }
+}
+
+@media (min-width: 851px) {
+  .dropdown-nav {
+    display: none;
+  }
+}
+
+@media (max-width: 815px) {
+  .home-link {
+    width: 100%;
+    text-align: center;
+  }
 }

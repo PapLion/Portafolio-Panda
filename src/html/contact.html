@@ -33,7 +33,7 @@
         
                     </div>
         
-                    <div class="col-1 d-flex justify-content-end mt-2 pt-1">
+                    <div class="col-1 d-flex justify-content-end mt-3 pt-1">
                         <i class="header-icon fa-solid fa-code"></i>
                     </div>
         
@@ -66,11 +66,11 @@
 
                             <div class="col-12 d-flex justify-content-center">
 
-                                <form action="mailto:estudiantedanilolopez@gmail.com" method="post" enctype="text/plain">
+                                <form action="../php/form.php" method="post" enctype="text/plain" novalidate>
 
                                     <div class="form-floating mt-5 mb-5 input-group input-div">
 
-                                        <input type="text" class="form-control" placeholder="Enter Name" name="Name" id="Name" required>
+                                        <input type="text" class="form-control" placeholder="Enter Name" name="Name" id="Name">
                                         <span class="input-group-text">Pepito</span>
                                         <label for="Name" class="text-black">Name</label>
 
@@ -78,7 +78,7 @@
 
                                     <div class="form-floating mt-5 mb-5 input-group">
 
-                                        <input type="text" class="form-control" placeholder="Enter email" name="Email" id="Email" required>
+                                        <input type="text" class="form-control" placeholder="Enter email" name="Email" id="Email">
                                         <span class="input-group-text">@example.com</span>
                                         <label for="Email" class="text-black">Email</label>
 
@@ -86,12 +86,14 @@
 
                                     <div class="form-floating">
 
-                                        <textarea class="form-control" name="text" id="comment" placeholder="Comment here!"></textarea>
+                                        <textarea class="form-control" name="msg" id="msg" placeholder="Comment here!"></textarea>
                                         <label for="comment" class="text-black">Message</label>
 
                                     </div>
 
-                                    <button onclick="enviarCorreo()" type="submi" class="btn btn-dark mt-5">Send Message</button>
+                                    <button onclick="submit()" type="submit" class="btn btn-dark mt-5 mb-3" id="subm">Send Message</button>
+
+                                    <script src="../js/input.js"></script>
                                 </form>
 
                             </div>
@@ -102,7 +104,7 @@
 
                 </main>
 
-                <footer class="text-center row">
+                <footer class="text-center row mt-4">
 
                     <div class="col-12">
         
