@@ -4,7 +4,7 @@
         <div class="text-center">
           <p class="mb-2 text-sm sm:text-base">{{ t('footer.developed') }}</p>
           <p class="text-xs sm:text-sm text-gray-400">
-            &copy; {{ new Date().getFullYear() }} Danilo López. {{ t('footer.rights') }}
+            &copy; 2021 Danilo López. {{ t('footer.rights') }}
           </p>
         </div>
       </div>

@@ -14,7 +14,7 @@
               :style="{ width: isLoading ? '0%' : '100%' }"
             ></div>
           </div>
-          <div class="text-xs text-white/50">Iniciando viaje espacial...</div>
+          <div class="text-xs text-white/50">{{ t('loading.message') }}</div>
         </div>
       </div>
     </div>
@@ -40,7 +40,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, inject } from 'vue';
 import Navbar from './components/Navbar.vue';
 import Hero from './components/Hero.vue';
 import About from './components/About.vue';
@@ -49,6 +49,9 @@ import Projects from './components/Projects.vue';
 import Contact from './components/Contact.vue';
 import Footer from './components/Footer.vue';
 import SpaceBackground from './components/SpaceBackground.vue';
+
+const language = inject('language');
+const { t } = language;
 
 const isLoading = ref(true);
 const scrollProgress = ref(0);

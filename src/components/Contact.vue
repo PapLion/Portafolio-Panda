@@ -79,14 +79,24 @@
                 <p v-if="formErrors.message" class="mt-1 text-xs text-red-500">{{ t('contact.message.error') }}</p>
               </div>
   
-              <div class="flex justify-center">
+              <div class="flex flex-col items-center justify-center">
                 <button 
                   type="submit" 
-                  class="bg-white text-black hover:bg-gray-200 border-2 border-white px-4 py-2 sm:px-6 sm:py-2 text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed"
+                  class="bg-white text-black hover:bg-gray-200 border-2 border-white px-4 py-2 sm:px-6 sm:py-2 text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed mb-2"
                   :disabled="isLoading"
                 >
                   {{ isLoading ? t('contact.sending') : t('contact.send') }}
                 </button>
+
+                <!-- Success message -->
+                <div v-if="isSuccess" class="text-green-400 text-sm mt-2">
+                  {{ t('contact.success') }}
+                </div>
+
+                <!-- Error message -->
+                <div v-if="errorMessage" class="text-red-400 text-sm mt-2">
+                  {{ errorMessage }}
+                </div>
               </div>
             </form>
           </div>
@@ -135,76 +145,71 @@
   import { ref, inject } from 'vue';
   import { Github, Twitter, Linkedin, MessageSquare, FileDown } from 'lucide-vue-next';
   import Astronaut from './Astronaut.vue';
-  import { Resend } from 'resend';
-  
+
   const language = inject('language');
   const { t } = language;
-  
-  const resend = new Resend('re_Z9NE8zTx_GJG7N3hBMmPkGYd6bYc7ZyZy');
-  
+
   const formData = ref({
     name: '',
     email: '',
     message: '',
   });
-  
+
   const formErrors = ref({
     name: false,
     email: false,
     message: false,
   });
-  
+
   const isLoading = ref(false);
-  
+  const isSuccess = ref(false);
+  const errorMessage = ref('');
+  const successMessage = ref('');
+
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
-  
+
   const handleSubmit = async () => {
-    // Validate all fields
-    const errors = {
-      name: !formData.value.name,
-      email: !formData.value.email || !validateEmail(formData.value.email),
-      message: !formData.value.message,
-    };
-  
-    formErrors.value = errors;
-  
-    // If no errors, submit form
-    if (!Object.values(errors).some(Boolean)) {
-      try {
-        isLoading.value = true;
-        
-        const { data, error } = await resend.emails.send({
-          from: 'Portfolio Contact <onboarding@resend.dev>',
-          to: 'a1danideveloper@gmail.com',
-          subject: `Nuevo mensaje de ${formData.value.name}`,
-          html: `
-            <h2>Nuevo mensaje de contacto</h2>
-            <p><strong>Nombre:</strong> ${formData.value.name}</p>
-            <p><strong>Email:</strong> ${formData.value.email}</p>
-            <p><strong>Mensaje:</strong></p>
-            <p>${formData.value.message}</p>
-          `,
-        });
-  
-        if (error) {
-          throw error;
+    isLoading.value = true;
+    errorMessage.value = '';
+    successMessage.value = '';
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.value.name,
+          email: formData.value.email,
+          message: formData.value.message,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        // Manejar diferentes tipos de errores
+        if (data.details?.statusCode === 403) {
+          throw new Error('El servidor de correo está en modo de prueba. Por favor, contacta al administrador.');
         }
-  
-        // Reset form and show success message
-        formData.value = { name: '', email: '', message: '' };
-        alert(t('contact.success'));
-      } catch (error) {
-        console.error('Error sending email:', error);
-        alert(t('contact.error'));
-      } finally {
-        isLoading.value = false;
+        throw new Error(data.message || 'Error al enviar el mensaje');
       }
+
+      // Éxito
+      successMessage.value = '¡Mensaje enviado con éxito! Gracias por contactarme.';
+      formData.value = { name: '', email: '', message: '' };
+    } catch (error) {
+      console.error('Error al enviar el mensaje:', error);
+      errorMessage.value = error.message || 'Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo.';
+    } finally {
+      isLoading.value = false;
     }
   };
-  
+
   const socialLinks = [
     { icon: Github, url: 'https://github.com/PapLion', label: 'GitHub' },
     { icon: Twitter, url: 'https://twitter.com/LionPap', label: 'Twitter' },

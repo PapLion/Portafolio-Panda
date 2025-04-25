@@ -78,6 +78,9 @@ const translations = {
     "language.select": "Seleccionar idioma",
     "language.en": "English",
     "language.es": "Español",
+
+    // Loading Screen
+    "loading.message": "Iniciando viaje espacial...",
   },
   en: {
     // Navbar
@@ -156,11 +159,14 @@ const translations = {
     "language.select": "Select language",
     "language.en": "English",
     "language.es": "Español",
+
+    // Loading Screen
+    "loading.message": "Starting space journey...",
   },
 };
 
 export function createLanguageProvider() {
-  const currentLanguage = ref('es');
+  const currentLanguage = ref('en');
 
   // Función para traducir textos
   const t = (key) => {
