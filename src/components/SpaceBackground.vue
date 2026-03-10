@@ -138,13 +138,17 @@ const createRandomStars = (container, count, size, opacity) => {
   container.appendChild(fragment);
 };
 
-// Clone stars using cloneNode for better performance
+// Clone stars using cloneNode for better performance (no innerHTML)
 const cloneStars = (source, target) => {
   if (!source || !target) return;
-  target.innerHTML = '';
-  const clone = source.cloneNode(true);
-  while (clone.firstChild) {
-    target.appendChild(clone.firstChild);
+  // Clear target using DOM API instead of innerHTML
+  while (target.firstChild) {
+    target.removeChild(target.firstChild);
+  }
+  // Clone and append children
+  const children = source.children;
+  for (let i = 0; i < children.length; i++) {
+    target.appendChild(children[i].cloneNode(true));
   }
 };
 

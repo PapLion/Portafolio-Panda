@@ -14,7 +14,7 @@
             </h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               <TechCard 
-                v-for="tech in technologies.languages" 
+                v-for="tech in technologies.value.languages" 
                 :key="tech.name" 
                 :tech="tech" 
                 :formatYears="formatYears"
@@ -29,7 +29,7 @@
             </h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
               <TechCard 
-                v-for="tech in technologies.frontend" 
+                v-for="tech in technologies.value.frontend" 
                 :key="tech.name" 
                 :tech="tech" 
                 :formatYears="formatYears"
@@ -46,7 +46,7 @@
               </h3>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <TechCard 
-                  v-for="tech in technologies.backend" 
+                  v-for="tech in technologies.value.backend" 
                   :key="tech.name" 
                   :tech="tech" 
                   :formatYears="formatYears"
@@ -61,7 +61,7 @@
               </h3>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <TechCard 
-                  v-for="tech in technologies.databases" 
+                  v-for="tech in technologies.value.databases" 
                   :key="tech.name" 
                   :tech="tech" 
                   :formatYears="formatYears"
@@ -77,7 +77,7 @@
             </h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8">
               <TechCard 
-                v-for="tech in technologies.multiplatform" 
+                v-for="tech in technologies.value.multiplatform" 
                 :key="tech.name" 
                 :tech="tech" 
                 :formatYears="formatYears"
@@ -129,18 +129,19 @@ const TechCard = {
   }
 };
 
-// All years are now numbers for consistency
-const technologies = {
+// Technology descriptions use i18n keys for proper translation support
+// All years are numbers for type consistency
+const getTechnologies = () => ({
   languages: [
     {
       name: "JavaScript",
-      description: "ECMAScript 6+",
+      description: t('tech.javascript.desc'),
       icon: FileCode,
       years: 3,
     },
     {
       name: "TypeScript",
-      description: "Typed JavaScript",
+      description: t('tech.typescript.desc'),
       icon: FileCode,
       years: 1,
     },
@@ -148,37 +149,37 @@ const technologies = {
   frontend: [
     {
       name: "HTML/CSS",
-      description: t('tech.htmlcss.desc') || "Web Structure & Styles",
+      description: t('tech.htmlcss.desc'),
       icon: Layout,
       years: 3,
     },
     {
       name: "React",
-      description: "Frontend Library",
+      description: t('tech.react.desc'),
       icon: Code2Icon,
       years: 2,
     },
     {
       name: "Next.js",
-      description: "React Framework",
+      description: t('tech.nextjs.desc'),
       icon: Code2Icon,
       years: 2,
     },
     {
       name: "Vue.js",
-      description: "Progressive Framework",
+      description: t('tech.vuejs.desc'),
       icon: Code2Icon,
       years: 1,
     },
     {
       name: "TailwindCSS",
-      description: "Utility-first CSS Framework",
+      description: t('tech.tailwind.desc'),
       icon: Layout,
       years: 2,
     },
     {
       name: "Vite",
-      description: "Frontend Build Tool",
+      description: t('tech.vite.desc'),
       icon: Globe,
       years: 1,
     },
@@ -186,13 +187,13 @@ const technologies = {
   backend: [
     {
       name: "Node.js",
-      description: "JavaScript Runtime",
+      description: t('tech.nodejs.desc'),
       icon: Server,
       years: 2,
     },
     {
       name: "Express.js",
-      description: "Web Framework for Node.js",
+      description: t('tech.express.desc'),
       icon: Server,
       years: 2,
     },
@@ -200,13 +201,13 @@ const technologies = {
   databases: [
     {
       name: "SQL",
-      description: "Structured Query Language",
+      description: t('tech.sql.desc'),
       icon: DatabaseIcon,
       years: 2,
     },
     {
       name: "Supabase",
-      description: "Open Source Firebase Alternative",
+      description: t('tech.supabase.desc'),
       icon: DatabaseIcon,
       years: 1,
     },
@@ -214,18 +215,22 @@ const technologies = {
   multiplatform: [
     {
       name: "Electron",
-      description: t('tech.electron.desc') || "Desktop Apps with Web Tech",
+      description: t('tech.electron.desc'),
       icon: Layers,
       years: 1,
     },
     {
       name: "React Native",
-      description: t('tech.reactnative.desc') || "Mobile Apps with React",
+      description: t('tech.reactnative.desc'),
       icon: Smartphone,
       years: 1,
     },
   ],
-};
+});
+
+// Computed to make technologies reactive to language changes
+import { computed } from 'vue';
+const technologies = computed(() => getTechnologies());
 
 onMounted(() => {
   observer = new IntersectionObserver(

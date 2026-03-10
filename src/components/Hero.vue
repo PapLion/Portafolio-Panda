@@ -93,14 +93,16 @@
             <span class="absolute bottom-0 left-0 right-0 top-0 -z-10 transform translate-y-full bg-white transition-transform duration-300 group-hover:translate-y-0"></span>
           </button>
 
-          <a href="/danilo-lopez-cv.pdf" download class="z-10 relative w-full sm:w-auto">
-            <button class="hero-btn group relative overflow-hidden border-2 border-white bg-transparent px-3 py-2 sm:px-4 sm:py-3 transition-all duration-300 hover:bg-white hover:text-black w-full">
-              <span class="relative z-10 flex items-center justify-center text-sm sm:text-base md:text-lg font-medium">
-                {{ t('hero.cv') }}
-                <FileDown class="ml-2 h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5 transform transition-transform duration-300 group-hover:translate-y-1" aria-hidden="true" />
-              </span>
-              <span class="absolute bottom-0 left-0 right-0 top-0 -z-10 transform translate-y-full bg-white transition-transform duration-300 group-hover:translate-y-0"></span>
-            </button>
+          <a 
+            href="/danilo-lopez-cv.pdf" 
+            download 
+            class="hero-btn group relative overflow-hidden border-2 border-white bg-transparent px-3 py-2 sm:px-4 sm:py-3 transition-all duration-300 hover:bg-white hover:text-black w-full sm:w-auto z-10 inline-flex"
+          >
+            <span class="relative z-10 flex items-center justify-center text-sm sm:text-base md:text-lg font-medium">
+              {{ t('hero.cv') }}
+              <FileDown class="ml-2 h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5 transform transition-transform duration-300 group-hover:translate-y-1" aria-hidden="true" />
+            </span>
+            <span class="absolute bottom-0 left-0 right-0 top-0 -z-10 transform translate-y-full bg-white transition-transform duration-300 group-hover:translate-y-0"></span>
           </a>
         </div>
       </div>
