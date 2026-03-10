@@ -10,8 +10,8 @@
         <div class="space-y-2">
           <div class="w-[200px] h-[3px] bg-white/20 rounded-full overflow-hidden">
             <div
-              class="h-full bg-white transition-all duration-300 ease-out"
-              :style="{ width: isLoading ? '0%' : '100%' }"
+              class="h-full bg-white transition-all duration-1000 ease-out loading-bar"
+              :style="{ width: loadingProgress + '%' }"
             ></div>
           </div>
           <div class="text-xs text-white/50">{{ t('loading.message') }}</div>
@@ -50,47 +50,60 @@ import Contact from './components/Contact.vue';
 import Footer from './components/Footer.vue';
 import SpaceBackground from './components/SpaceBackground.vue';
 
-const language = inject('language');
+// Provide default value to prevent errors in tests or isolated rendering
+const language = inject('language', { t: (key) => key });
 const { t } = language;
 
 const isLoading = ref(true);
+const loadingProgress = ref(0);
 const scrollProgress = ref(0);
 const mainRef = ref(null);
 
+// Store references for cleanup
+let loadingTimer = null;
+let progressInterval = null;
+
+const handleScroll = () => {
+  if (!mainRef.value) return;
+
+  const totalHeight = document.body.scrollHeight - window.innerHeight;
+  // Prevent division by zero and NaN
+  if (totalHeight <= 0) {
+    scrollProgress.value = 0;
+    return;
+  }
+  const progress = Math.min(Math.max(window.scrollY / totalHeight, 0), 1);
+  scrollProgress.value = progress;
+};
+
+const initializeProgressBars = () => {
+  const progressBars = document.querySelectorAll(".skill-progress");
+  progressBars.forEach((bar) => {
+    const width = bar.getAttribute("data-width");
+    if (width) {
+      bar.style.setProperty("--width", width);
+    }
+  });
+};
+
 onMounted(() => {
-  // Simple performance measurement
-  const pageLoadStart = performance.now();
+  // Animate loading progress
+  progressInterval = setInterval(() => {
+    if (loadingProgress.value < 90) {
+      loadingProgress.value += Math.random() * 15;
+    }
+  }, 100);
 
-  // Simulate loading for smoother transitions
-  const timer = setTimeout(() => {
-    isLoading.value = false;
-
-    // Log page load time
-    const pageLoadTime = performance.now() - pageLoadStart;
-    console.log(`Page loaded in: ${pageLoadTime.toFixed(2)}ms`);
-  }, 1200);
-
-  const handleScroll = () => {
-    if (!mainRef.value) return;
-
-    const totalHeight = document.body.scrollHeight - window.innerHeight;
-    const progress = window.scrollY / totalHeight;
-    scrollProgress.value = progress;
-  };
+  // Complete loading after delay
+  loadingTimer = setTimeout(() => {
+    loadingProgress.value = 100;
+    setTimeout(() => {
+      isLoading.value = false;
+    }, 200);
+  }, 1000);
 
   // Use passive event listener for better performance
   window.addEventListener("scroll", handleScroll, { passive: true });
-
-  // Initialize progress bars
-  const initializeProgressBars = () => {
-    const progressBars = document.querySelectorAll(".skill-progress");
-    progressBars.forEach((bar) => {
-      const width = bar.getAttribute("data-width");
-      if (width) {
-        bar.style.setProperty("--width", width);
-      }
-    });
-  };
 
   // Execute after DOM is completely loaded
   if (document.readyState === "complete") {
@@ -98,16 +111,19 @@ onMounted(() => {
   } else {
     window.addEventListener("load", initializeProgressBars);
   }
+});
 
-  // Cleanup
-  onUnmounted(() => {
-    clearTimeout(timer);
-    window.removeEventListener("scroll", handleScroll);
-    window.removeEventListener("load", initializeProgressBars);
-  });
+// Proper cleanup - registered at setup level, not nested inside onMounted
+onUnmounted(() => {
+  if (loadingTimer) clearTimeout(loadingTimer);
+  if (progressInterval) clearInterval(progressInterval);
+  window.removeEventListener("scroll", handleScroll);
+  window.removeEventListener("load", initializeProgressBars);
 });
 </script>
 
-<style>
-@import './styles/main.css';
+<style scoped>
+.loading-bar {
+  transition: width 0.3s ease-out;
+}
 </style>
