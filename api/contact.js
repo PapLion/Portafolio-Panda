@@ -9,7 +9,7 @@ const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
 const MAX_REQUESTS_PER_WINDOW = 5;
 
 // Allowed origin for CORS (restrict to your domain)
-const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || 'https://danidev.vercel.app';
+const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN;
 
 // Email validation regex
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
