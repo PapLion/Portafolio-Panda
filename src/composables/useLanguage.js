@@ -4,7 +4,7 @@ const translations = {
   es: {
     // Navbar
     "nav.home": "Inicio",
-    "nav.about": "Sobre Mí",
+    "nav.about": "Sobre Mi",
     "nav.skills": "Habilidades",
     "nav.projects": "Proyectos",
     "nav.contact": "Contacto",
@@ -12,61 +12,72 @@ const translations = {
     "nav.download.cv": "Descargar CV",
 
     // Hero
-    "hero.title": "Danilo López",
+    "hero.title": "Danilo Lopez",
     "hero.subtitle": "JavaScript Developer",
-    "hero.description": "Creando experiencias digitales que combinan lógica, arte y emoción.",
+    "hero.description": "Creando experiencias digitales que combinan logica, arte y emocion.",
     "hero.projects": "Ver Proyectos",
     "hero.contact": "Contactarme",
     "hero.cv": "Descargar CV",
 
     // About
-    "about.title": "Sobre Mí",
+    "about.title": "Sobre Mi",
     "about.intro":
-      "Soy Danilo López, desarrollador full stack apasionado por crear experiencias digitales que combinan funcionalidad y diseño. Me especializo en tecnologías JavaScript modernas para construir aplicaciones web y móviles.",
+      "Soy Danilo Lopez, desarrollador full stack apasionado por crear experiencias digitales que combinan funcionalidad y diseno. Me especializo en tecnologias JavaScript modernas para construir aplicaciones web y moviles.",
     "about.approach":
-      "Mi enfoque va más allá de solo escribir código. Creo que el verdadero valor está en resolver problemas y comunicar soluciones efectivas que generen impacto real para los usuarios.",
-    "about.philosophy.title": "Mi filosofía de trabajo",
+      "Mi enfoque va mas alla de solo escribir codigo. Creo que el verdadero valor esta en resolver problemas y comunicar soluciones efectivas que generen impacto real para los usuarios.",
+    "about.philosophy.title": "Mi filosofia de trabajo",
     "about.philosophy.text":
-      "Veo el desarrollo como una mezcla de lógica, diseño y emoción. Busco escribir código limpio y mantenible que refleje una intención clara y resuelva necesidades específicas.",
-    "about.beyond.title": "Más allá del código",
+      "Veo el desarrollo como una mezcla de logica, diseno y emocion. Busco escribir codigo limpio y mantenible que refleje una intencion clara y resuelva necesidades especificas.",
+    "about.beyond.title": "Mas alla del codigo",
     "about.beyond.text":
-      "Fuera del trabajo, experimento con inteligencias artificiales, diseño sistemas interactivos y exploro nuevas tecnologías que me permitan seguir creciendo como desarrollador.",
+      "Fuera del trabajo, experimento con inteligencias artificiales, diseno sistemas interactivos y exploro nuevas tecnologias que me permitan seguir creciendo como desarrollador.",
 
     // Skills
     "skills.title": "Mis Conocimientos",
-    "skills.languages": "Lenguajes de programación",
+    "skills.languages": "Lenguajes de programacion",
     "skills.backend": "Backend",
     "skills.frontend": "Frontend",
     "skills.multiplatform": "Multiplataforma",
-    "skills.years": "años",
-    "skills.year": "año",
+    "skills.years": "anos",
+    "skills.year": "ano",
 
     // Projects
     "projects.title": "Mis Proyectos",
     "projects.view": "Ver Proyecto",
+    "projects.coming": "Proximamente",
+    "projects.prev": "Proyecto anterior",
+    "projects.next": "Proyecto siguiente",
+    "projects.goto": "Ir al proyecto",
+    "projects.nav": "Navegacion de proyectos",
 
     // Technologies
-    "tech.title": "Tecnologías Utilizadas",
+    "tech.title": "Tecnologias Utilizadas",
     "tech.frontend": "Frontend",
     "tech.backend": "Backend",
     "tech.databases": "Bases de Datos",
     "tech.multiplatform": "Multiplataforma",
+    "tech.htmlcss.desc": "Estructura y Estilos Web",
+    "tech.electron.desc": "Apps de Escritorio con Web Tech",
+    "tech.reactnative.desc": "Apps Moviles con React",
 
     // Contact
     "contact.title": "Contacto",
-    "contact.form.title": "Envíame un Mensaje",
+    "contact.form.title": "Enviame un Mensaje",
     "contact.name": "Nombre",
     "contact.name.placeholder": "Tu nombre",
     "contact.name.error": "Por favor ingresa tu nombre",
     "contact.email": "Email",
     "contact.email.placeholder": "tu@email.com",
-    "contact.email.error": "Por favor ingresa un email válido",
+    "contact.email.error": "Por favor ingresa un email valido",
     "contact.message": "Mensaje",
     "contact.message.placeholder": "Tu mensaje...",
     "contact.message.error": "Por favor ingresa un mensaje",
     "contact.send": "Enviar Mensaje",
+    "contact.sending": "Enviando...",
+    "contact.success": "Mensaje enviado con exito! Gracias por contactarme.",
+    "contact.error.generic": "Hubo un error al enviar el mensaje. Por favor, intentalo de nuevo.",
     "contact.social": "Redes Sociales",
-    "contact.ready": "¿Listo para trabajar juntos?",
+    "contact.ready": "Listo para trabajar juntos?",
     "contact.available": "Estoy disponible para proyectos freelance y oportunidades de trabajo a tiempo completo.",
     "contact.download.cv": "Descargar mi CV",
 
@@ -77,7 +88,7 @@ const translations = {
     // Language Selector
     "language.select": "Seleccionar idioma",
     "language.en": "English",
-    "language.es": "Español",
+    "language.es": "Espanol",
 
     // Loading Screen
     "loading.message": "Iniciando viaje espacial...",
@@ -93,7 +104,7 @@ const translations = {
     "nav.download.cv": "Download Resume",
 
     // Hero
-    "hero.title": "Danilo López",
+    "hero.title": "Danilo Lopez",
     "hero.subtitle": "JavaScript Developer",
     "hero.description": "Creating digital experiences that combine logic, art, and emotion.",
     "hero.projects": "View Projects",
@@ -103,7 +114,7 @@ const translations = {
     // About
     "about.title": "About Me",
     "about.intro":
-      "I'm Danilo López, a full stack developer passionate about creating digital experiences that combine functionality and design. I specialize in modern JavaScript technologies to build web and mobile applications.",
+      "I'm Danilo Lopez, a full stack developer passionate about creating digital experiences that combine functionality and design. I specialize in modern JavaScript technologies to build web and mobile applications.",
     "about.approach":
       "My approach goes beyond just writing code. I believe that true value lies in solving problems and communicating effective solutions that generate real impact for users.",
     "about.philosophy.title": "My work philosophy",
@@ -125,6 +136,11 @@ const translations = {
     // Projects
     "projects.title": "My Projects",
     "projects.view": "View Project",
+    "projects.coming": "Coming Soon",
+    "projects.prev": "Previous project",
+    "projects.next": "Next project",
+    "projects.goto": "Go to project",
+    "projects.nav": "Project navigation",
 
     // Technologies
     "tech.title": "Technologies Used",
@@ -132,6 +148,9 @@ const translations = {
     "tech.backend": "Backend",
     "tech.databases": "Databases",
     "tech.multiplatform": "Multiplatform",
+    "tech.htmlcss.desc": "Web Structure & Styles",
+    "tech.electron.desc": "Desktop Apps with Web Tech",
+    "tech.reactnative.desc": "Mobile Apps with React",
 
     // Contact
     "contact.title": "Contact",
@@ -146,6 +165,9 @@ const translations = {
     "contact.message.placeholder": "Your message...",
     "contact.message.error": "Please enter a message",
     "contact.send": "Send Message",
+    "contact.sending": "Sending...",
+    "contact.success": "Message sent successfully! Thanks for reaching out.",
+    "contact.error.generic": "An error occurred while sending your message. Please try again.",
     "contact.social": "Social Media",
     "contact.ready": "Ready to work together?",
     "contact.available": "I'm available for freelance projects and full-time job opportunities.",
@@ -158,7 +180,7 @@ const translations = {
     // Language Selector
     "language.select": "Select language",
     "language.en": "English",
-    "language.es": "Español",
+    "language.es": "Espanol",
 
     // Loading Screen
     "loading.message": "Starting space journey...",
@@ -168,32 +190,42 @@ const translations = {
 export function createLanguageProvider() {
   const currentLanguage = ref('en');
 
-  // Función para traducir textos
+  // Translation function - reads reactive ref internally
   const t = (key) => {
-    return translations[currentLanguage.value][key] || key;
+    const lang = currentLanguage.value;
+    return translations[lang]?.[key] || key;
   };
 
-  // Cambiar idioma
+  // Change language with SSR guard
   const setLanguage = (lang) => {
     if (lang === 'es' || lang === 'en') {
       currentLanguage.value = lang;
-      localStorage.setItem('language', lang);
+      // SSR guard for localStorage
+      if (typeof window !== 'undefined' && window.localStorage) {
+        try {
+          localStorage.setItem('language', lang);
+        } catch (e) {
+          // localStorage not available or quota exceeded
+          console.warn('Could not save language preference:', e);
+        }
+      }
     }
   };
 
-  // Cargar preferencia de idioma desde localStorage
-  if (typeof window !== 'undefined') {
-    const savedLanguage = localStorage.getItem('language');
-    if (savedLanguage && (savedLanguage === 'es' || savedLanguage === 'en')) {
-      currentLanguage.value = savedLanguage;
+  // Load saved language preference with SSR guard
+  if (typeof window !== 'undefined' && window.localStorage) {
+    try {
+      const savedLanguage = localStorage.getItem('language');
+      if (savedLanguage && (savedLanguage === 'es' || savedLanguage === 'en')) {
+        currentLanguage.value = savedLanguage;
+      }
+    } catch (e) {
+      // localStorage not available
+      console.warn('Could not load language preference:', e);
     }
   }
 
-  // Guardar preferencia de idioma en localStorage cuando cambie
-  watch(currentLanguage, (newLang) => {
-    localStorage.setItem('language', newLang);
-  });
-
+  // Return computed for currentLanguage to ensure reactivity in templates
   return {
     currentLanguage: computed(() => currentLanguage.value),
     t,
