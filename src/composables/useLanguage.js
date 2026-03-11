@@ -32,14 +32,16 @@ const translations = {
     "about.beyond.text":
       "Fuera del trabajo, experimento con inteligencias artificiales, diseno sistemas interactivos y exploro nuevas tecnologias que me permitan seguir creciendo como desarrollador.",
 
-    // Skills
+    // Skills — domain pillars
     "skills.title": "Mis Conocimientos",
-    "skills.languages": "Lenguajes de programacion",
-    "skills.backend": "Backend",
-    "skills.frontend": "Frontend",
-    "skills.multiplatform": "Multiplataforma",
-    "skills.years": "anos",
-    "skills.year": "ano",
+    "skills.pillar.arch.title": "Arquitectura & Ingenieria de Software",
+    "skills.pillar.arch.desc": "El nucleo de mi enfoque ingenieril: construir sistemas que escalan, resisten y evolucionan.",
+    "skills.pillar.ai.title": "Inteligencia Artificial & Machine Learning",
+    "skills.pillar.ai.desc": "Mi mayor especialidad. Desde modelos de lenguaje hasta redes neuronales y ML convencional.",
+    "skills.pillar.fullstack.title": "Ecosistemas Fullstack & Multiplataforma",
+    "skills.pillar.fullstack.desc": "Produzco en cualquier destino: web, escritorio y movil, eligiendo la herramienta correcta para cada contexto.",
+    "skills.pillar.data.title": "Datos, Cloud & Networking",
+    "skills.pillar.data.desc": "Persistencia, despliegue y conectividad: el tejido que mantiene todo en produccion.",
 
     // Case Studies
     "case_studies.title": "Casos de Estudio",
@@ -51,26 +53,12 @@ const translations = {
     "case_studies.goto": "Ir al caso",
     "case_studies.nav": "Navegacion de casos de estudio",
 
-    // Technologies
+    // Technologies (kept for backward compat in other components)
     "tech.title": "Tecnologias Utilizadas",
     "tech.frontend": "Frontend",
     "tech.backend": "Backend",
     "tech.databases": "Bases de Datos",
     "tech.multiplatform": "Multiplataforma",
-    "tech.javascript.desc": "ECMAScript 6+",
-    "tech.typescript.desc": "JavaScript Tipado",
-    "tech.htmlcss.desc": "Estructura y Estilos Web",
-    "tech.react.desc": "Libreria Frontend",
-    "tech.nextjs.desc": "Framework de React",
-    "tech.vuejs.desc": "Framework Progresivo",
-    "tech.tailwind.desc": "Framework CSS Utilitario",
-    "tech.vite.desc": "Herramienta de Build Frontend",
-    "tech.nodejs.desc": "Entorno de Ejecucion JS",
-    "tech.express.desc": "Framework Web para Node.js",
-    "tech.sql.desc": "Lenguaje de Consultas Estructurado",
-    "tech.supabase.desc": "Alternativa Open Source a Firebase",
-    "tech.electron.desc": "Apps de Escritorio con Web Tech",
-    "tech.reactnative.desc": "Apps Moviles con React",
 
     // Contact
     "contact.title": "Contacto",
@@ -136,14 +124,16 @@ const translations = {
     "about.beyond.text":
       "Outside of work, I experiment with artificial intelligence, design interactive systems, and explore new technologies that allow me to continue growing as a developer.",
 
-    // Skills
-    "skills.title": "My Skills",
-    "skills.languages": "Programming Languages",
-    "skills.backend": "Backend",
-    "skills.frontend": "Frontend",
-    "skills.multiplatform": "Multiplatform",
-    "skills.years": "years",
-    "skills.year": "year",
+    // Skills — domain pillars
+    "skills.title": "My Knowledge",
+    "skills.pillar.arch.title": "Software Architecture & Engineering",
+    "skills.pillar.arch.desc": "The core of my engineering mindset: building systems that scale, endure, and evolve.",
+    "skills.pillar.ai.title": "Artificial Intelligence & Machine Learning",
+    "skills.pillar.ai.desc": "My deepest speciality. From large language models to neural networks and conventional ML.",
+    "skills.pillar.fullstack.title": "Fullstack & Multiplatform Ecosystems",
+    "skills.pillar.fullstack.desc": "I ship to any target: web, desktop, and mobile — picking the right tool for each context.",
+    "skills.pillar.data.title": "Data, Cloud & Networking",
+    "skills.pillar.data.desc": "Persistence, deployment, and connectivity: the fabric that keeps everything running in production.",
 
     // Case Studies
     "case_studies.title": "Case Studies",
@@ -155,26 +145,12 @@ const translations = {
     "case_studies.goto": "Go to case",
     "case_studies.nav": "Case study navigation",
 
-    // Technologies
+    // Technologies (kept for backward compat in other components)
     "tech.title": "Technologies Used",
     "tech.frontend": "Frontend",
     "tech.backend": "Backend",
     "tech.databases": "Databases",
     "tech.multiplatform": "Multiplatform",
-    "tech.javascript.desc": "ECMAScript 6+",
-    "tech.typescript.desc": "Typed JavaScript",
-    "tech.htmlcss.desc": "Web Structure & Styles",
-    "tech.react.desc": "Frontend Library",
-    "tech.nextjs.desc": "React Framework",
-    "tech.vuejs.desc": "Progressive Framework",
-    "tech.tailwind.desc": "Utility-first CSS Framework",
-    "tech.vite.desc": "Frontend Build Tool",
-    "tech.nodejs.desc": "JavaScript Runtime",
-    "tech.express.desc": "Web Framework for Node.js",
-    "tech.sql.desc": "Structured Query Language",
-    "tech.supabase.desc": "Open Source Firebase Alternative",
-    "tech.electron.desc": "Desktop Apps with Web Tech",
-    "tech.reactnative.desc": "Mobile Apps with React",
 
     // Contact
     "contact.title": "Contact",
