@@ -13,7 +13,7 @@ const translations = {
 
     // Hero
     "hero.title": "Danilo Lopez",
-    "hero.subtitle": "JavaScript Developer",
+    "hero.subtitle": "Full-Stack Multiplatform | LM Engineering | Web3 Solutions",
     "hero.description": "Creando experiencias digitales que combinan logica, arte y emocion.",
     "hero.projects": "Ver Proyectos",
     "hero.contact": "Contactarme",
@@ -105,7 +105,7 @@ const translations = {
 
     // Hero
     "hero.title": "Danilo Lopez",
-    "hero.subtitle": "JavaScript Developer",
+    "hero.subtitle": "Full-Stack Multiplatform | LM Engineering | Web3 Solutions",
     "hero.description": "Creating digital experiences that combine logic, art, and emotion.",
     "hero.projects": "View Projects",
     "hero.contact": "Contact Me",
