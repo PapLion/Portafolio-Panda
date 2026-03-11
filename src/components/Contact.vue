@@ -305,8 +305,8 @@ const handleSubmit = async () => {
 
 const socialLinks = [
   { icon: Github, url: 'https://github.com/PapLion', label: 'GitHub' },
-  { icon: Twitter, url: 'https://twitter.com/LionPap', label: 'Twitter' },
-  { icon: Linkedin, url: 'https://www.linkedin.com/in/danilo-eduardo-l%C3%B3pez-corozo-0b83a2310/', label: 'LinkedIn' },
+  { icon: Twitter, url: 'https://x.com/DaniLopezPP', label: 'Twitter' },
+  { icon: Linkedin, url: 'https://www.linkedin.com/in/danilo-eduardo-lopez-corozo-5868153b6/', label: 'LinkedIn' },
   { icon: MessageSquare, url: 'https://discord.gg/4zGbjav7Bn', label: 'Discord' },
 ];
 </script>
