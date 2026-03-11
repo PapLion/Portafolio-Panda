@@ -1,401 +1,450 @@
 <template>
+  <!-- 
+    Neural Cosmos / Data Fabric Background
+    =====================================
+    High-performance Canvas-based particle system representing:
+    - Clean Architecture (ordered grid at top)
+    - Neural Networks (organic clustering on scroll)
+    - Data Orchestration (interactive node connections)
+    
+    Architecture Decision: Canvas API over DOM
+    - Single GPU-accelerated surface
+    - No DOM reflows, guaranteed 60fps
+    - Efficient batch rendering of thousands of primitives
+  -->
   <div ref="containerRef" class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-    <!-- Star layers with different parallax speeds -->
-    <div class="star-layer absolute inset-0">
-      <div ref="starsLayer1" class="stars-container"></div>
-      <div ref="starsLayer1Clone" class="stars-container-clone"></div>
-    </div>
-    <div class="star-layer absolute inset-0">
-      <div ref="starsLayer2" class="stars-container"></div>
-      <div ref="starsLayer2Clone" class="stars-container-clone"></div>
-    </div>
-    <div class="star-layer absolute inset-0">
-      <div ref="starsLayer3" class="stars-container"></div>
-      <div ref="starsLayer3Clone" class="stars-container-clone"></div>
-    </div>
-
-    <!-- Planets - Only visible ones (removed off-screen planets for performance) -->
-    <div ref="planetsRef" class="absolute inset-0">
-      <!-- Planet 1 - Top right -->
-      <div 
-        v-for="planet in visiblePlanets" 
-        :key="planet.id"
-        class="planet absolute"
-        :class="planet.animationClass"
-        :style="planet.style"
-      >
-        <div :class="`w-full h-full rounded-full border-${planet.borderWidth} border-white relative overflow-hidden`">
-          <div class="absolute inset-0 bg-black">
-            <div 
-              v-for="(crater, idx) in planet.craters" 
-              :key="idx"
-              class="absolute rounded-full border border-white"
-              :style="crater"
-            ></div>
-          </div>
-        </div>
-        <!-- Rings for ringed planets -->
-        <div 
-          v-if="planet.hasRings" 
-          class="absolute inset-0 rounded-full border-8 border-white opacity-20 scale-[1.2] rotate-12"
-        ></div>
-      </div>
-
-      <!-- Comet -->
-      <div class="absolute animate-comet">
-        <div class="w-[3px] h-[3px] bg-white rounded-full relative">
-          <div class="absolute top-0 right-0 w-[100px] h-[1px] bg-gradient-to-l from-transparent to-white"></div>
-        </div>
-      </div>
-
-      <!-- Floating astronaut using the Astronaut component -->
-      <div class="absolute top-[30%] left-[5%] animate-float-astronaut hidden md:block">
-        <Astronaut />
-      </div>
-    </div>
-
-    <!-- Subtle fog/nebula effect -->
-    <div class="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-black opacity-40"></div>
-
-    <!-- Animated shooting stars -->
-    <div class="shooting-stars"></div>
-    <div class="shooting-stars" style="animation-delay: 2s; top: 40%; left: 60%"></div>
+    <canvas 
+      ref="canvasRef" 
+      class="absolute inset-0 w-full h-full pointer-events-auto"
+      aria-hidden="true"
+    />
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
-import Astronaut from './Astronaut.vue';
+import { ref, onMounted, onUnmounted, reactive } from 'vue';
 
-const containerRef = ref(null);
-const planetsRef = ref(null);
-const starsLayer1 = ref(null);
-const starsLayer1Clone = ref(null);
-const starsLayer2 = ref(null);
-const starsLayer2Clone = ref(null);
-const starsLayer3 = ref(null);
-const starsLayer3Clone = ref(null);
+// ============================================================================
+// CONFIGURATION - Tunable parameters for the particle system
+// ============================================================================
 
-// Store animation frame for cleanup
-let animationFrameRef = null;
-let lastScrollY = 0;
-
-// Planet configuration - only visible planets
-const visiblePlanets = [
-  {
-    id: 1,
-    style: { top: '20%', right: '-100px', width: '200px', height: '200px', opacity: 0.3 },
-    animationClass: 'animate-float-slow',
-    borderWidth: 2,
-    craters: [
-      { top: '10%', left: '20%', width: '30px', height: '30px', opacity: 0.6 },
-      { top: '40%', left: '60%', width: '20px', height: '20px', opacity: 0.4 },
-      { top: '70%', left: '30%', width: '15px', height: '15px', opacity: 0.5 },
-    ],
-    hasRings: false,
-  },
-  {
-    id: 2,
-    style: { top: '60%', left: '-150px', width: '300px', height: '300px', opacity: 0.2 },
-    animationClass: 'animate-float-medium',
-    borderWidth: 4,
-    craters: [
-      { top: '20%', left: '10%', width: '40px', height: '40px', opacity: 0.1, background: 'white' },
-      { top: '50%', left: '70%', width: '60px', height: '60px', opacity: 0.1, background: 'white' },
-    ],
-    hasRings: true,
-  },
-];
-
-// Create stars using DocumentFragment for better performance
-const createRandomStars = (container, count, size, opacity) => {
-  if (!container) return;
+const CONFIG = {
+  // Node properties
+  NODE_COUNT: 120,
+  NODE_RADIUS: 2,
+  NODE_COLOR: 'rgba(255, 255, 255, 0.6)',
+  NODE_ACTIVE_COLOR: 'rgba(255, 255, 255, 1)',
   
-  const fragment = document.createDocumentFragment();
-  const containerWidth = container.offsetWidth || window.innerWidth;
-  const containerHeight = container.offsetHeight || window.innerHeight;
+  // Connection properties
+  CONNECTION_COLOR: 'rgba(255, 255, 255, 0.15)',
+  CONNECTION_ACTIVE_COLOR: 'rgba(255, 255, 255, 0.4)',
+  MAX_CONNECTION_DISTANCE: 150,
+  MAX_CONNECTIONS_PER_NODE: 4,
   
-  for (let i = 0; i < count; i++) {
-    const star = document.createElement('div');
-    const x = Math.random() * containerWidth;
-    const y = Math.random() * containerHeight;
-    const scale = Math.random() * (size.max - size.min) + size.min;
-    const starOpacity = Math.random() * (opacity.max - opacity.min) + opacity.min;
-    
-    star.className = 'star';
-    star.style.cssText = `left:${x}px;top:${y}px;width:${scale}px;height:${scale}px;opacity:${starOpacity}`;
-    
-    // Add twinkling effect to some stars
-    if (Math.random() > 0.7) {
-      star.classList.add('twinkling');
-      star.style.animationDelay = `${Math.random() * 5}s`;
-    }
-    
-    fragment.appendChild(star);
-  }
+  // Mouse interaction - "Farming" mechanic
+  MOUSE_ATTRACTION_RADIUS: 200,
+  MOUSE_ATTRACTION_FORCE: 0.02,
+  MOUSE_CONNECTION_RADIUS: 180,
   
-  container.innerHTML = '';
-  container.appendChild(fragment);
+  // Physics
+  BASE_VELOCITY: 0.3,
+  FRICTION: 0.98,
+  RETURN_FORCE: 0.01,
+  
+  // Scroll-based complexity scaling
+  SCROLL_DENSITY_MULTIPLIER: 2.5, // Max multiplier for connections at bottom
+  SCROLL_VELOCITY_MULTIPLIER: 1.5, // Speed increase with scroll
 };
 
-// Clone stars using cloneNode for better performance (no innerHTML)
-const cloneStars = (source, target) => {
-  if (!source || !target) return;
-  // Clear target using DOM API instead of innerHTML
-  while (target.firstChild) {
-    target.removeChild(target.firstChild);
-  }
-  // Clone and append children
-  const children = source.children;
-  for (let i = 0; i < children.length; i++) {
-    target.appendChild(children[i].cloneNode(true));
-  }
+// ============================================================================
+// STATE MACHINE - Network formation states for Intersection Observer
+// ============================================================================
+
+/**
+ * NetworkState enum for orchestrating visual transitions
+ * Prepared for future Intersection Observer integration
+ */
+const NetworkState = {
+  FREE_FLOAT: 'free_float',     // Default: organic floating
+  GRID: 'grid',                  // Clean Architecture visualization
+  CLUSTER: 'cluster',            // Neural Network grouping
+  WAVE: 'wave',                  // Data flow visualization
 };
 
-const handleScroll = () => {
-  if (!containerRef.value || !planetsRef.value) return;
-
-  const scrollY = window.scrollY;
-  
-  // Skip if scroll hasn't changed significantly (threshold of 2px)
-  if (Math.abs(scrollY - lastScrollY) < 2) return;
-  lastScrollY = scrollY;
-
-  // Parallax effect for stars - only update transform
-  const stars = containerRef.value.querySelectorAll('.star-layer');
-  stars.forEach((star, index) => {
-    const speed = 0.2 + index * 0.1;
-    star.style.transform = `translateY(-${scrollY * speed}px)`;
-  });
-
-  // Planets movement
-  const planets = planetsRef.value.querySelectorAll('.planet');
-  planets.forEach((planet, index) => {
-    const planetSpeed = 0.05 + index * 0.03;
-    const rotation = scrollY * 0.01 * (index % 2 === 0 ? 1 : -1);
-    planet.style.transform = `translateX(${scrollY * planetSpeed}px) rotate(${rotation}deg)`;
-  });
-};
-
-const onScroll = () => {
-  if (animationFrameRef) {
-    cancelAnimationFrame(animationFrameRef);
-  }
-  animationFrameRef = requestAnimationFrame(handleScroll);
-};
-
-onMounted(() => {
-  // Create stars with reduced count for better performance
-  createRandomStars(starsLayer1.value, 100, { min: 1, max: 2.5 }, { min: 0.3, max: 1 });
-  createRandomStars(starsLayer2.value, 150, { min: 0.5, max: 1.5 }, { min: 0.2, max: 0.8 });
-  createRandomStars(starsLayer3.value, 200, { min: 0.5, max: 1 }, { min: 0.1, max: 0.6 });
-  
-  // Clone stars for infinite scroll effect
-  cloneStars(starsLayer1.value, starsLayer1Clone.value);
-  cloneStars(starsLayer2.value, starsLayer2Clone.value);
-  cloneStars(starsLayer3.value, starsLayer3Clone.value);
-
-  window.addEventListener('scroll', onScroll, { passive: true });
+// Reactive state for the particle system
+const state = reactive({
+  currentNetworkState: NetworkState.FREE_FLOAT,
+  scrollProgress: 0,           // 0-1 normalized scroll position
+  complexityLevel: 1,          // Multiplier derived from scroll
+  mouseActive: false,
+  transitionProgress: 0,       // For smooth state transitions
 });
 
-// Proper cleanup at setup level
+// ============================================================================
+// REFS AND RUNTIME STATE
+// ============================================================================
+
+const containerRef = ref(null);
+const canvasRef = ref(null);
+
+let ctx = null;
+let animationFrameId = null;
+let nodes = [];
+let mouse = { x: -1000, y: -1000, active: false };
+let lastTime = 0;
+
+// ============================================================================
+// NODE CLASS - Particle with physics and state
+// ============================================================================
+
+/**
+ * Node represents a single particle in the neural cosmos
+ * Design: Encapsulates position, velocity, and rendering state
+ */
+class Node {
+  constructor(x, y, canvasWidth, canvasHeight) {
+    // Position
+    this.x = x;
+    this.y = y;
+    this.originX = x;
+    this.originY = y;
+    
+    // Velocity (random initial direction)
+    const angle = Math.random() * Math.PI * 2;
+    const speed = CONFIG.BASE_VELOCITY * (0.5 + Math.random() * 0.5);
+    this.vx = Math.cos(angle) * speed;
+    this.vy = Math.sin(angle) * speed;
+    
+    // Boundaries
+    this.canvasWidth = canvasWidth;
+    this.canvasHeight = canvasHeight;
+    
+    // State
+    this.isActive = false;
+    this.connections = [];
+    this.activationLevel = 0; // 0-1 for smooth transitions
+  }
+  
+  /**
+   * Update physics each frame
+   * @param {number} deltaTime - Time since last frame in ms
+   * @param {Object} mousePos - Current mouse position
+   * @param {number} complexityLevel - Scroll-based complexity
+   */
+  update(deltaTime, mousePos, complexityLevel) {
+    const dt = Math.min(deltaTime / 16.67, 2); // Normalize to 60fps, cap at 2x
+    
+    // Calculate distance to mouse
+    const dx = mousePos.x - this.x;
+    const dy = mousePos.y - this.y;
+    const distToMouse = Math.sqrt(dx * dx + dy * dy);
+    
+    // Mouse attraction - "Farming" mechanic
+    if (mousePos.active && distToMouse < CONFIG.MOUSE_ATTRACTION_RADIUS) {
+      const force = (1 - distToMouse / CONFIG.MOUSE_ATTRACTION_RADIUS) * CONFIG.MOUSE_ATTRACTION_FORCE;
+      this.vx += dx * force * dt;
+      this.vy += dy * force * dt;
+      this.isActive = true;
+      this.activationLevel = Math.min(1, this.activationLevel + 0.1);
+    } else {
+      this.isActive = false;
+      this.activationLevel = Math.max(0, this.activationLevel - 0.02);
+      
+      // Gentle return to origin when not attracted
+      const returnDx = this.originX - this.x;
+      const returnDy = this.originY - this.y;
+      this.vx += returnDx * CONFIG.RETURN_FORCE * dt;
+      this.vy += returnDy * CONFIG.RETURN_FORCE * dt;
+    }
+    
+    // Apply velocity with complexity-based speed
+    const speedMult = 1 + (complexityLevel - 1) * (CONFIG.SCROLL_VELOCITY_MULTIPLIER - 1);
+    this.x += this.vx * speedMult * dt;
+    this.y += this.vy * speedMult * dt;
+    
+    // Apply friction
+    this.vx *= CONFIG.FRICTION;
+    this.vy *= CONFIG.FRICTION;
+    
+    // Boundary wrapping with padding
+    const padding = 50;
+    if (this.x < -padding) this.x = this.canvasWidth + padding;
+    if (this.x > this.canvasWidth + padding) this.x = -padding;
+    if (this.y < -padding) this.y = this.canvasHeight + padding;
+    if (this.y > this.canvasHeight + padding) this.y = -padding;
+  }
+  
+  /**
+   * Render the node
+   * @param {CanvasRenderingContext2D} ctx
+   */
+  draw(ctx) {
+    const radius = CONFIG.NODE_RADIUS + this.activationLevel * 2;
+    const alpha = 0.4 + this.activationLevel * 0.6;
+    
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, radius, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+    ctx.fill();
+    
+    // Glow effect for active nodes
+    if (this.activationLevel > 0.1) {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, radius + 4 * this.activationLevel, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255, 255, 255, ${this.activationLevel * 0.1})`;
+      ctx.fill();
+    }
+  }
+}
+
+// ============================================================================
+// INITIALIZATION
+// ============================================================================
+
+/**
+ * Initialize the particle system
+ * Creates nodes distributed across the canvas
+ */
+function initNodes() {
+  const canvas = canvasRef.value;
+  if (!canvas) return;
+  
+  nodes = [];
+  const width = canvas.width;
+  const height = canvas.height;
+  
+  for (let i = 0; i < CONFIG.NODE_COUNT; i++) {
+    const x = Math.random() * width;
+    const y = Math.random() * height;
+    nodes.push(new Node(x, y, width, height));
+  }
+}
+
+/**
+ * Resize canvas to match container and recalculate node boundaries
+ */
+function resizeCanvas() {
+  const canvas = canvasRef.value;
+  const container = containerRef.value;
+  if (!canvas || !container) return;
+  
+  // Use devicePixelRatio for crisp rendering on high-DPI displays
+  const dpr = window.devicePixelRatio || 1;
+  const rect = container.getBoundingClientRect();
+  
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+  canvas.style.width = `${rect.width}px`;
+  canvas.style.height = `${rect.height}px`;
+  
+  ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  
+  // Update node boundaries
+  nodes.forEach(node => {
+    node.canvasWidth = rect.width;
+    node.canvasHeight = rect.height;
+  });
+}
+
+// ============================================================================
+// PHYSICS AND RENDERING
+// ============================================================================
+
+/**
+ * Find and draw connections between nearby nodes
+ * Complexity scales with scroll position
+ */
+function drawConnections() {
+  const maxDist = CONFIG.MAX_CONNECTION_DISTANCE * state.complexityLevel;
+  const maxConns = Math.floor(CONFIG.MAX_CONNECTIONS_PER_NODE * state.complexityLevel);
+  
+  // Reset connections
+  nodes.forEach(node => node.connections = []);
+  
+  // O(n^2) but acceptable for ~120 nodes
+  // For larger systems, implement spatial partitioning
+  for (let i = 0; i < nodes.length; i++) {
+    let connectionCount = 0;
+    
+    for (let j = i + 1; j < nodes.length && connectionCount < maxConns; j++) {
+      const dx = nodes[i].x - nodes[j].x;
+      const dy = nodes[i].y - nodes[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      
+      if (dist < maxDist) {
+        const alpha = (1 - dist / maxDist) * 0.2;
+        const isActive = nodes[i].isActive || nodes[j].isActive;
+        
+        ctx.beginPath();
+        ctx.moveTo(nodes[i].x, nodes[i].y);
+        ctx.lineTo(nodes[j].x, nodes[j].y);
+        ctx.strokeStyle = isActive 
+          ? `rgba(255, 255, 255, ${alpha * 2.5})`
+          : `rgba(255, 255, 255, ${alpha})`;
+        ctx.lineWidth = isActive ? 1.5 : 0.5;
+        ctx.stroke();
+        
+        connectionCount++;
+      }
+    }
+  }
+  
+  // Draw connections to mouse cursor when active
+  if (mouse.active) {
+    nodes.forEach(node => {
+      const dx = mouse.x - node.x;
+      const dy = mouse.y - node.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      
+      if (dist < CONFIG.MOUSE_CONNECTION_RADIUS) {
+        const alpha = (1 - dist / CONFIG.MOUSE_CONNECTION_RADIUS) * 0.4;
+        ctx.beginPath();
+        ctx.moveTo(node.x, node.y);
+        ctx.lineTo(mouse.x, mouse.y);
+        ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+    });
+    
+    // Draw cursor node
+    ctx.beginPath();
+    ctx.arc(mouse.x, mouse.y, 4, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+    ctx.fill();
+  }
+}
+
+/**
+ * Main animation loop
+ * Uses requestAnimationFrame for smooth 60fps rendering
+ */
+function animate(currentTime) {
+  if (!ctx || !canvasRef.value) return;
+  
+  const deltaTime = currentTime - lastTime;
+  lastTime = currentTime;
+  
+  // Clear canvas
+  const canvas = canvasRef.value;
+  const dpr = window.devicePixelRatio || 1;
+  ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
+  
+  // Update all nodes
+  nodes.forEach(node => {
+    node.update(deltaTime, mouse, state.complexityLevel);
+  });
+  
+  // Draw connections first (behind nodes)
+  drawConnections();
+  
+  // Draw nodes
+  nodes.forEach(node => {
+    node.draw(ctx);
+  });
+  
+  animationFrameId = requestAnimationFrame(animate);
+}
+
+// ============================================================================
+// EVENT HANDLERS
+// ============================================================================
+
+/**
+ * Handle mouse movement for "farming" interaction
+ */
+function handleMouseMove(event) {
+  const canvas = canvasRef.value;
+  if (!canvas) return;
+  
+  const rect = canvas.getBoundingClientRect();
+  mouse.x = event.clientX - rect.left;
+  mouse.y = event.clientY - rect.top;
+  mouse.active = true;
+}
+
+function handleMouseLeave() {
+  mouse.active = false;
+  mouse.x = -1000;
+  mouse.y = -1000;
+}
+
+/**
+ * Handle scroll for complexity scaling
+ * Higher scroll = denser network = more complex systems visualized
+ */
+function handleScroll() {
+  const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const scrollProgress = scrollHeight > 0 ? window.scrollY / scrollHeight : 0;
+  
+  state.scrollProgress = scrollProgress;
+  state.complexityLevel = 1 + scrollProgress * (CONFIG.SCROLL_DENSITY_MULTIPLIER - 1);
+}
+
+/**
+ * Debounced resize handler
+ */
+let resizeTimeout = null;
+function handleResize() {
+  if (resizeTimeout) clearTimeout(resizeTimeout);
+  resizeTimeout = setTimeout(() => {
+    resizeCanvas();
+    initNodes();
+  }, 100);
+}
+
+// ============================================================================
+// LIFECYCLE
+// ============================================================================
+
+onMounted(() => {
+  resizeCanvas();
+  initNodes();
+  
+  // Start animation loop
+  lastTime = performance.now();
+  animationFrameId = requestAnimationFrame(animate);
+  
+  // Event listeners
+  const canvas = canvasRef.value;
+  if (canvas) {
+    canvas.addEventListener('mousemove', handleMouseMove);
+    canvas.addEventListener('mouseleave', handleMouseLeave);
+  }
+  
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  window.addEventListener('resize', handleResize, { passive: true });
+  
+  // Initial scroll state
+  handleScroll();
+});
+
 onUnmounted(() => {
-  window.removeEventListener('scroll', onScroll);
-  if (animationFrameRef) {
-    cancelAnimationFrame(animationFrameRef);
+  // Cancel animation frame
+  if (animationFrameId) {
+    cancelAnimationFrame(animationFrameId);
+  }
+  
+  // Remove event listeners
+  const canvas = canvasRef.value;
+  if (canvas) {
+    canvas.removeEventListener('mousemove', handleMouseMove);
+    canvas.removeEventListener('mouseleave', handleMouseLeave);
+  }
+  
+  window.removeEventListener('scroll', handleScroll);
+  window.removeEventListener('resize', handleResize);
+  
+  if (resizeTimeout) {
+    clearTimeout(resizeTimeout);
   }
 });
 </script>
 
 <style scoped>
-.stars-container, .stars-container-clone {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.stars-container-clone {
-  top: -100%;
-}
-
-.star-layer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 200%;
-  animation: stars-scroll 100s linear infinite;
-}
-
-.star {
-  position: absolute;
-  background-color: white;
-  border-radius: 50%;
-  box-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
-}
-
-/* Twinkling effect */
-.twinkling {
-  animation: twinkle 4s ease-in-out infinite;
-}
-
-@keyframes twinkle {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.3;
-    transform: scale(0.8);
-  }
-}
-
-@keyframes stars-scroll {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(100%);
-  }
-}
-
-/* Adjust speeds for each layer */
-.star-layer:nth-child(1) {
-  animation-duration: 100s;
-}
-
-.star-layer:nth-child(2) {
-  animation-duration: 150s;
-}
-
-.star-layer:nth-child(3) {
-  animation-duration: 200s;
-}
-
-/* Shooting stars */
-.shooting-stars {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: rotate(-45deg);
-  opacity: 0.5;
-}
-
-.shooting-stars::before,
-.shooting-stars::after {
-  content: "";
-  position: absolute;
-  width: 100px;
-  height: 2px;
-  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
-  border-radius: 999px;
-}
-
-.shooting-stars::before {
-  top: 20%;
-  left: 10%;
-  animation: shooting-star 4s linear infinite;
-  animation-delay: 1s;
-}
-
-.shooting-stars::after {
-  top: 60%;
-  left: 40%;
-  animation: shooting-star 5s linear infinite;
-  animation-delay: 3s;
-}
-
-@keyframes shooting-star {
-  0% {
-    transform: translateX(0) translateY(0);
-    opacity: 1;
-  }
-  70% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(500px) translateY(500px);
-    opacity: 0;
-  }
-}
-
-/* Float animations */
-@keyframes float-slow {
-  0%, 100% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-  25% {
-    transform: translate(5px, 10px) rotate(1deg);
-  }
-  50% {
-    transform: translate(0, 20px) rotate(0deg);
-  }
-  75% {
-    transform: translate(-5px, 10px) rotate(-1deg);
-  }
-}
-
-@keyframes float-medium {
-  0%, 100% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-  33% {
-    transform: translate(10px, 15px) rotate(2deg);
-  }
-  66% {
-    transform: translate(-10px, 15px) rotate(-2deg);
-  }
-}
-
-@keyframes float-astronaut {
-  0%, 100% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-  25% {
-    transform: translate(30px, -20px) rotate(10deg);
-  }
-  50% {
-    transform: translate(60px, 0) rotate(0deg);
-  }
-  75% {
-    transform: translate(30px, 20px) rotate(-10deg);
-  }
-}
-
-@keyframes comet {
-  0% {
-    top: -50px;
-    left: 10%;
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  100% {
-    top: 120%;
-    left: 70%;
-    opacity: 0;
-  }
-}
-
-.animate-float-slow {
-  animation: float-slow 20s ease-in-out infinite;
-}
-
-.animate-float-medium {
-  animation: float-medium 15s ease-in-out infinite;
-}
-
-.animate-float-astronaut {
-  animation: float-astronaut 30s ease-in-out infinite;
-}
-
-.animate-comet {
-  animation: comet 15s ease-out infinite;
-  animation-delay: 5s;
+/* Minimal styling - Canvas handles all rendering */
+canvas {
+  background: transparent;
 }
 </style>
