@@ -12,10 +12,10 @@
     - No DOM reflows, guaranteed 60fps
     - Efficient batch rendering of thousands of primitives
   -->
-  <div ref="containerRef" class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+  <div ref="containerRef" class="neural-cosmos-container">
     <canvas 
       ref="canvasRef" 
-      class="absolute inset-0 w-full h-full pointer-events-auto"
+      class="neural-cosmos-canvas"
       aria-hidden="true"
     />
   </div>
@@ -203,15 +203,12 @@ class Node {
 
 /**
  * Initialize the particle system
- * Creates nodes distributed across the canvas
+ * Creates nodes distributed across the viewport
  */
 function initNodes() {
-  const canvas = canvasRef.value;
-  if (!canvas) return;
-  
   nodes = [];
-  const width = canvas.width;
-  const height = canvas.height;
+  const width = window.innerWidth;
+  const height = window.innerHeight;
   
   for (let i = 0; i < CONFIG.NODE_COUNT; i++) {
     const x = Math.random() * width;
@@ -221,29 +218,32 @@ function initNodes() {
 }
 
 /**
- * Resize canvas to match container and recalculate node boundaries
+ * Resize canvas to match viewport and recalculate node boundaries
+ * Uses window dimensions directly for reliability
  */
 function resizeCanvas() {
   const canvas = canvasRef.value;
-  const container = containerRef.value;
-  if (!canvas || !container) return;
+  if (!canvas) return;
+  
+  // Use window dimensions for full viewport coverage
+  const width = window.innerWidth;
+  const height = window.innerHeight;
   
   // Use devicePixelRatio for crisp rendering on high-DPI displays
   const dpr = window.devicePixelRatio || 1;
-  const rect = container.getBoundingClientRect();
   
-  canvas.width = rect.width * dpr;
-  canvas.height = rect.height * dpr;
-  canvas.style.width = `${rect.width}px`;
-  canvas.style.height = `${rect.height}px`;
+  canvas.width = width * dpr;
+  canvas.height = height * dpr;
+  canvas.style.width = `${width}px`;
+  canvas.style.height = `${height}px`;
   
   ctx = canvas.getContext('2d');
   ctx.scale(dpr, dpr);
   
   // Update node boundaries
   nodes.forEach(node => {
-    node.canvasWidth = rect.width;
-    node.canvasHeight = rect.height;
+    node.canvasWidth = width;
+    node.canvasHeight = height;
   });
 }
 
@@ -355,12 +355,8 @@ function animate(currentTime) {
  * Handle mouse movement for "farming" interaction
  */
 function handleMouseMove(event) {
-  const canvas = canvasRef.value;
-  if (!canvas) return;
-  
-  const rect = canvas.getBoundingClientRect();
-  mouse.x = event.clientX - rect.left;
-  mouse.y = event.clientY - rect.top;
+  mouse.x = event.clientX;
+  mouse.y = event.clientY;
   mouse.active = true;
 }
 
@@ -399,20 +395,19 @@ function handleResize() {
 // ============================================================================
 
 onMounted(() => {
-  resizeCanvas();
-  initNodes();
+  // Delay init to ensure DOM is ready
+  requestAnimationFrame(() => {
+    resizeCanvas();
+    initNodes();
+    
+    // Start animation loop
+    lastTime = performance.now();
+    animationFrameId = requestAnimationFrame(animate);
+  });
   
-  // Start animation loop
-  lastTime = performance.now();
-  animationFrameId = requestAnimationFrame(animate);
-  
-  // Event listeners
-  const canvas = canvasRef.value;
-  if (canvas) {
-    canvas.addEventListener('mousemove', handleMouseMove);
-    canvas.addEventListener('mouseleave', handleMouseLeave);
-  }
-  
+  // Global mouse events for interaction anywhere on page
+  window.addEventListener('mousemove', handleMouseMove, { passive: true });
+  window.addEventListener('mouseout', handleMouseLeave, { passive: true });
   window.addEventListener('scroll', handleScroll, { passive: true });
   window.addEventListener('resize', handleResize, { passive: true });
   
@@ -427,12 +422,8 @@ onUnmounted(() => {
   }
   
   // Remove event listeners
-  const canvas = canvasRef.value;
-  if (canvas) {
-    canvas.removeEventListener('mousemove', handleMouseMove);
-    canvas.removeEventListener('mouseleave', handleMouseLeave);
-  }
-  
+  window.removeEventListener('mousemove', handleMouseMove);
+  window.removeEventListener('mouseout', handleMouseLeave);
   window.removeEventListener('scroll', handleScroll);
   window.removeEventListener('resize', handleResize);
   
@@ -443,8 +434,26 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-/* Minimal styling - Canvas handles all rendering */
-canvas {
+/* Fixed fullscreen container */
+.neural-cosmos-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Canvas fills the container */
+.neural-cosmos-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
   background: transparent;
 }
 </style>
