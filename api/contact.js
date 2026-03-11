@@ -129,7 +129,7 @@ export default async function handler(req, res) {
 
     const { data, error } = await resend.emails.send({
       from: 'Portfolio Contact <onboarding@resend.dev>',
-      to: process.env.CONTACT_EMAIL || 'estudiantedanilolopez@gmail.com',
+      to: process.env.CONTACT_EMAIL,
       reply_to: email.trim(),
       subject: `Nuevo mensaje de ${sanitizedName}`,
       html: `
