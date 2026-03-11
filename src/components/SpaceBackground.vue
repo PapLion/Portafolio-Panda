@@ -29,31 +29,23 @@ import { ref, onMounted, onUnmounted, reactive } from 'vue';
 // ============================================================================
 
 const CONFIG = {
-  // Node properties
   NODE_COUNT: 120,
   NODE_RADIUS: 2,
   NODE_COLOR: 'rgba(255, 255, 255, 0.6)',
   NODE_ACTIVE_COLOR: 'rgba(255, 255, 255, 1)',
-  
-  // Connection properties
   CONNECTION_COLOR: 'rgba(255, 255, 255, 0.15)',
   CONNECTION_ACTIVE_COLOR: 'rgba(255, 255, 255, 0.4)',
   MAX_CONNECTION_DISTANCE: 150,
   MAX_CONNECTIONS_PER_NODE: 4,
-  
-  // Mouse interaction - "Farming" mechanic
-  MOUSE_ATTRACTION_RADIUS: 200,
-  MOUSE_ATTRACTION_FORCE: 0.02,
-  MOUSE_CONNECTION_RADIUS: 180,
-  
-  // Physics
+  MOUSE_INTERACTION_RADIUS: 250,
+  MOUSE_REPEL_FORCE: 0.03,
+  MOUSE_ATTRACTION_FORCE: 0.005,
+  MOUSE_CONNECTION_RADIUS: 140,
   BASE_VELOCITY: 0.3,
-  FRICTION: 0.98,
-  RETURN_FORCE: 0.01,
-  
-  // Scroll-based complexity scaling
-  SCROLL_DENSITY_MULTIPLIER: 2.5, // Max multiplier for connections at bottom
-  SCROLL_VELOCITY_MULTIPLIER: 1.5, // Speed increase with scroll
+  FRICTION: 0.92,
+  RETURN_FORCE: 0.003,
+  SCROLL_DENSITY_MULTIPLIER: 2.5,
+  SCROLL_VELOCITY_MULTIPLIER: 1.5,
 };
 
 // ============================================================================
@@ -132,41 +124,50 @@ class Node {
    * @param {number} complexityLevel - Scroll-based complexity
    */
   update(deltaTime, mousePos, complexityLevel) {
-    const dt = Math.min(deltaTime / 16.67, 2); // Normalize to 60fps, cap at 2x
+    const dt = Math.min(deltaTime / 16.67, 2); 
+    let distSq = Infinity;
+    let dx = 0;
+    let dy = 0;
     
-    // Calculate distance to mouse
-    const dx = mousePos.x - this.x;
-    const dy = mousePos.y - this.y;
-    const distToMouse = Math.sqrt(dx * dx + dy * dy);
+    if (mousePos.active) {
+      dx = mousePos.x - this.x;
+      dy = mousePos.y - this.y;
+      distSq = dx * dx + dy * dy;
+    }
     
-    // Mouse attraction - "Farming" mechanic
-    if (mousePos.active && distToMouse < CONFIG.MOUSE_ATTRACTION_RADIUS) {
-      const force = (1 - distToMouse / CONFIG.MOUSE_ATTRACTION_RADIUS) * CONFIG.MOUSE_ATTRACTION_FORCE;
-      this.vx += dx * force * dt;
-      this.vy += dy * force * dt;
+    const interactSq = CONFIG.MOUSE_INTERACTION_RADIUS * CONFIG.MOUSE_INTERACTION_RADIUS;
+    
+    if (mousePos.active && distSq < interactSq) {
+      const distToMouse = Math.sqrt(distSq);
+      const normalizedDist = distToMouse / CONFIG.MOUSE_INTERACTION_RADIUS;
+      
+      if (normalizedDist < 0.35) {
+        const repelStrength = (0.35 - normalizedDist) * CONFIG.MOUSE_REPEL_FORCE;
+        this.vx -= dx * repelStrength * dt;
+        this.vy -= dy * repelStrength * dt;
+      } else {
+        const attractStrength = (1 - normalizedDist) * CONFIG.MOUSE_ATTRACTION_FORCE;
+        this.vx += dx * attractStrength * dt;
+        this.vy += dy * attractStrength * dt;
+      }
+      
       this.isActive = true;
-      this.activationLevel = Math.min(1, this.activationLevel + 0.1);
+      this.activationLevel = Math.min(1, this.activationLevel + 0.05);
     } else {
       this.isActive = false;
       this.activationLevel = Math.max(0, this.activationLevel - 0.02);
-      
-      // Gentle return to origin when not attracted
       const returnDx = this.originX - this.x;
       const returnDy = this.originY - this.y;
       this.vx += returnDx * CONFIG.RETURN_FORCE * dt;
       this.vy += returnDy * CONFIG.RETURN_FORCE * dt;
     }
     
-    // Apply velocity with complexity-based speed
     const speedMult = 1 + (complexityLevel - 1) * (CONFIG.SCROLL_VELOCITY_MULTIPLIER - 1);
     this.x += this.vx * speedMult * dt;
     this.y += this.vy * speedMult * dt;
-    
-    // Apply friction
     this.vx *= CONFIG.FRICTION;
     this.vy *= CONFIG.FRICTION;
     
-    // Boundary wrapping with padding
     const padding = 50;
     if (this.x < -padding) this.x = this.canvasWidth + padding;
     if (this.x > this.canvasWidth + padding) this.x = -padding;
@@ -290,25 +291,29 @@ function drawConnections() {
     }
   }
   
-  // Draw connections to mouse cursor when active
   if (mouse.active) {
     nodes.forEach(node => {
       const dx = mouse.x - node.x;
       const dy = mouse.y - node.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
+      const distSq = dx * dx + dy * dy;
+      const maxConnSq = CONFIG.MOUSE_CONNECTION_RADIUS * CONFIG.MOUSE_CONNECTION_RADIUS;
       
-      if (dist < CONFIG.MOUSE_CONNECTION_RADIUS) {
-        const alpha = (1 - dist / CONFIG.MOUSE_CONNECTION_RADIUS) * 0.4;
+      if (distSq < maxConnSq) {
+        const dist = Math.sqrt(distSq);
+        const alpha = (1 - dist / CONFIG.MOUSE_CONNECTION_RADIUS) * 0.15;
         ctx.beginPath();
         ctx.moveTo(node.x, node.y);
-        ctx.lineTo(mouse.x, mouse.y);
+        
+        const cpX = node.x + dx * 0.5 - (node.vx * 15);
+        const cpY = node.y + dy * 0.5 - (node.vy * 15);
+        ctx.quadraticCurveTo(cpX, cpY, mouse.x, mouse.y);
+        
         ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
         ctx.lineWidth = 1;
         ctx.stroke();
       }
     });
     
-    // Draw cursor node
     ctx.beginPath();
     ctx.arc(mouse.x, mouse.y, 4, 0, Math.PI * 2);
     ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
