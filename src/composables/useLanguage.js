@@ -41,14 +41,15 @@ const translations = {
     "skills.years": "anos",
     "skills.year": "ano",
 
-    // Projects
-    "projects.title": "Mis Proyectos",
-    "projects.view": "Ver Proyecto",
-    "projects.coming": "Proximamente",
-    "projects.prev": "Proyecto anterior",
-    "projects.next": "Proyecto siguiente",
-    "projects.goto": "Ir al proyecto",
-    "projects.nav": "Navegacion de proyectos",
+    // Case Studies
+    "case_studies.title": "Casos de Estudio",
+    "case_studies.stack": "Stack Tecnologico",
+    "case_studies.overview": "Descripcion",
+    "case_studies.highlights": "Puntos Clave",
+    "case_studies.prev": "Caso anterior",
+    "case_studies.next": "Caso siguiente",
+    "case_studies.goto": "Ir al caso",
+    "case_studies.nav": "Navegacion de casos de estudio",
 
     // Technologies
     "tech.title": "Tecnologias Utilizadas",
@@ -144,14 +145,15 @@ const translations = {
     "skills.years": "years",
     "skills.year": "year",
 
-    // Projects
-    "projects.title": "My Projects",
-    "projects.view": "View Project",
-    "projects.coming": "Coming Soon",
-    "projects.prev": "Previous project",
-    "projects.next": "Next project",
-    "projects.goto": "Go to project",
-    "projects.nav": "Project navigation",
+    // Case Studies
+    "case_studies.title": "Case Studies",
+    "case_studies.stack": "Tech Stack",
+    "case_studies.overview": "Overview",
+    "case_studies.highlights": "Key Highlights",
+    "case_studies.prev": "Previous case",
+    "case_studies.next": "Next case",
+    "case_studies.goto": "Go to case",
+    "case_studies.nav": "Case study navigation",
 
     // Technologies
     "tech.title": "Technologies Used",
