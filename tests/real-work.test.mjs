@@ -28,7 +28,7 @@ test('app renders a dedicated RobloxGameDev page for /roblox-gamedev', () => {
   assert.match(app, /import RobloxGameDev from '\.\/pages\/RobloxGameDev\.vue'/);
   assert.match(app, /isRobloxGameDevRoute/);
   assert.match(app, /\/roblox-gamedev/);
-  assert.match(app, /<RobloxGameDev\s*\/>/);
+  assert.match(app, /<RobloxGameDev\b[^>]*\/>/);
   assert.ok(existsSync(robloxPagePath), 'RobloxGameDev.vue should exist');
 });
 
