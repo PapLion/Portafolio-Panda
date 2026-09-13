@@ -1,6 +1,7 @@
 {
   "framework": "vite",
   "rewrites": [
+    { "source": "/roblox-gamedev", "destination": "/index.html" },
     { "source": "/api/(.*)", "destination": "/api/$1" }
   ],
   "headers": [
