@@ -71,3 +71,14 @@ test('home positions BloxTop as concise flagship work and keeps Roblox subtle', 
   assert.match(source, /¿Buscas Roblox \/ Game Dev\?/);
   assert.doesNotMatch(source, /robloxRouteDescription/);
 });
+
+
+test('flagship project appears before My Knowledge on the home page', () => {
+  const app = readFileSync(appPath, 'utf8');
+  const flagshipIndex = app.indexOf('<RealWork />');
+  const knowledgeIndex = app.indexOf('<Skills />');
+
+  assert.ok(flagshipIndex !== -1, 'RealWork should render on home');
+  assert.ok(knowledgeIndex !== -1, 'Skills should render on home');
+  assert.ok(flagshipIndex < knowledgeIndex, 'Flagship Project should appear before My Knowledge');
+});
