@@ -49,3 +49,25 @@ test('Vercel rewrites direct /roblox-gamedev visits to the SPA entry point', () 
     'vercel.json should rewrite /roblox-gamedev to /index.html',
   );
 });
+
+
+test('home positions BloxTop as concise flagship work and keeps Roblox subtle', () => {
+  const source = readFileSync(componentPath, 'utf8');
+  const navbar = readFileSync(new URL('../src/components/Navbar.vue', import.meta.url), 'utf8');
+
+  assert.match(source, /Flagship Project/);
+  assert.match(source, /Proyecto insignia/);
+  assert.match(source, /Production client project/);
+  assert.doesNotMatch(source, /Playwright/);
+  assert.doesNotMatch(source, /Work shipped outside the portfolio/);
+  assert.doesNotMatch(source, /Trabajo publicado fuera del portafolio/);
+  assert.doesNotMatch(source, /actively maintain/i);
+  assert.doesNotMatch(source, /Ongoing engineering and maintenance/i);
+
+  assert.match(navbar, /href:\s*['"]\/roblox-gamedev['"]/);
+  assert.match(navbar, /Roblox \/ Game Dev/);
+
+  assert.match(source, /Looking for Roblox \/ Game Dev\?/);
+  assert.match(source, /¿Buscas Roblox \/ Game Dev\?/);
+  assert.doesNotMatch(source, /robloxRouteDescription/);
+});
