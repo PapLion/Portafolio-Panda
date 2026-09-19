@@ -1,10 +1,10 @@
 <template>
   <section id="real-work" class="py-12 sm:py-16 md:py-20 border-b border-white/20 bg-black" aria-labelledby="real-work-title">
     <div class="container mx-auto px-4">
-      <div class="max-w-3xl mx-auto text-center mb-10 sm:mb-12">
+      <div class="max-w-3xl mx-auto text-center mb-8 sm:mb-10">
         <p class="text-xs sm:text-sm uppercase tracking-[0.35em] text-white/50 mb-3">{{ copy.eyebrow }}</p>
         <h2 id="real-work-title" class="text-2xl sm:text-3xl md:text-4xl font-bold section-title">{{ copy.title }}</h2>
-        <p class="mt-5 text-sm sm:text-base text-white/65 leading-relaxed">{{ copy.intro }}</p>
+        <p class="mt-4 text-sm sm:text-base text-white/65 leading-relaxed">{{ copy.intro }}</p>
       </div>
 
       <article class="manga-panel border-2 border-white p-5 sm:p-7 relative overflow-hidden">
@@ -13,7 +13,7 @@
             <div>
               <div class="flex flex-wrap items-center gap-2 mb-4">
                 <span class="border border-white/50 px-2 py-1 text-[10px] sm:text-xs uppercase tracking-[0.2em]">{{ copy.project.category }}</span>
-                <span class="bg-white text-black px-2 py-1 text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em]">{{ copy.featured }}</span>
+                <span class="bg-white text-black px-2 py-1 text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em]">{{ copy.project.badge }}</span>
               </div>
               <h3 class="text-xl sm:text-2xl md:text-3xl font-bold manga-text">{{ copy.project.title }}</h3>
               <p class="mt-3 text-xs sm:text-sm text-white/55">{{ copy.project.role }}</p>
@@ -48,17 +48,15 @@
         </div>
       </article>
 
-      <a
-        href="/roblox-gamedev"
-        class="mt-6 sm:mt-8 border border-white/30 p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 hover:border-white transition-colors manga-panel"
-      >
-        <div>
-          <p class="text-xs uppercase tracking-[0.25em] text-white/45">{{ copy.robloxRouteEyebrow }}</p>
-          <h3 class="mt-2 text-lg sm:text-xl font-bold">{{ copy.robloxRouteTitle }}</h3>
-          <p class="mt-2 text-sm text-white/60">{{ copy.robloxRouteDescription }}</p>
-        </div>
-        <span class="text-sm whitespace-nowrap">{{ copy.robloxRouteCta }} →</span>
-      </a>
+      <div class="mt-5 text-center sm:text-right">
+        <a
+          href="/roblox-gamedev"
+          class="text-xs sm:text-sm text-white/45 hover:text-white transition-colors"
+        >
+          {{ copy.robloxRoutePrompt }}
+          <span class="ml-1 text-white/70">{{ copy.robloxRouteCta }} →</span>
+        </a>
+      </div>
 
       <div v-if="testimonials.length" class="mt-10 sm:mt-12">
         <h3 class="text-xl sm:text-2xl font-bold mb-5">{{ copy.testimonialsTitle }}</h3>
@@ -81,53 +79,47 @@ const currentLanguage = language.currentLanguage ?? ref('en');
 
 const content = {
   en: {
-    eyebrow: 'Delivered work / real clients',
-    title: 'Work shipped outside the portfolio',
-    intro: 'Selected work that has been maintained, delivered, or used beyond a demo. Existing case studies remain untouched; this section adds concrete evidence from real engagements.',
-    featured: 'Featured',
+    eyebrow: 'Selected work',
+    title: 'Flagship Project',
+    intro: 'If you only have time to review one project, start here: real production work with broad contribution across the platform.',
     testimonialsTitle: 'Client feedback',
-    robloxRouteEyebrow: 'Separate specialization',
-    robloxRouteTitle: 'Roblox & Game Development',
-    robloxRouteDescription: 'Gameplay systems, NPC work, and Luau evidence now live on their own dedicated page.',
-    robloxRouteCta: 'Open page',
+    robloxRoutePrompt: 'Looking for Roblox / Game Dev?',
+    robloxRouteCta: 'Separate portfolio',
     project: {
       category: 'E-commerce / Automation',
+      badge: 'Client project',
       title: 'BloxTop',
-      role: 'Fullstack Developer · Ongoing client work',
-      description: 'Ongoing engineering and maintenance for a Shopify Hydrogen storefront focused on digital Roblox items, spanning storefront UX, delivery/claim flows, production fixes, QA, and technical SEO.',
+      role: 'Fullstack Developer · Production client project',
+      description: 'Fullstack contributor on a production Shopify Hydrogen platform for digital Roblox items, working across storefront engineering, automated delivery, commerce flows, QA, and technical SEO.',
       highlights: [
-        'Maintained and extended a Shopify Hydrogen / Remix storefront in production.',
-        'Built and hardened claim and delivery flows that connect storefront state with automated item delivery.',
-        'Shipped storefront fixes across cart, locale handling, selectors, checkout-facing flows, and technical SEO.',
-        'Worked with regression testing and production QA to keep changes safe across an actively maintained store.',
+        'Production storefront work across UX, cart/locale flows, selectors, and checkout-facing fixes.',
+        'Automated claim and delivery flows connecting Shopify state with item delivery.',
+        'Production QA and technical SEO improvements for a live storefront.',
       ],
-      stack: ['Shopify Hydrogen', 'Remix', 'TypeScript', 'GraphQL', 'Playwright', 'Oxygen'],
+      stack: ['Shopify Hydrogen', 'Remix', 'TypeScript', 'GraphQL', 'Oxygen'],
       links: [{ label: 'Visit BloxTop', href: 'https://bloxtop.com' }],
       media: [],
     },
   },
   es: {
-    eyebrow: 'Trabajo entregado / clientes reales',
-    title: 'Trabajo publicado fuera del portafolio',
-    intro: 'Una selección de trabajo mantenido, entregado o usado más allá de una demo. Los casos de estudio existentes se conservan intactos; esta sección solo añade evidencia concreta de trabajos reales.',
-    featured: 'Destacado',
+    eyebrow: 'Trabajo seleccionado',
+    title: 'Proyecto insignia',
+    intro: 'Si solo tienes tiempo de revisar un proyecto, empieza por este: trabajo real en producción con participación transversal en la plataforma.',
     testimonialsTitle: 'Opiniones de clientes',
-    robloxRouteEyebrow: 'Especialización separada',
-    robloxRouteTitle: 'Roblox & Game Development',
-    robloxRouteDescription: 'Los sistemas de gameplay, NPCs y evidencia en Luau ahora viven en su propia página dedicada.',
-    robloxRouteCta: 'Abrir página',
+    robloxRoutePrompt: '¿Buscas Roblox / Game Dev?',
+    robloxRouteCta: 'Portafolio aparte',
     project: {
       category: 'E-commerce / Automatización',
+      badge: 'Proyecto cliente',
       title: 'BloxTop',
-      role: 'Desarrollador Fullstack · Trabajo continuo con cliente',
-      description: 'Ingeniería y mantenimiento continuo de una tienda Shopify Hydrogen enfocada en ítems digitales de Roblox, cubriendo UX del storefront, flujos de entrega/claim, fixes de producción, QA y SEO técnico.',
+      role: 'Desarrollador Fullstack · Proyecto cliente en producción',
+      description: 'Participación fullstack en una plataforma Shopify Hydrogen en producción para ítems digitales de Roblox, cubriendo storefront, entrega automatizada, flujos de comercio, QA y SEO técnico.',
       highlights: [
-        'Mantenimiento y extensión de un storefront Shopify Hydrogen / Remix en producción.',
-        'Construcción y endurecimiento de flujos de claim y delivery que conectan el estado de la tienda con la entrega automatizada de ítems.',
-        'Entrega de fixes en carrito, locales, selectores, flujos cercanos al checkout y SEO técnico.',
-        'Uso de pruebas de regresión y QA de producción para mantener cambios seguros en una tienda activa.',
+        'Trabajo de storefront en UX, carrito/locales, selectores y fixes cercanos al checkout.',
+        'Flujos automatizados de claim y delivery conectando el estado de Shopify con la entrega de ítems.',
+        'QA de producción y mejoras de SEO técnico sobre una tienda en uso real.',
       ],
-      stack: ['Shopify Hydrogen', 'Remix', 'TypeScript', 'GraphQL', 'Playwright', 'Oxygen'],
+      stack: ['Shopify Hydrogen', 'Remix', 'TypeScript', 'GraphQL', 'Oxygen'],
       links: [{ label: 'Visitar BloxTop', href: 'https://bloxtop.com' }],
       media: [],
     },
