@@ -34,9 +34,9 @@
         <Navbar />
         <Hero />
         <About />
+        <RealWork />
         <Skills />
         <Projects />
-        <RealWork />
         <Contact />
         <Footer />
       </template>
