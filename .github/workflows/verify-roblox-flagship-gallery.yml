@@ -1,4 +1,5 @@
 name: Verify Roblox flagship gallery
+# rerun after assertion alignment
 
 on:
   push:
