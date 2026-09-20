@@ -110,10 +110,10 @@ test('Roblox/Game Dev experience areas are selectable without numbering or impli
 });
 
 
-test('experience scroller uses portfolio-styled scrollbar', () => {
+test('experience selector uses portfolio-styled scrollbar on compact screens', () => {
   const source = readFileSync(robloxPagePath, 'utf8');
 
-  assert.match(source, /case-study-scroller/);
+  assert.match(source, /experience-selector/);
   assert.match(source, /scrollbar-width:\s*thin/);
   assert.match(source, /scrollbar-color:/);
   assert.match(source, /::-webkit-scrollbar/);
