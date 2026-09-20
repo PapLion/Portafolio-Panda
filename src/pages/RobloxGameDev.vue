@@ -13,7 +13,7 @@
         <span class="text-xs uppercase tracking-[0.3em] text-white/40">Dani.Dev / Roblox & Game Dev</span>
       </div>
 
-      <header class="max-w-4xl mb-10 sm:mb-14">
+      <header class="max-w-4xl mb-10 sm:mb-12">
         <p class="text-xs sm:text-sm uppercase tracking-[0.35em] text-white/50 mb-3">{{ copy.eyebrow }}</p>
         <h1 id="roblox-gamedev-title" class="text-3xl sm:text-4xl md:text-5xl font-bold manga-text">
           {{ copy.title }}
@@ -34,66 +34,118 @@
       </header>
 
       <section aria-labelledby="case-studies-title">
-        <div class="flex items-end justify-between gap-4 mb-6 sm:mb-8">
+        <div class="flex items-end justify-between gap-4 mb-5">
           <div>
             <p class="text-xs uppercase tracking-[0.3em] text-white/40">{{ copy.caseStudiesEyebrow }}</p>
             <h2 id="case-studies-title" class="mt-2 text-2xl sm:text-3xl font-bold">{{ copy.caseStudiesTitle }}</h2>
           </div>
-          <span class="hidden sm:block text-xs text-white/35">{{ caseStudies.length }} {{ copy.systemsLabel }}</span>
+          <span class="text-xs text-white/35">{{ activeIndex + 1 }} / {{ caseStudies.length }}</span>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
-          <article
-            v-for="(study, index) in caseStudies"
-            :key="study.id"
-            class="manga-panel border border-white/35 p-5 sm:p-6 md:p-7 relative overflow-hidden"
-          >
-            <div class="flex items-center justify-between gap-4 mb-5">
-              <span class="text-[10px] sm:text-xs uppercase tracking-[0.22em] text-white/45">
-                {{ copy.caseStudyLabel }} {{ String(index + 1).padStart(2, '0') }}
+        <div
+          class="manga-panel border border-white/35 p-5 sm:p-6 md:p-8 relative overflow-hidden"
+          tabindex="0"
+          aria-live="polite"
+          @keydown.left.prevent="previousStudy"
+          @keydown.right.prevent="nextStudy"
+        >
+          <div class="flex items-center justify-between gap-4 mb-6">
+            <div class="flex items-center gap-3 min-w-0">
+              <span class="text-[10px] sm:text-xs uppercase tracking-[0.22em] text-white/45 shrink-0">
+                {{ copy.caseStudyLabel }} {{ String(activeIndex + 1).padStart(2, '0') }}
               </span>
-              <span class="text-[10px] sm:text-xs border border-white/30 px-2 py-1 text-white/60">
-                {{ study.category }}
-              </span>
-            </div>
-
-            <h3 class="text-xl sm:text-2xl font-bold">{{ study.title }}</h3>
-            <p class="mt-3 text-sm text-white/65 leading-relaxed">{{ study.description }}</p>
-
-            <ul v-if="study.highlights?.length" class="mt-5 space-y-2.5">
-              <li
-                v-for="highlight in study.highlights"
-                :key="highlight"
-                class="flex gap-3 text-sm text-white/65 leading-relaxed"
-              >
-                <span class="mt-2 block h-1.5 w-1.5 shrink-0 bg-white" aria-hidden="true"></span>
-                <span>{{ highlight }}</span>
-              </li>
-            </ul>
-
-            <div class="mt-5 flex flex-wrap gap-2">
-              <span
-                v-for="tag in study.tags"
-                :key="tag"
-                class="border border-white/20 px-2.5 py-1 text-xs text-white/60"
-              >
-                {{ tag }}
+              <span class="text-[10px] sm:text-xs border border-white/30 px-2 py-1 text-white/60 truncate">
+                {{ activeStudy.category }}
               </span>
             </div>
 
-            <div v-if="study.media?.length" class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <a
-                v-for="item in study.media"
-                :key="item.src"
-                :href="item.href || item.src"
-                target="_blank"
-                rel="noreferrer"
-                class="block border border-white/20 overflow-hidden hover:border-white transition-colors"
+            <div class="flex items-center gap-2 shrink-0">
+              <button
+                type="button"
+                class="h-9 w-9 border border-white/30 hover:border-white hover:bg-white hover:text-black transition-colors"
+                :aria-label="copy.previous"
+                @click="previousStudy"
               >
-                <img :src="item.src" :alt="item.alt" class="w-full aspect-video object-cover" loading="lazy" />
-              </a>
+                ←
+              </button>
+              <button
+                type="button"
+                class="h-9 w-9 border border-white/30 hover:border-white hover:bg-white hover:text-black transition-colors"
+                :aria-label="copy.next"
+                @click="nextStudy"
+              >
+                →
+              </button>
             </div>
-          </article>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-6 lg:gap-8">
+            <div>
+              <h3 class="text-2xl sm:text-3xl font-bold">{{ activeStudy.title }}</h3>
+              <p class="mt-3 text-sm sm:text-base text-white/65 leading-relaxed">
+                {{ activeStudy.description }}
+              </p>
+
+              <div class="mt-5 flex flex-wrap gap-2">
+                <span
+                  v-for="tag in activeStudy.tags"
+                  :key="tag"
+                  class="border border-white/20 px-2.5 py-1 text-xs text-white/60"
+                >
+                  {{ tag }}
+                </span>
+              </div>
+            </div>
+
+            <div class="lg:border-l lg:border-white/20 lg:pl-8">
+              <ul class="space-y-3">
+                <li
+                  v-for="highlight in activeStudy.highlights"
+                  :key="highlight"
+                  class="flex gap-3 text-sm text-white/70 leading-relaxed"
+                >
+                  <span class="mt-2 block h-1.5 w-1.5 shrink-0 bg-white" aria-hidden="true"></span>
+                  <span>{{ highlight }}</span>
+                </li>
+              </ul>
+
+              <div v-if="activeStudy.media?.length" class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <a
+                  v-for="item in activeStudy.media"
+                  :key="item.src"
+                  :href="item.href || item.src"
+                  target="_blank"
+                  rel="noreferrer"
+                  class="block border border-white/20 overflow-hidden hover:border-white transition-colors"
+                >
+                  <img :src="item.src" :alt="item.alt" class="w-full aspect-video object-cover" loading="lazy" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-3 overflow-x-auto pb-2">
+          <div class="flex gap-2 min-w-max">
+            <button
+              v-for="(study, index) in caseStudies"
+              :key="study.id"
+              type="button"
+              class="text-left border px-3 py-2 min-w-[150px] sm:min-w-[175px] transition-colors"
+              :class="index === activeIndex
+                ? 'border-white bg-white text-black'
+                : 'border-white/20 text-white/55 hover:border-white/60 hover:text-white'"
+              :aria-current="index === activeIndex ? 'true' : undefined"
+              @click="selectStudy(index)"
+            >
+              <span class="block text-[9px] uppercase tracking-[0.2em] opacity-60">
+                {{ String(index + 1).padStart(2, '0') }} · {{ study.category }}
+              </span>
+              <span class="block mt-1 text-xs sm:text-sm font-medium truncate">
+                {{ study.shortTitle || study.title }}
+              </span>
+            </button>
+          </div>
         </div>
       </section>
 
@@ -119,64 +171,73 @@ import { computed, inject, ref } from 'vue';
 
 const language = inject('language', { currentLanguage: ref('en') });
 const currentLanguage = language.currentLanguage ?? ref('en');
+const activeIndex = ref(0);
 
 const content = {
   en: {
     back: 'Back to Dani.Dev',
     eyebrow: 'Roblox / Game Development',
     title: 'Game Systems Case Studies',
-    intro: 'A selection of gameplay systems I have built across years of Roblox and game development. Each case study represents a distinct system or gameplay discipline I have worked on.',
+    intro: 'A compact selection of gameplay systems I have built across years of Roblox and game development. Browse them as individual case studies rather than code dumps.',
     caseStudiesEyebrow: 'Selected systems',
     caseStudiesTitle: 'Case Studies',
     caseStudyLabel: 'Case Study',
-    systemsLabel: 'systems',
+    previous: 'Previous case study',
+    next: 'Next case study',
     testimonialsTitle: 'Client feedback',
     stack: ['Luau', 'Roblox Studio', 'Gameplay Systems', 'Game Development'],
     caseStudies: [
       {
         id: 'fps-combat',
         category: 'Combat',
+        shortTitle: 'FPS Combat',
         title: 'First-Person Shooter Combat',
-        description: 'A first-person shooter combat system built around real-time player interaction and combat gameplay.',
+        description: 'A modular first-person weapon and combat framework covering aiming, weapon feel, camera behavior, feedback, and configurable combat states.',
         highlights: [
-          'First-person combat and shooter-oriented gameplay logic.',
-          'Designed as a reusable gameplay system rather than a one-off scripted sequence.',
+          'Recoil, weapon sway, aim/FOV transitions, stance handling, and shoulder/camera behavior.',
+          'Tracer, hit feedback, shell ejection, projectile, whizz, crosshair, and weapon-audio modules.',
+          'Support for combat equipment states such as laser/IR, suppressors, bipods, flashlights, and sight modes.',
         ],
-        tags: ['FPS', 'Combat Systems', 'Luau'],
+        tags: ['FPS', 'Weapon Systems', 'Camera', 'Combat'],
         media: [],
       },
       {
         id: 'advanced-ai',
         category: 'AI',
+        shortTitle: 'Advanced AI',
         title: 'Advanced NPC & AI Systems',
-        description: 'Advanced AI and NPC behavior systems created for gameplay-driven environments.',
+        description: 'A state-driven NPC combat system designed around perception, navigation, behavior variation, combat decisions, and recovery when contact with the player is lost.',
         highlights: [
-          'NPC behavior and decision-oriented gameplay systems.',
-          'AI work designed to interact with wider game systems rather than operate in isolation.',
+          'State machine covering patrol, alert, combat, melee, flee, surrender, arrest, stun, search, and death.',
+          'FOV/line-of-sight sensing, last-seen tracking, pathfinding, active search around the last known position, and smooth rotation.',
+          'Behavior roles and weapon modes including semi-auto, burst-style automatic fire, spread weapons, pre-fire, and rusher behavior.',
         ],
-        tags: ['NPC AI', 'Game AI', 'Behavior Systems'],
+        tags: ['NPC AI', 'State Machines', 'Pathfinding', 'Combat AI'],
         media: [],
       },
       {
         id: 'vehicles',
         category: 'Vehicles',
+        shortTitle: 'Vehicles',
         title: 'Vehicle Systems — Cars & Aircraft',
-        description: 'Driving and control systems built for both ground vehicles and aircraft.',
+        description: 'Driving and control systems built for ground vehicles and aircraft, with the repository-backed ground implementation covering the full player-to-vehicle loop.',
         highlights: [
-          'Vehicle gameplay covering cars and ground movement.',
-          'Aircraft control systems as a separate movement and handling problem.',
+          'Ground vehicle implementation with client/server input separation, acceleration/braking, friction, and smoothed steering.',
+          'Custom driving camera, fuel HUD, fuel consumption, refueling interactions, and enter/exit handling.',
+          'Separate aircraft-control work built around the different movement and handling requirements of flight.',
         ],
-        tags: ['Vehicles', 'Cars', 'Aircraft'],
+        tags: ['Vehicles', 'Cars', 'Aircraft', 'Controls'],
         media: [],
       },
       {
         id: 'qte',
         category: 'Interaction',
+        shortTitle: 'QTE',
         title: 'Quick-Time Events',
-        description: 'Quick-time event systems for timed and sequence-based player interactions.',
+        description: 'Quick-time event systems for timing-sensitive and sequence-based player interactions.',
         highlights: [
-          'Timing-sensitive player input sequences.',
-          'Reusable interaction logic for scripted gameplay moments.',
+          'Timed input windows and sequence-driven interaction flow.',
+          'Reusable logic designed for scripted gameplay moments rather than one-off hardcoded scenes.',
         ],
         tags: ['QTE', 'Interaction Systems', 'Gameplay'],
         media: [],
@@ -184,35 +245,39 @@ const content = {
       {
         id: 'narrative-dialogue',
         category: 'Narrative',
+        shortTitle: 'Dialogue',
         title: 'Narrative & Dialogue Systems',
-        description: 'Dialogue and narrative systems built to support story-driven gameplay and character interactions.',
+        description: 'Event-driven dialogue and narrative interaction systems for NPC conversations and gameplay-linked story moments.',
         highlights: [
-          'Dialogue flow and player-facing narrative interactions.',
-          'Systems intended to support reusable story and conversation structures.',
+          'Client dialogue UI driven by server events with NPC name, message, contextual action, and close/continue flow.',
+          'Dialogue tied into NPC and world interactions rather than existing as a disconnected UI layer.',
+          'Reusable event-based structure suitable for branching into delivery, quest, or interaction-specific actions.',
         ],
-        tags: ['Dialogue', 'Narrative Systems', 'UI'],
+        tags: ['Dialogue', 'Narrative Systems', 'Events', 'UI'],
         media: [],
       },
       {
         id: 'simulator',
         category: 'Game Loop',
+        shortTitle: 'Simulator',
         title: 'Simulator Systems',
         description: 'Core systems for Roblox-style simulator gameplay and repeatable progression-oriented game loops.',
         highlights: [
-          'Gameplay systems for the simulator genre.',
-          'Reusable mechanics designed around repeatable player loops.',
+          'Gameplay structures built around repeatable actions and progression.',
+          'Reusable mechanics intended to support the loop-heavy structure typical of simulator games.',
         ],
-        tags: ['Simulator', 'Game Loops', 'Gameplay Systems'],
+        tags: ['Simulator', 'Game Loops', 'Progression'],
         media: [],
       },
       {
         id: 'fighting-combat',
         category: 'Combat',
+        shortTitle: 'Fighting Combat',
         title: 'Fighting Game Combat',
-        description: 'Combat systems built for fighting-game style player-versus-player gameplay.',
+        description: 'Combat systems built for close-range player-versus-player gameplay with a fighting-game focus.',
         highlights: [
-          'Close-range fighting-game combat logic.',
-          'A separate combat discipline from shooter-oriented gameplay.',
+          'Close-range combat logic built around direct player-versus-player interaction.',
+          'A separate combat discipline from shooter systems, with different timing and interaction requirements.',
         ],
         tags: ['Fighting Game', 'Combat Systems', 'PvP'],
         media: [],
@@ -223,58 +288,66 @@ const content = {
     back: 'Volver a Dani.Dev',
     eyebrow: 'Roblox / Game Development',
     title: 'Casos de estudio de sistemas de juego',
-    intro: 'Una selección de sistemas de gameplay que he construido a lo largo de años desarrollando en Roblox y videojuegos. Cada caso representa un sistema o disciplina de gameplay distinta en la que he trabajado.',
+    intro: 'Una selección compacta de sistemas de gameplay que he construido a lo largo de años desarrollando en Roblox y videojuegos. Se recorren como casos de estudio, no como dumps de código.',
     caseStudiesEyebrow: 'Sistemas seleccionados',
     caseStudiesTitle: 'Casos de estudio',
     caseStudyLabel: 'Caso de estudio',
-    systemsLabel: 'sistemas',
+    previous: 'Caso anterior',
+    next: 'Caso siguiente',
     testimonialsTitle: 'Opiniones de clientes',
     stack: ['Luau', 'Roblox Studio', 'Sistemas de Gameplay', 'Game Development'],
     caseStudies: [
       {
         id: 'fps-combat',
         category: 'Combate',
+        shortTitle: 'Combate FPS',
         title: 'Combate Shooter en Primera Persona',
-        description: 'Sistema de combate en primera persona orientado a gameplay shooter e interacción en tiempo real.',
+        description: 'Framework modular de armas y combate en primera persona, cubriendo apuntado, sensación del arma, cámara, feedback y estados configurables de combate.',
         highlights: [
-          'Lógica de combate y gameplay orientada a un shooter en primera persona.',
-          'Construido como sistema reutilizable y no como una secuencia aislada.',
+          'Recoil, weapon sway, transiciones de aim/FOV, stances y comportamiento de cámara/shoulder.',
+          'Módulos para tracers, hit feedback, shell ejection, proyectiles, whizz, crosshair y audio de armas.',
+          'Estados y equipamiento como laser/IR, supresores, bipods, flashlights y modos de mira.',
         ],
-        tags: ['FPS', 'Sistemas de Combate', 'Luau'],
+        tags: ['FPS', 'Sistemas de Armas', 'Cámara', 'Combate'],
         media: [],
       },
       {
         id: 'advanced-ai',
         category: 'IA',
+        shortTitle: 'IA Avanzada',
         title: 'Sistemas Avanzados de NPCs e IA',
-        description: 'Sistemas avanzados de inteligencia artificial y comportamiento de NPCs para entornos de gameplay.',
+        description: 'Sistema de combate para NPCs basado en estados, percepción, navegación, variación de comportamiento y recuperación cuando se pierde contacto con el jugador.',
         highlights: [
-          'Comportamiento de NPCs y sistemas de decisión orientados al juego.',
-          'IA diseñada para interactuar con otros sistemas del juego.',
+          'Máquina de estados con patrol, alert, combat, melee, flee, surrender, arrest, stunned, search y death.',
+          'FOV/line-of-sight, tracking de última posición vista, pathfinding, búsqueda activa alrededor de esa posición y rotación suavizada.',
+          'Roles de comportamiento y armas semi, auto por ráfagas, spread, pre-fire y comportamiento rusher.',
         ],
-        tags: ['IA de NPCs', 'Game AI', 'Comportamiento'],
+        tags: ['IA de NPCs', 'State Machines', 'Pathfinding', 'Combat AI'],
         media: [],
       },
       {
         id: 'vehicles',
         category: 'Vehículos',
+        shortTitle: 'Vehículos',
         title: 'Sistemas de Vehículos — Coches y Aviones',
-        description: 'Sistemas de conducción y control desarrollados tanto para vehículos terrestres como para aeronaves.',
+        description: 'Sistemas de conducción y control para vehículos terrestres y aeronaves; la implementación terrestre respaldada en el repo cubre el loop completo jugador-vehículo.',
         highlights: [
-          'Gameplay de vehículos para coches y movimiento terrestre.',
-          'Sistemas de control de aviones como problema independiente de movimiento y manejo.',
+          'Vehículo terrestre con separación client/server de inputs, aceleración/frenado, fricción y steering suavizado.',
+          'Cámara de conducción propia, HUD de combustible, consumo, recarga y manejo de entrada/salida del vehículo.',
+          'Trabajo separado en controles de aeronaves adaptado a las necesidades distintas de movimiento y manejo del vuelo.',
         ],
-        tags: ['Vehículos', 'Coches', 'Aviones'],
+        tags: ['Vehículos', 'Coches', 'Aviones', 'Controles'],
         media: [],
       },
       {
         id: 'qte',
         category: 'Interacción',
+        shortTitle: 'QTE',
         title: 'Quick-Time Events',
-        description: 'Sistemas de quick-time events para interacciones temporizadas y secuencias de inputs del jugador.',
+        description: 'Sistemas de quick-time events para interacciones sensibles al tiempo y secuencias de inputs.',
         highlights: [
-          'Secuencias de entrada sensibles al tiempo.',
-          'Lógica reutilizable para momentos de gameplay guiados.',
+          'Ventanas temporizadas de input y flujo basado en secuencias.',
+          'Lógica reutilizable para momentos de gameplay guiados, no escenas hardcodeadas aisladas.',
         ],
         tags: ['QTE', 'Interacción', 'Gameplay'],
         media: [],
@@ -282,35 +355,39 @@ const content = {
       {
         id: 'narrative-dialogue',
         category: 'Narrativa',
+        shortTitle: 'Diálogo',
         title: 'Sistemas de Narrativa y Diálogo',
-        description: 'Sistemas de diálogo y narrativa para gameplay centrado en historias e interacción con personajes.',
+        description: 'Sistemas event-driven de diálogo e interacción narrativa para conversaciones con NPCs y momentos de historia conectados al gameplay.',
         highlights: [
-          'Flujos de diálogo e interacción narrativa de cara al jugador.',
-          'Estructuras reutilizables para conversaciones e historia.',
+          'UI de diálogo en cliente controlada por eventos del servidor con nombre de NPC, mensaje, acción contextual y flujo de cerrar/continuar.',
+          'Diálogo conectado a NPCs e interacciones del mundo en lugar de existir como una capa de UI aislada.',
+          'Estructura reutilizable basada en eventos para acciones de delivery, quests o interacciones específicas.',
         ],
-        tags: ['Diálogo', 'Narrativa', 'UI'],
+        tags: ['Diálogo', 'Narrativa', 'Eventos', 'UI'],
         media: [],
       },
       {
         id: 'simulator',
         category: 'Game Loop',
+        shortTitle: 'Simulator',
         title: 'Sistemas de Simuladores',
-        description: 'Sistemas base para gameplay de simuladores en Roblox y loops de juego repetibles orientados a progresión.',
+        description: 'Sistemas base para gameplay de simuladores en Roblox y loops repetibles orientados a progresión.',
         highlights: [
-          'Sistemas de gameplay propios del género simulator.',
-          'Mecánicas reutilizables alrededor de loops repetibles del jugador.',
+          'Estructuras de gameplay alrededor de acciones repetibles y progresión.',
+          'Mecánicas reutilizables pensadas para el loop intensivo típico de juegos simulator.',
         ],
-        tags: ['Simulator', 'Game Loops', 'Gameplay'],
+        tags: ['Simulator', 'Game Loops', 'Progresión'],
         media: [],
       },
       {
         id: 'fighting-combat',
         category: 'Combate',
+        shortTitle: 'Combate Fighting',
         title: 'Combate de Juego de Pelea',
-        description: 'Sistemas de combate construidos para gameplay jugador contra jugador con enfoque de fighting game.',
+        description: 'Sistemas de combate para gameplay jugador contra jugador a corta distancia con enfoque de fighting game.',
         highlights: [
-          'Lógica de combate cuerpo a cuerpo orientada a un juego de pelea.',
-          'Disciplina de combate distinta al gameplay shooter.',
+          'Lógica de combate cercano centrada en interacción directa PvP.',
+          'Disciplina de combate separada del shooter, con requisitos distintos de timing e interacción.',
         ],
         tags: ['Fighting Game', 'Combate', 'PvP'],
         media: [],
@@ -322,4 +399,17 @@ const content = {
 const testimonials = ref([]);
 const copy = computed(() => content[currentLanguage.value] ?? content.en);
 const caseStudies = computed(() => copy.value.caseStudies);
+const activeStudy = computed(() => caseStudies.value[activeIndex.value] ?? caseStudies.value[0]);
+
+const selectStudy = (index) => {
+  activeIndex.value = index;
+};
+
+const nextStudy = () => {
+  activeIndex.value = (activeIndex.value + 1) % caseStudies.value.length;
+};
+
+const previousStudy = () => {
+  activeIndex.value = (activeIndex.value - 1 + caseStudies.value.length) % caseStudies.value.length;
+};
 </script>
