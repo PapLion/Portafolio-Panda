@@ -21,53 +21,69 @@
         <p class="mt-5 text-sm sm:text-base md:text-lg text-white/65 leading-relaxed max-w-3xl">
           {{ copy.intro }}
         </p>
+
+        <div class="mt-6 flex flex-wrap gap-2">
+          <span
+            v-for="tech in copy.stack"
+            :key="tech"
+            class="border border-white/25 px-2.5 py-1 text-xs text-white/70"
+          >
+            {{ tech }}
+          </span>
+        </div>
       </header>
 
-      <article class="manga-panel border-2 border-white p-5 sm:p-7 md:p-9 relative overflow-hidden">
-        <div class="grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-8">
-          <div class="flex flex-col justify-between">
-            <div>
-              <div class="flex flex-wrap gap-2 mb-4">
-                <span class="border border-white/50 px-2 py-1 text-[10px] sm:text-xs uppercase tracking-[0.2em]">
-                  {{ project.category }}
-                </span>
-                <span class="bg-white text-black px-2 py-1 text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em]">
-                  {{ copy.focus }}
-                </span>
-              </div>
+      <section aria-labelledby="case-studies-title">
+        <div class="flex items-end justify-between gap-4 mb-6 sm:mb-8">
+          <div>
+            <p class="text-xs uppercase tracking-[0.3em] text-white/40">{{ copy.caseStudiesEyebrow }}</p>
+            <h2 id="case-studies-title" class="mt-2 text-2xl sm:text-3xl font-bold">{{ copy.caseStudiesTitle }}</h2>
+          </div>
+          <span class="hidden sm:block text-xs text-white/35">{{ caseStudies.length }} {{ copy.systemsLabel }}</span>
+        </div>
 
-              <h2 class="text-2xl sm:text-3xl font-bold">{{ project.title }}</h2>
-              <p class="mt-3 text-xs sm:text-sm text-white/55">{{ project.role }}</p>
-            </div>
-
-            <div class="mt-6 flex flex-wrap gap-2">
-              <span
-                v-for="tech in project.stack"
-                :key="tech"
-                class="border border-white/25 px-2.5 py-1 text-xs text-white/75"
-              >
-                {{ tech }}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+          <article
+            v-for="(study, index) in caseStudies"
+            :key="study.id"
+            class="manga-panel border border-white/35 p-5 sm:p-6 md:p-7 relative overflow-hidden"
+          >
+            <div class="flex items-center justify-between gap-4 mb-5">
+              <span class="text-[10px] sm:text-xs uppercase tracking-[0.22em] text-white/45">
+                {{ copy.caseStudyLabel }} {{ String(index + 1).padStart(2, '0') }}
+              </span>
+              <span class="text-[10px] sm:text-xs border border-white/30 px-2 py-1 text-white/60">
+                {{ study.category }}
               </span>
             </div>
-          </div>
 
-          <div class="lg:border-l lg:border-white/20 lg:pl-8">
-            <p class="text-sm sm:text-base text-white/80 leading-relaxed">{{ project.description }}</p>
+            <h3 class="text-xl sm:text-2xl font-bold">{{ study.title }}</h3>
+            <p class="mt-3 text-sm text-white/65 leading-relaxed">{{ study.description }}</p>
 
-            <ul class="mt-6 space-y-3">
+            <ul v-if="study.highlights?.length" class="mt-5 space-y-2.5">
               <li
-                v-for="highlight in project.highlights"
+                v-for="highlight in study.highlights"
                 :key="highlight"
-                class="flex gap-3 text-sm text-white/70 leading-relaxed"
+                class="flex gap-3 text-sm text-white/65 leading-relaxed"
               >
                 <span class="mt-2 block h-1.5 w-1.5 shrink-0 bg-white" aria-hidden="true"></span>
                 <span>{{ highlight }}</span>
               </li>
             </ul>
 
-            <div v-if="project.media?.length" class="mt-7 grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="mt-5 flex flex-wrap gap-2">
+              <span
+                v-for="tag in study.tags"
+                :key="tag"
+                class="border border-white/20 px-2.5 py-1 text-xs text-white/60"
+              >
+                {{ tag }}
+              </span>
+            </div>
+
+            <div v-if="study.media?.length" class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
               <a
-                v-for="item in project.media"
+                v-for="item in study.media"
                 :key="item.src"
                 :href="item.href || item.src"
                 target="_blank"
@@ -77,22 +93,9 @@
                 <img :src="item.src" :alt="item.alt" class="w-full aspect-video object-cover" loading="lazy" />
               </a>
             </div>
-
-            <div class="mt-7 flex flex-wrap gap-3">
-              <a
-                v-for="link in project.links"
-                :key="link.href"
-                :href="link.href"
-                target="_blank"
-                rel="noreferrer"
-                class="inline-flex items-center border border-white px-3 py-2 text-xs sm:text-sm hover:bg-white hover:text-black transition-colors"
-              >
-                {{ link.label }} ↗
-              </a>
-            </div>
-          </div>
+          </article>
         </div>
-      </article>
+      </section>
 
       <section v-if="testimonials.length" class="mt-10 sm:mt-12" :aria-label="copy.testimonialsTitle">
         <h2 class="text-xl sm:text-2xl font-bold mb-5">{{ copy.testimonialsTitle }}</h2>
@@ -121,50 +124,202 @@ const content = {
   en: {
     back: 'Back to Dani.Dev',
     eyebrow: 'Roblox / Game Development',
-    title: 'Roblox & Game Development',
-    intro: 'Gameplay systems, NPC behavior, camera mechanics, and production-oriented Luau work kept together as one game-development discipline.',
-    focus: 'Dedicated route',
+    title: 'Game Systems Case Studies',
+    intro: 'A selection of gameplay systems I have built across years of Roblox and game development. Each case study represents a distinct system or gameplay discipline I have worked on.',
+    caseStudiesEyebrow: 'Selected systems',
+    caseStudiesTitle: 'Case Studies',
+    caseStudyLabel: 'Case Study',
+    systemsLabel: 'systems',
     testimonialsTitle: 'Client feedback',
-    project: {
-      category: 'Roblox / Game Development',
-      title: 'Roblox Gameplay & NPC Systems',
-      role: 'Roblox / Game Developer · Delivered systems and prototypes',
-      description: 'Public evidence of Roblox work covering gameplay systems, NPC behavior, camera mechanics, and production-oriented Luau scripting.',
-      highlights: [
-        'Production-oriented NPC system work with a dedicated production-ready Luau implementation.',
-        'Gameplay prototypes and systems organized as Brainroot-game, NPC-System, and Shoulder-Swap.',
-        'Roblox work stays grouped with game development rather than being split into artificial portfolio categories.',
-      ],
-      stack: ['Luau', 'Roblox Studio', 'Gameplay Systems', 'NPC AI', 'QA'],
-      links: [{ label: 'View public work', href: 'https://github.com/PapLion/Roblox-Scripting-Work' }],
-      media: [],
-    },
+    stack: ['Luau', 'Roblox Studio', 'Gameplay Systems', 'Game Development'],
+    caseStudies: [
+      {
+        id: 'fps-combat',
+        category: 'Combat',
+        title: 'First-Person Shooter Combat',
+        description: 'A first-person shooter combat system built around real-time player interaction and combat gameplay.',
+        highlights: [
+          'First-person combat and shooter-oriented gameplay logic.',
+          'Designed as a reusable gameplay system rather than a one-off scripted sequence.',
+        ],
+        tags: ['FPS', 'Combat Systems', 'Luau'],
+        media: [],
+      },
+      {
+        id: 'advanced-ai',
+        category: 'AI',
+        title: 'Advanced NPC & AI Systems',
+        description: 'Advanced AI and NPC behavior systems created for gameplay-driven environments.',
+        highlights: [
+          'NPC behavior and decision-oriented gameplay systems.',
+          'AI work designed to interact with wider game systems rather than operate in isolation.',
+        ],
+        tags: ['NPC AI', 'Game AI', 'Behavior Systems'],
+        media: [],
+      },
+      {
+        id: 'vehicles',
+        category: 'Vehicles',
+        title: 'Vehicle Systems — Cars & Aircraft',
+        description: 'Driving and control systems built for both ground vehicles and aircraft.',
+        highlights: [
+          'Vehicle gameplay covering cars and ground movement.',
+          'Aircraft control systems as a separate movement and handling problem.',
+        ],
+        tags: ['Vehicles', 'Cars', 'Aircraft'],
+        media: [],
+      },
+      {
+        id: 'qte',
+        category: 'Interaction',
+        title: 'Quick-Time Events',
+        description: 'Quick-time event systems for timed and sequence-based player interactions.',
+        highlights: [
+          'Timing-sensitive player input sequences.',
+          'Reusable interaction logic for scripted gameplay moments.',
+        ],
+        tags: ['QTE', 'Interaction Systems', 'Gameplay'],
+        media: [],
+      },
+      {
+        id: 'narrative-dialogue',
+        category: 'Narrative',
+        title: 'Narrative & Dialogue Systems',
+        description: 'Dialogue and narrative systems built to support story-driven gameplay and character interactions.',
+        highlights: [
+          'Dialogue flow and player-facing narrative interactions.',
+          'Systems intended to support reusable story and conversation structures.',
+        ],
+        tags: ['Dialogue', 'Narrative Systems', 'UI'],
+        media: [],
+      },
+      {
+        id: 'simulator',
+        category: 'Game Loop',
+        title: 'Simulator Systems',
+        description: 'Core systems for Roblox-style simulator gameplay and repeatable progression-oriented game loops.',
+        highlights: [
+          'Gameplay systems for the simulator genre.',
+          'Reusable mechanics designed around repeatable player loops.',
+        ],
+        tags: ['Simulator', 'Game Loops', 'Gameplay Systems'],
+        media: [],
+      },
+      {
+        id: 'fighting-combat',
+        category: 'Combat',
+        title: 'Fighting Game Combat',
+        description: 'Combat systems built for fighting-game style player-versus-player gameplay.',
+        highlights: [
+          'Close-range fighting-game combat logic.',
+          'A separate combat discipline from shooter-oriented gameplay.',
+        ],
+        tags: ['Fighting Game', 'Combat Systems', 'PvP'],
+        media: [],
+      },
+    ],
   },
   es: {
     back: 'Volver a Dani.Dev',
     eyebrow: 'Roblox / Game Development',
-    title: 'Roblox & Game Development',
-    intro: 'Sistemas de gameplay, comportamiento de NPCs, mecánicas de cámara y trabajo en Luau orientado a producción, reunidos como una sola disciplina de desarrollo de videojuegos.',
-    focus: 'Ruta dedicada',
+    title: 'Casos de estudio de sistemas de juego',
+    intro: 'Una selección de sistemas de gameplay que he construido a lo largo de años desarrollando en Roblox y videojuegos. Cada caso representa un sistema o disciplina de gameplay distinta en la que he trabajado.',
+    caseStudiesEyebrow: 'Sistemas seleccionados',
+    caseStudiesTitle: 'Casos de estudio',
+    caseStudyLabel: 'Caso de estudio',
+    systemsLabel: 'sistemas',
     testimonialsTitle: 'Opiniones de clientes',
-    project: {
-      category: 'Roblox / Game Development',
-      title: 'Sistemas de Gameplay y NPCs en Roblox',
-      role: 'Roblox / Game Developer · Sistemas y prototipos entregados',
-      description: 'Evidencia pública de trabajo en Roblox, incluyendo sistemas de gameplay, comportamiento de NPCs, mecánicas de cámara y scripting Luau orientado a producción.',
-      highlights: [
-        'Trabajo de NPCs orientado a producción con una implementación Luau dedicada y lista para uso real.',
-        'Prototipos y sistemas organizados como Brainroot-game, NPC-System y Shoulder-Swap.',
-        'El trabajo de Roblox se mantiene junto con game development en vez de dividirse en categorías artificiales.',
-      ],
-      stack: ['Luau', 'Roblox Studio', 'Gameplay Systems', 'NPC AI', 'QA'],
-      links: [{ label: 'Ver trabajo público', href: 'https://github.com/PapLion/Roblox-Scripting-Work' }],
-      media: [],
-    },
+    stack: ['Luau', 'Roblox Studio', 'Sistemas de Gameplay', 'Game Development'],
+    caseStudies: [
+      {
+        id: 'fps-combat',
+        category: 'Combate',
+        title: 'Combate Shooter en Primera Persona',
+        description: 'Sistema de combate en primera persona orientado a gameplay shooter e interacción en tiempo real.',
+        highlights: [
+          'Lógica de combate y gameplay orientada a un shooter en primera persona.',
+          'Construido como sistema reutilizable y no como una secuencia aislada.',
+        ],
+        tags: ['FPS', 'Sistemas de Combate', 'Luau'],
+        media: [],
+      },
+      {
+        id: 'advanced-ai',
+        category: 'IA',
+        title: 'Sistemas Avanzados de NPCs e IA',
+        description: 'Sistemas avanzados de inteligencia artificial y comportamiento de NPCs para entornos de gameplay.',
+        highlights: [
+          'Comportamiento de NPCs y sistemas de decisión orientados al juego.',
+          'IA diseñada para interactuar con otros sistemas del juego.',
+        ],
+        tags: ['IA de NPCs', 'Game AI', 'Comportamiento'],
+        media: [],
+      },
+      {
+        id: 'vehicles',
+        category: 'Vehículos',
+        title: 'Sistemas de Vehículos — Coches y Aviones',
+        description: 'Sistemas de conducción y control desarrollados tanto para vehículos terrestres como para aeronaves.',
+        highlights: [
+          'Gameplay de vehículos para coches y movimiento terrestre.',
+          'Sistemas de control de aviones como problema independiente de movimiento y manejo.',
+        ],
+        tags: ['Vehículos', 'Coches', 'Aviones'],
+        media: [],
+      },
+      {
+        id: 'qte',
+        category: 'Interacción',
+        title: 'Quick-Time Events',
+        description: 'Sistemas de quick-time events para interacciones temporizadas y secuencias de inputs del jugador.',
+        highlights: [
+          'Secuencias de entrada sensibles al tiempo.',
+          'Lógica reutilizable para momentos de gameplay guiados.',
+        ],
+        tags: ['QTE', 'Interacción', 'Gameplay'],
+        media: [],
+      },
+      {
+        id: 'narrative-dialogue',
+        category: 'Narrativa',
+        title: 'Sistemas de Narrativa y Diálogo',
+        description: 'Sistemas de diálogo y narrativa para gameplay centrado en historias e interacción con personajes.',
+        highlights: [
+          'Flujos de diálogo e interacción narrativa de cara al jugador.',
+          'Estructuras reutilizables para conversaciones e historia.',
+        ],
+        tags: ['Diálogo', 'Narrativa', 'UI'],
+        media: [],
+      },
+      {
+        id: 'simulator',
+        category: 'Game Loop',
+        title: 'Sistemas de Simuladores',
+        description: 'Sistemas base para gameplay de simuladores en Roblox y loops de juego repetibles orientados a progresión.',
+        highlights: [
+          'Sistemas de gameplay propios del género simulator.',
+          'Mecánicas reutilizables alrededor de loops repetibles del jugador.',
+        ],
+        tags: ['Simulator', 'Game Loops', 'Gameplay'],
+        media: [],
+      },
+      {
+        id: 'fighting-combat',
+        category: 'Combate',
+        title: 'Combate de Juego de Pelea',
+        description: 'Sistemas de combate construidos para gameplay jugador contra jugador con enfoque de fighting game.',
+        highlights: [
+          'Lógica de combate cuerpo a cuerpo orientada a un juego de pelea.',
+          'Disciplina de combate distinta al gameplay shooter.',
+        ],
+        tags: ['Fighting Game', 'Combate', 'PvP'],
+        media: [],
+      },
+    ],
   },
 };
 
 const testimonials = ref([]);
 const copy = computed(() => content[currentLanguage.value] ?? content.en);
-const project = computed(() => copy.value.project);
+const caseStudies = computed(() => copy.value.caseStudies);
 </script>
