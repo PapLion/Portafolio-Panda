@@ -77,20 +77,88 @@
               </div>
             </div>
 
-            <div class="border-t lg:border-t-0 lg:border-l border-white/20 bg-white/[0.025]">
-              <figure v-if="flagshipEvidence.length" class="border-b border-white/15 p-3 sm:p-4">
-                <div class="flagship-media-frame">
-                  <img
-                    :src="flagshipEvidence[0].src"
-                    :alt="flagshipEvidence[0].alt"
-                    class="w-full aspect-video object-contain bg-black"
-                    loading="eager"
-                  />
+            <div class="border-t lg:border-t-0 lg:border-l border-white/20 bg-white/[0.025] flex flex-col">
+              <section
+                v-if="flagshipEvidence.length"
+                class="flagship-evidence-gallery border-b border-white/15 p-3 sm:p-4"
+                :aria-label="flagship.evidenceSummary"
+                tabindex="0"
+                @keydown.left.prevent="previousEvidence"
+                @keydown.right.prevent="nextEvidence"
+              >
+                <div class="flex items-center justify-between gap-3">
+                  <div class="min-w-0">
+                    <p class="text-[10px] sm:text-xs uppercase tracking-[0.22em] text-white/45">
+                      {{ flagship.evidenceSummary }}
+                    </p>
+                    <p class="mt-1 text-[10px] text-white/30">
+                      {{ activeEvidenceIndex + 1 }} / {{ flagshipEvidence.length }}
+                    </p>
+                  </div>
+
+                  <div class="flex items-center gap-2 shrink-0">
+                    <button
+                      type="button"
+                      class="h-8 w-8 border border-white/25 hover:border-white hover:bg-white hover:text-black transition-colors"
+                      :aria-label="flagship.previousEvidence"
+                      @click="previousEvidence"
+                    >
+                      ←
+                    </button>
+                    <button
+                      type="button"
+                      class="h-8 w-8 border border-white/25 hover:border-white hover:bg-white hover:text-black transition-colors"
+                      :aria-label="flagship.nextEvidence"
+                      @click="nextEvidence"
+                    >
+                      →
+                    </button>
+                  </div>
                 </div>
-                <figcaption class="px-1 pt-3 text-[11px] sm:text-xs text-white/45">
-                  {{ flagshipEvidence[0].label }}
-                </figcaption>
-              </figure>
+
+                <figure class="mt-3">
+                  <a
+                    :href="activeEvidence.src"
+                    target="_blank"
+                    rel="noreferrer"
+                    class="flagship-media-frame block hover:border-white/65 transition-colors"
+                  >
+                    <img
+                      :src="activeEvidence.src"
+                      :alt="activeEvidence.alt"
+                      class="w-full aspect-video object-contain bg-black"
+                      loading="eager"
+                    />
+                  </a>
+                  <figcaption class="min-h-[2.75rem] px-1 pt-3 text-[11px] sm:text-xs text-white/45 leading-relaxed">
+                    {{ activeEvidence.label }}
+                  </figcaption>
+                </figure>
+
+                <div class="flagship-evidence-strip mt-2 overflow-x-auto pb-1">
+                  <div class="flex gap-2 min-w-max">
+                    <button
+                      v-for="(item, index) in flagshipEvidence"
+                      :key="item.src"
+                      type="button"
+                      class="w-20 sm:w-24 border p-1 transition-colors"
+                      :class="index === activeEvidenceIndex
+                        ? 'border-white bg-white/10'
+                        : 'border-white/15 opacity-55 hover:opacity-100 hover:border-white/50'"
+                      :aria-current="index === activeEvidenceIndex ? 'true' : undefined"
+                      :aria-label="`${flagship.evidenceSummary}: ${item.label}`"
+                      @click="selectEvidence(index)"
+                    >
+                      <img
+                        :src="item.src"
+                        :alt="item.alt"
+                        class="w-full aspect-video object-cover bg-black"
+                        loading="lazy"
+                      />
+                    </button>
+                  </div>
+                </div>
+              </section>
 
               <blockquote class="p-5 sm:p-6 border-b border-white/15">
                 <p class="text-sm sm:text-base text-white/80 leading-relaxed">
@@ -101,60 +169,26 @@
                 </footer>
               </blockquote>
 
-              <details class="group">
-                <summary class="cursor-pointer list-none px-5 sm:px-6 py-4 flex items-center justify-between gap-4 text-xs sm:text-sm text-white/65 hover:text-white transition-colors">
-                  <span>{{ flagship.evidenceSummary }}</span>
-                  <span aria-hidden="true" class="text-white/40 group-open:rotate-45 transition-transform">+</span>
-                </summary>
-
-                <div class="px-5 sm:px-6 pb-5 sm:pb-6">
-                  <div class="flagship-evidence-grid grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <figure
-                      v-for="item in flagshipEvidence.slice(1)"
-                      :key="item.src"
-                      class="min-w-0"
-                    >
-                      <a
-                        :href="item.src"
-                        target="_blank"
-                        rel="noreferrer"
-                        class="flagship-media-frame block hover:border-white/65 transition-colors"
-                      >
-                        <img
-                          :src="item.src"
-                          :alt="item.alt"
-                          class="w-full aspect-video object-contain bg-black"
-                          loading="lazy"
-                        />
-                      </a>
-                      <figcaption class="pt-2 px-1 text-[10px] sm:text-[11px] text-white/45 leading-relaxed">
-                        {{ item.label }}
-                      </figcaption>
-                    </figure>
-                  </div>
-
-                  <ul class="mt-5 space-y-2">
-                    <li
-                      v-for="point in flagship.evidencePoints"
-                      :key="point"
-                      class="flex gap-2 text-xs sm:text-sm text-white/55 leading-relaxed"
-                    >
-                      <span class="mt-1.5 h-1 w-1 shrink-0 bg-white/60" aria-hidden="true"></span>
-                      <span>{{ point }}</span>
-                    </li>
-                  </ul>
-                </div>
-              </details>
+              <ul class="p-5 sm:p-6 pt-4 sm:pt-5 space-y-2">
+                <li
+                  v-for="point in flagship.evidencePoints"
+                  :key="point"
+                  class="flex gap-2 text-xs sm:text-sm text-white/55 leading-relaxed"
+                >
+                  <span class="mt-1.5 h-1 w-1 shrink-0 bg-white/60" aria-hidden="true"></span>
+                  <span>{{ point }}</span>
+                </li>
+              </ul>
             </div>
           </div>
         </article>
       </section>
 
-      <section aria-labelledby="case-studies-title">
+      <section aria-labelledby="experience-title">
         <div class="flex items-end justify-between gap-4 mb-5">
           <div>
             <p class="text-xs uppercase tracking-[0.3em] text-white/40">{{ copy.caseStudiesEyebrow }}</p>
-            <h2 id="case-studies-title" class="mt-2 text-2xl sm:text-3xl font-bold">{{ copy.caseStudiesTitle }}</h2>
+            <h2 id="experience-title" class="mt-2 text-2xl sm:text-3xl font-bold">{{ copy.caseStudiesTitle }}</h2>
           </div>
           <span class="text-xs text-white/35">{{ activeIndex + 1 }} / {{ caseStudies.length }}</span>
         </div>
@@ -289,18 +323,19 @@ import { computed, inject, ref } from 'vue';
 const language = inject('language', { currentLanguage: ref('en') });
 const currentLanguage = language.currentLanguage ?? ref('en');
 const activeIndex = ref(0);
+const activeEvidenceIndex = ref(0);
 
 const content = {
   en: {
     back: 'Back to Dani.Dev',
     eyebrow: 'Roblox / Game Development',
-    title: 'Game Systems Case Studies',
-    intro: 'A compact selection of gameplay systems I have built across years of Roblox and game development. Browse them as individual case studies rather than code dumps.',
-    caseStudiesEyebrow: 'Selected systems',
-    caseStudiesTitle: 'Case Studies',
-    caseStudyLabel: 'Case Study',
-    previous: 'Previous case study',
-    next: 'Next case study',
+    title: 'Roblox & Game Development Experience',
+    intro: 'A compact overview of gameplay systems I can build confidently across Roblox and game development, grounded in systems I have implemented over years of hands-on work.',
+    caseStudiesEyebrow: 'Core capabilities',
+    caseStudiesTitle: 'Game Development Experience',
+    caseStudyLabel: 'Experience',
+    previous: 'Previous experience area',
+    next: 'Next experience area',
     testimonialsTitle: 'Client feedback',
     stack: ['Luau', 'Roblox Studio', 'Client / Server', 'Gameplay Systems', 'Game Development'],
     flagship: {
@@ -312,6 +347,8 @@ const content = {
       quote: "You've exceeded my expectations ... absolutely nailing the request.",
       quoteAuthor: 'Roblox client, after testing the NPC system',
       evidenceSummary: 'Development evidence',
+      previousEvidence: 'Previous development evidence',
+      nextEvidence: 'Next development evidence',
       evidencePoints: [
         'Iterative delivery through real client testing, revisions, and follow-up commissions.',
         'Production work inside an existing game and codebase rather than an isolated portfolio demo.',
@@ -470,13 +507,13 @@ const content = {
   es: {
     back: 'Volver a Dani.Dev',
     eyebrow: 'Roblox / Game Development',
-    title: 'Casos de estudio de sistemas de juego',
-    intro: 'Una selección compacta de sistemas de gameplay que he construido a lo largo de años desarrollando en Roblox y videojuegos. Se recorren como casos de estudio, no como dumps de código.',
-    caseStudiesEyebrow: 'Sistemas seleccionados',
-    caseStudiesTitle: 'Casos de estudio',
-    caseStudyLabel: 'Caso de estudio',
-    previous: 'Caso anterior',
-    next: 'Caso siguiente',
+    title: 'Experiencia en Roblox y Game Development',
+    intro: 'Una vista compacta de sistemas de gameplay que puedo construir con soltura, basada en años de trabajo práctico en Roblox y desarrollo de videojuegos.',
+    caseStudiesEyebrow: 'Capacidades principales',
+    caseStudiesTitle: 'Experiencia en desarrollo',
+    caseStudyLabel: 'Experiencia',
+    previous: 'Área de experiencia anterior',
+    next: 'Área de experiencia siguiente',
     testimonialsTitle: 'Opiniones de clientes',
     stack: ['Luau', 'Roblox Studio', 'Client / Server', 'Sistemas de Gameplay', 'Game Development'],
     flagship: {
@@ -488,6 +525,8 @@ const content = {
       quote: 'Superaste mis expectativas ... clavaste por completo lo que pedí.',
       quoteAuthor: 'Cliente de Roblox, después de probar el sistema de NPCs',
       evidenceSummary: 'Evidencia de desarrollo',
+      previousEvidence: 'Evidencia anterior',
+      nextEvidence: 'Evidencia siguiente',
       evidencePoints: [
         'Entrega iterativa con pruebas reales del cliente, revisiones y comisiones posteriores.',
         'Trabajo de producción dentro de un juego y codebase existentes, no una demo aislada de portafolio.',
@@ -650,8 +689,27 @@ const copy = computed(() => content[currentLanguage.value] ?? content.en);
 const flagship = computed(() => copy.value.flagship);
 const flagshipAreas = computed(() => flagship.value.areas);
 const flagshipEvidence = computed(() => flagship.value.evidence);
+const activeEvidence = computed(
+  () => flagshipEvidence.value[activeEvidenceIndex.value] ?? flagshipEvidence.value[0],
+);
 const caseStudies = computed(() => copy.value.caseStudies);
 const activeStudy = computed(() => caseStudies.value[activeIndex.value] ?? caseStudies.value[0]);
+
+const selectEvidence = (index) => {
+  activeEvidenceIndex.value = index;
+};
+
+const nextEvidence = () => {
+  if (!flagshipEvidence.value.length) return;
+  activeEvidenceIndex.value = (activeEvidenceIndex.value + 1) % flagshipEvidence.value.length;
+};
+
+const previousEvidence = () => {
+  if (!flagshipEvidence.value.length) return;
+  activeEvidenceIndex.value = (
+    activeEvidenceIndex.value - 1 + flagshipEvidence.value.length
+  ) % flagshipEvidence.value.length;
+};
 
 const selectStudy = (index) => {
   activeIndex.value = index;
@@ -698,32 +756,38 @@ const previousStudy = () => {
   pointer-events: none;
 }
 
-.case-study-scroller {
+.case-study-scroller,
+.flagship-evidence-strip {
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.58) rgba(255, 255, 255, 0.07);
   scrollbar-gutter: stable;
 }
 
-.case-study-scroller::-webkit-scrollbar {
+.case-study-scroller::-webkit-scrollbar,
+.flagship-evidence-strip::-webkit-scrollbar {
   height: 7px;
 }
 
-.case-study-scroller::-webkit-scrollbar-track {
+.case-study-scroller::-webkit-scrollbar-track,
+.flagship-evidence-strip::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.05);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.case-study-scroller::-webkit-scrollbar-thumb {
+.case-study-scroller::-webkit-scrollbar-thumb,
+.flagship-evidence-strip::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.5);
   border: 1px solid rgba(0, 0, 0, 0.9);
   border-radius: 0;
 }
 
-.case-study-scroller::-webkit-scrollbar-thumb:hover {
+.case-study-scroller::-webkit-scrollbar-thumb:hover,
+.flagship-evidence-strip::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.9);
 }
 
-.case-study-scroller::-webkit-scrollbar-corner {
+.case-study-scroller::-webkit-scrollbar-corner,
+.flagship-evidence-strip::-webkit-scrollbar-corner {
   background: transparent;
 }
 </style>
