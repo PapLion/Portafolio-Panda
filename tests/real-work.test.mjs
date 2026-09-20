@@ -116,3 +116,34 @@ test('case study scroller uses portfolio-styled scrollbar', () => {
   assert.match(source, /::-webkit-scrollbar-thumb/);
   assert.match(source, /::-webkit-scrollbar-track/);
 });
+
+
+test('Roblox/Game Dev page leads with a compact paid-client flagship backed by local evidence', () => {
+  const source = readFileSync(robloxPagePath, 'utf8');
+  const evidencePaths = [
+    '../public/images/roblox/flagship-arrest.webp',
+    '../public/images/roblox/flagship-ai-chase.webp',
+    '../public/images/roblox/flagship-patrol-points.webp',
+    '../public/images/roblox/flagship-client-proof.webp',
+  ];
+
+  assert.match(source, /Flagship Client Project/);
+  assert.match(source, /Adaptive Tactical AI & Combat Systems/);
+  assert.match(source, /Full-stack Roblox Game Developer/);
+  assert.match(source, /Paid client work/);
+  assert.match(source, /flagshipAreas/);
+  assert.match(source, /flagshipEvidence/);
+  assert.match(source, /Development evidence/);
+  assert.match(source, /exceeded my expectations/i);
+  assert.match(source, /<details/);
+
+  assert.doesNotMatch(source, /pdadraJb20o/i);
+  assert.doesNotMatch(source, /1,?000\s+Robux/i);
+
+  for (const relativePath of evidencePaths) {
+    assert.ok(
+      existsSync(new URL(relativePath, import.meta.url)),
+      `expected flagship evidence asset: ${relativePath}`,
+    );
+  }
+});
