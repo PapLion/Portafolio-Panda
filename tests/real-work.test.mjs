@@ -101,6 +101,7 @@ test('Roblox/Game Dev experience areas are selectable without numbering or impli
   assert.match(source, /activeIndex/);
   assert.match(source, /activeStudy/);
   assert.match(source, /selectStudy\(index\)/);
+  assert.match(source, /experience-selector/);
   assert.match(source, /aria-live="polite"/);
   assert.doesNotMatch(source, /nextStudy/);
   assert.doesNotMatch(source, /previousStudy/);
@@ -141,10 +142,11 @@ test('Roblox/Game Dev page leads with a compact paid-client flagship backed by s
   assert.match(source, /flagshipEvidence/);
   assert.match(source, /flagshipPrimaryEvidence/);
   assert.match(source, /flagshipSecondaryEvidence/);
-  assert.match(source, /flagship-evidence-strip/);
-  assert.doesNotMatch(source, /activeEvidenceIndex/);
-  assert.doesNotMatch(source, /activeEvidence/);
-  assert.doesNotMatch(source, /selectEvidence\(index\)/);
+  assert.match(source, /activeEvidenceIndex/);
+  assert.match(source, /activeEvidence/);
+  assert.match(source, /selectEvidence\(index\)/);
+  assert.match(source, /flagship-evidence-thumbnails/);
+  assert.doesNotMatch(source, /target="_blank"[^>]*class="flagship-media-frame/);
   assert.doesNotMatch(source, /previousEvidence/);
   assert.doesNotMatch(source, /nextEvidence/);
   assert.match(source, /Development evidence/);
