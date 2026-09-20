@@ -5,6 +5,7 @@ import { readFileSync, existsSync } from 'node:fs';
 const appPath = new URL('../src/App.vue', import.meta.url);
 const componentPath = new URL('../src/components/RealWork.vue', import.meta.url);
 const robloxPagePath = new URL('../src/pages/RobloxGameDev.vue', import.meta.url);
+const robloxFlagshipMediaPath = new URL('../src/data/robloxFlagshipMedia.js', import.meta.url);
 const vercelPath = new URL('../vercel.json', import.meta.url);
 
 test('portfolio keeps the existing Projects and RealWork sections on the home route', () => {
@@ -120,11 +121,8 @@ test('case study scroller uses portfolio-styled scrollbar', () => {
 
 test('Roblox/Game Dev page leads with a compact paid-client flagship backed by local evidence', () => {
   const source = readFileSync(robloxPagePath, 'utf8');
-  const evidencePaths = [
-    '../public/images/roblox/flagship-arrest.webp',
-    '../public/images/roblox/flagship-ai-chase.webp',
-    '../public/images/roblox/flagship-patrol-points.webp',
-  ];
+  assert.ok(existsSync(robloxFlagshipMediaPath), 'flagship media module should exist');
+  const media = readFileSync(robloxFlagshipMediaPath, 'utf8');
 
   assert.match(source, /Flagship Client Project/);
   assert.match(source, /Adaptive Tactical AI & Combat Systems/);
@@ -139,10 +137,7 @@ test('Roblox/Game Dev page leads with a compact paid-client flagship backed by l
   assert.doesNotMatch(source, /pdadraJb20o/i);
   assert.doesNotMatch(source, /1,?000\s+Robux/i);
 
-  for (const relativePath of evidencePaths) {
-    assert.ok(
-      existsSync(new URL(relativePath, import.meta.url)),
-      `expected flagship evidence asset: ${relativePath}`,
-    );
-  }
+  assert.match(media, /flagshipArrest/);
+  assert.match(media, /flagshipPatrolPoints/);
+  assert.match(media, /data:image\/webp;base64,/);
 });
