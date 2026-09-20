@@ -33,6 +33,110 @@
         </div>
       </header>
 
+
+      <section class="mb-10 sm:mb-12" aria-labelledby="roblox-flagship-title">
+        <article class="manga-panel border border-white/35 overflow-hidden">
+          <div class="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr]">
+            <div class="p-5 sm:p-6 md:p-8">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="text-[10px] sm:text-xs uppercase tracking-[0.24em] text-white/50">
+                  {{ flagship.eyebrow }}
+                </span>
+                <span class="border border-white/25 px-2 py-1 text-[10px] sm:text-xs text-white/55">
+                  {{ flagship.status }}
+                </span>
+              </div>
+
+              <p class="mt-5 text-xs uppercase tracking-[0.2em] text-white/45">{{ flagship.role }}</p>
+              <h2 id="roblox-flagship-title" class="mt-2 text-2xl sm:text-3xl md:text-4xl font-bold max-w-2xl">
+                {{ flagship.title }}
+              </h2>
+              <p class="mt-4 text-sm sm:text-base text-white/65 leading-relaxed max-w-2xl">
+                {{ flagship.description }}
+              </p>
+
+              <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-px border border-white/15 bg-white/15">
+                <div
+                  v-for="area in flagshipAreas"
+                  :key="area.title"
+                  class="bg-black/90 p-4"
+                >
+                  <h3 class="text-sm font-semibold text-white/90">{{ area.title }}</h3>
+                  <p class="mt-2 text-xs sm:text-sm text-white/55 leading-relaxed">{{ area.description }}</p>
+                </div>
+              </div>
+
+              <div class="mt-5 flex flex-wrap gap-2">
+                <span
+                  v-for="tag in flagship.tags"
+                  :key="tag"
+                  class="border border-white/20 px-2.5 py-1 text-xs text-white/55"
+                >
+                  {{ tag }}
+                </span>
+              </div>
+            </div>
+
+            <div class="border-t lg:border-t-0 lg:border-l border-white/20 bg-white/[0.025]">
+              <figure v-if="flagshipEvidence.length" class="relative border-b border-white/15">
+                <img
+                  :src="flagshipEvidence[0].src"
+                  :alt="flagshipEvidence[0].alt"
+                  class="w-full aspect-[16/10] object-cover"
+                  loading="eager"
+                />
+                <figcaption class="px-4 py-3 text-[11px] sm:text-xs text-white/45">
+                  {{ flagshipEvidence[0].label }}
+                </figcaption>
+              </figure>
+
+              <blockquote class="p-5 sm:p-6 border-b border-white/15">
+                <p class="text-sm sm:text-base text-white/80 leading-relaxed">
+                  “{{ flagship.quote }}”
+                </p>
+                <footer class="mt-3 text-[11px] sm:text-xs text-white/40">
+                  — {{ flagship.quoteAuthor }}
+                </footer>
+              </blockquote>
+
+              <details class="group">
+                <summary class="cursor-pointer list-none px-5 sm:px-6 py-4 flex items-center justify-between gap-4 text-xs sm:text-sm text-white/65 hover:text-white transition-colors">
+                  <span>{{ flagship.evidenceSummary }}</span>
+                  <span aria-hidden="true" class="text-white/40 group-open:rotate-45 transition-transform">+</span>
+                </summary>
+
+                <div class="px-5 sm:px-6 pb-5 sm:pb-6">
+                  <div
+                    v-for="item in flagshipEvidence.slice(1)"
+                    :key="item.label"
+                    class="border border-white/15 overflow-hidden"
+                  >
+                    <img
+                      :src="item.src"
+                      :alt="item.alt"
+                      class="w-full aspect-[2.2/1] object-cover"
+                      loading="lazy"
+                    />
+                    <p class="px-3 py-2 text-[11px] sm:text-xs text-white/45">{{ item.label }}</p>
+                  </div>
+
+                  <ul class="mt-4 space-y-2">
+                    <li
+                      v-for="point in flagship.evidencePoints"
+                      :key="point"
+                      class="flex gap-2 text-xs sm:text-sm text-white/55 leading-relaxed"
+                    >
+                      <span class="mt-1.5 h-1 w-1 shrink-0 bg-white/60" aria-hidden="true"></span>
+                      <span>{{ point }}</span>
+                    </li>
+                  </ul>
+                </div>
+              </details>
+            </div>
+          </div>
+        </article>
+      </section>
+
       <section aria-labelledby="case-studies-title">
         <div class="flex items-end justify-between gap-4 mb-5">
           <div>
@@ -168,6 +272,7 @@
 
 <script setup>
 import { computed, inject, ref } from 'vue';
+import { flagshipArrest, flagshipPatrolPoints } from '../data/robloxFlagshipMedia.js';
 
 const language = inject('language', { currentLanguage: ref('en') });
 const currentLanguage = language.currentLanguage ?? ref('en');
@@ -185,7 +290,53 @@ const content = {
     previous: 'Previous case study',
     next: 'Next case study',
     testimonialsTitle: 'Client feedback',
-    stack: ['Luau', 'Roblox Studio', 'Gameplay Systems', 'Game Development'],
+    stack: ['Luau', 'Roblox Studio', 'Client / Server', 'Gameplay Systems', 'Game Development'],
+    flagship: {
+      eyebrow: 'Flagship Client Project',
+      status: 'Paid client work · 2026',
+      role: 'Full-stack Roblox Game Developer',
+      title: 'Adaptive Tactical AI & Combat Systems',
+      description: 'A paid Roblox commission that grew from focused NPC improvements into an interconnected gameplay system spanning AI behavior, combat, player interactions, UI/audio feedback, animation integration, and production QA.',
+      quote: "You've exceeded my expectations ... absolutely nailing the request.",
+      quoteAuthor: 'Roblox client, after testing the NPC system',
+      evidenceSummary: 'Development evidence',
+      evidencePoints: [
+        'Iterative delivery through real client testing, revisions, and follow-up commissions.',
+        'Production work inside an existing game and codebase rather than an isolated portfolio demo.',
+        'Documented handoff and continued support around the systems delivered.',
+      ],
+      tags: ['Luau', 'State Machines', 'Pathfinding', 'Combat AI', 'RemoteEvents', 'UI / Audio'],
+      areas: [
+        {
+          title: 'AI & Behaviour',
+          description: 'State-driven NPCs with perception, pathfinding, patrol/search, behavior traits, surrender, arrest, and variable tactical decisions.',
+        },
+        {
+          title: 'Combat Systems',
+          description: 'Semi, automatic, and spread weapon modes, pre-fire, melee, flashbang/damage reactions, and weapon-state handling.',
+        },
+        {
+          title: 'Player Experience',
+          description: 'Intimidation and arrest flows, responsive subtitles, contextual audio, footsteps, ragdoll, and animation-state integration.',
+        },
+        {
+          title: 'Production Integration',
+          description: 'Worked inside an existing project, incorporated live client QA, documented the systems, and shipped revisions across the development cycle.',
+        },
+      ],
+      evidence: [
+        {
+          src: flagshipArrest,
+          alt: 'Roblox development build showing an NPC surrender and arrest interaction.',
+          label: 'Surrender and arrest interaction in a development build.',
+        },
+        {
+          src: flagshipPatrolPoints,
+          alt: 'Roblox Studio showing configurable patrol points for an NPC.',
+          label: 'Configurable patrol-point workflow inside Roblox Studio.',
+        },
+      ],
+    },
     caseStudies: [
       {
         id: 'fps-combat',
@@ -295,7 +446,53 @@ const content = {
     previous: 'Caso anterior',
     next: 'Caso siguiente',
     testimonialsTitle: 'Opiniones de clientes',
-    stack: ['Luau', 'Roblox Studio', 'Sistemas de Gameplay', 'Game Development'],
+    stack: ['Luau', 'Roblox Studio', 'Client / Server', 'Sistemas de Gameplay', 'Game Development'],
+    flagship: {
+      eyebrow: 'Proyecto insignia con cliente',
+      status: 'Trabajo pagado · 2026',
+      role: 'Full-stack Roblox Game Developer',
+      title: 'IA Táctica Adaptativa y Sistemas de Combate',
+      description: 'Una comisión pagada de Roblox que pasó de mejoras concretas a NPCs a un sistema de gameplay conectado: comportamiento de IA, combate, interacciones del jugador, feedback UI/audio, integración de animaciones y QA de producción.',
+      quote: 'Superaste mis expectativas ... clavaste por completo lo que pedí.',
+      quoteAuthor: 'Cliente de Roblox, después de probar el sistema de NPCs',
+      evidenceSummary: 'Evidencia de desarrollo',
+      evidencePoints: [
+        'Entrega iterativa con pruebas reales del cliente, revisiones y comisiones posteriores.',
+        'Trabajo de producción dentro de un juego y codebase existentes, no una demo aislada de portafolio.',
+        'Documentación, handoff y soporte posterior sobre los sistemas entregados.',
+      ],
+      tags: ['Luau', 'State Machines', 'Pathfinding', 'Combat AI', 'RemoteEvents', 'UI / Audio'],
+      areas: [
+        {
+          title: 'IA y comportamiento',
+          description: 'NPCs basados en estados con percepción, pathfinding, patrol/search, traits, surrender, arrest y decisiones tácticas variables.',
+        },
+        {
+          title: 'Sistemas de combate',
+          description: 'Armas semi, automáticas y spread, pre-fire, melee, reacciones a flashbang/daño y manejo de estados del arma.',
+        },
+        {
+          title: 'Experiencia del jugador',
+          description: 'Flujos de intimidación y arresto, subtítulos responsivos, audio contextual, footsteps, ragdoll e integración de estados de animación.',
+        },
+        {
+          title: 'Integración de producción',
+          description: 'Trabajo dentro de un proyecto existente, QA directo del cliente, documentación de sistemas y revisiones durante el ciclo de desarrollo.',
+        },
+      ],
+      evidence: [
+        {
+          src: flagshipArrest,
+          alt: 'Build de desarrollo en Roblox mostrando surrender y una interacción de arresto.',
+          label: 'Interacción de surrender y arresto en un build de desarrollo.',
+        },
+        {
+          src: flagshipPatrolPoints,
+          alt: 'Roblox Studio mostrando puntos de patrulla configurables para un NPC.',
+          label: 'Workflow configurable de patrol points dentro de Roblox Studio.',
+        },
+      ],
+    },
     caseStudies: [
       {
         id: 'fps-combat',
@@ -398,6 +595,9 @@ const content = {
 
 const testimonials = ref([]);
 const copy = computed(() => content[currentLanguage.value] ?? content.en);
+const flagship = computed(() => copy.value.flagship);
+const flagshipAreas = computed(() => flagship.value.areas);
+const flagshipEvidence = computed(() => flagship.value.evidence);
 const caseStudies = computed(() => copy.value.caseStudies);
 const activeStudy = computed(() => caseStudies.value[activeIndex.value] ?? caseStudies.value[0]);
 
