@@ -32,7 +32,7 @@ test('app renders a dedicated RobloxGameDev page for /roblox-gamedev', () => {
   assert.ok(existsSync(robloxPagePath), 'RobloxGameDev.vue should exist');
 });
 
-test('dedicated Roblox/Game Dev page presents systems as case studies without GitHub links', () => {
+test('dedicated Roblox/Game Dev page presents systems as experience areas without GitHub links', () => {
   assert.ok(existsSync(robloxPagePath), 'RobloxGameDev.vue should exist');
   const source = readFileSync(robloxPagePath, 'utf8');
 
@@ -43,6 +43,8 @@ test('dedicated Roblox/Game Dev page presents systems as case studies without Gi
   assert.match(source, /Narrative & Dialogue Systems/);
   assert.match(source, /Simulator Systems/);
   assert.match(source, /Fighting Game Combat/);
+  assert.match(source, /Game Development Experience/);
+  assert.match(source, /Experiencia en desarrollo/);
   assert.match(source, /caseStudies/);
   assert.match(source, /activeStudy\.media\?\.length/);
   assert.doesNotMatch(source, /github\.com/i);
@@ -93,7 +95,7 @@ test('flagship project appears before My Knowledge on the home page', () => {
 });
 
 
-test('Roblox/Game Dev case studies use a compact interactive carousel', () => {
+test('Roblox/Game Dev experience areas use a compact interactive carousel', () => {
   const source = readFileSync(robloxPagePath, 'utf8');
 
   assert.match(source, /activeIndex/);
@@ -106,7 +108,7 @@ test('Roblox/Game Dev case studies use a compact interactive carousel', () => {
 });
 
 
-test('case study scroller uses portfolio-styled scrollbar', () => {
+test('experience scroller uses portfolio-styled scrollbar', () => {
   const source = readFileSync(robloxPagePath, 'utf8');
 
   assert.match(source, /case-study-scroller/);
@@ -135,10 +137,17 @@ test('Roblox/Game Dev page leads with a compact paid-client flagship backed by s
   assert.match(source, /Paid client work/);
   assert.match(source, /flagshipAreas/);
   assert.match(source, /flagshipEvidence/);
-  assert.match(source, /flagship-evidence-grid/);
+  assert.match(source, /flagship-evidence-gallery/);
+  assert.match(source, /flagship-evidence-strip/);
+  assert.match(source, /activeEvidenceIndex/);
+  assert.match(source, /activeEvidence/);
+  assert.match(source, /selectEvidence\(index\)/);
+  assert.match(source, /previousEvidence/);
+  assert.match(source, /nextEvidence/);
   assert.match(source, /Development evidence/);
   assert.match(source, /exceeded my expectations/i);
-  assert.match(source, /<details/);
+  assert.doesNotMatch(source, /<details/);
+  assert.doesNotMatch(source, /<summary/);
 
   for (const assetPath of assetPaths) {
     assert.match(source, new RegExp(assetPath.replaceAll('/', '\\/')));
