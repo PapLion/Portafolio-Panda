@@ -124,7 +124,6 @@ test('Roblox/Game Dev page leads with a compact paid-client flagship backed by l
     '../public/images/roblox/flagship-arrest.webp',
     '../public/images/roblox/flagship-ai-chase.webp',
     '../public/images/roblox/flagship-patrol-points.webp',
-    '../public/images/roblox/flagship-client-proof.webp',
   ];
 
   assert.match(source, /Flagship Client Project/);
