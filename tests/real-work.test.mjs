@@ -44,7 +44,7 @@ test('dedicated Roblox/Game Dev page presents systems as case studies without Gi
   assert.match(source, /Simulator Systems/);
   assert.match(source, /Fighting Game Combat/);
   assert.match(source, /caseStudies/);
-  assert.match(source, /study\.media\?\.length/);
+  assert.match(source, /activeStudy\.media\?\.length/);
   assert.doesNotMatch(source, /github\.com/i);
   assert.doesNotMatch(source, /Roblox-Scripting-Work/);
 });
