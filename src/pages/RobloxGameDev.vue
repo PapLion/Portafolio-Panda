@@ -78,14 +78,16 @@
             </div>
 
             <div class="border-t lg:border-t-0 lg:border-l border-white/20 bg-white/[0.025]">
-              <figure v-if="flagshipEvidence.length" class="relative border-b border-white/15">
-                <img
-                  :src="flagshipEvidence[0].src"
-                  :alt="flagshipEvidence[0].alt"
-                  class="w-full aspect-[16/10] object-cover"
-                  loading="eager"
-                />
-                <figcaption class="px-4 py-3 text-[11px] sm:text-xs text-white/45">
+              <figure v-if="flagshipEvidence.length" class="border-b border-white/15 p-3 sm:p-4">
+                <div class="flagship-media-frame">
+                  <img
+                    :src="flagshipEvidence[0].src"
+                    :alt="flagshipEvidence[0].alt"
+                    class="w-full aspect-video object-contain bg-black"
+                    loading="eager"
+                  />
+                </div>
+                <figcaption class="px-1 pt-3 text-[11px] sm:text-xs text-white/45">
                   {{ flagshipEvidence[0].label }}
                 </figcaption>
               </figure>
@@ -106,21 +108,32 @@
                 </summary>
 
                 <div class="px-5 sm:px-6 pb-5 sm:pb-6">
-                  <div
-                    v-for="item in flagshipEvidence.slice(1)"
-                    :key="item.label"
-                    class="border border-white/15 overflow-hidden"
-                  >
-                    <img
-                      :src="item.src"
-                      :alt="item.alt"
-                      class="w-full aspect-[2.2/1] object-cover"
-                      loading="lazy"
-                    />
-                    <p class="px-3 py-2 text-[11px] sm:text-xs text-white/45">{{ item.label }}</p>
+                  <div class="flagship-evidence-grid grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <figure
+                      v-for="item in flagshipEvidence.slice(1)"
+                      :key="item.src"
+                      class="min-w-0"
+                    >
+                      <a
+                        :href="item.src"
+                        target="_blank"
+                        rel="noreferrer"
+                        class="flagship-media-frame block hover:border-white/65 transition-colors"
+                      >
+                        <img
+                          :src="item.src"
+                          :alt="item.alt"
+                          class="w-full aspect-video object-contain bg-black"
+                          loading="lazy"
+                        />
+                      </a>
+                      <figcaption class="pt-2 px-1 text-[10px] sm:text-[11px] text-white/45 leading-relaxed">
+                        {{ item.label }}
+                      </figcaption>
+                    </figure>
                   </div>
 
-                  <ul class="mt-4 space-y-2">
+                  <ul class="mt-5 space-y-2">
                     <li
                       v-for="point in flagship.evidencePoints"
                       :key="point"
@@ -272,7 +285,6 @@
 
 <script setup>
 import { computed, inject, ref } from 'vue';
-import { flagshipArrest, flagshipPatrolPoints } from '../data/robloxFlagshipMedia.js';
 
 const language = inject('language', { currentLanguage: ref('en') });
 const currentLanguage = language.currentLanguage ?? ref('en');
@@ -326,14 +338,34 @@ const content = {
       ],
       evidence: [
         {
-          src: flagshipArrest,
-          alt: 'Roblox development build showing an NPC surrender and arrest interaction.',
-          label: 'Surrender and arrest interaction in a development build.',
+          src: '/images/roblox/flagship/npc-production-map.webp',
+          alt: 'NPCs integrated into a more complete industrial Roblox environment.',
+          label: 'NPC Integration in Production Map · AI behavior tested inside a more complete environment.',
         },
         {
-          src: flagshipPatrolPoints,
-          alt: 'Roblox Studio showing configurable patrol points for an NPC.',
-          label: 'Configurable patrol-point workflow inside Roblox Studio.',
+          src: '/images/roblox/flagship/surrender-arrest.webp',
+          alt: 'NPC surrendering while the player receives an arrest interaction prompt.',
+          label: 'Surrender & Arrest System · NPC state, dialogue feedback, and player interaction.',
+        },
+        {
+          src: '/images/roblox/flagship/fps-combat.webp',
+          alt: 'First-person combat scene with a weapon firing inside an industrial environment.',
+          label: 'FPS Combat Integration · Weapon behavior integrated with the project combat loop.',
+        },
+        {
+          src: '/images/roblox/flagship/weapon-optics-hud.webp',
+          alt: 'Scoped first-person weapon view with ammo HUD and equipment slots.',
+          label: 'Weapon Optics & FPS HUD · Aiming, equipment state, and combat feedback.',
+        },
+        {
+          src: '/images/roblox/flagship/ragdoll-weapon-drop.webp',
+          alt: 'Defeated NPC in ragdoll state with its weapon dropped beside it.',
+          label: 'Ragdoll & Weapon Drop · NPC defeat state and world-item interaction.',
+        },
+        {
+          src: '/images/roblox/flagship/studio-workflow.webp',
+          alt: 'Roblox Studio development view showing NPC setup and animation workflow.',
+          label: 'Studio Workflow & Animation Setup · Development and integration inside Roblox Studio.',
         },
       ],
     },
@@ -482,14 +514,34 @@ const content = {
       ],
       evidence: [
         {
-          src: flagshipArrest,
-          alt: 'Build de desarrollo en Roblox mostrando surrender y una interacción de arresto.',
-          label: 'Interacción de surrender y arresto en un build de desarrollo.',
+          src: '/images/roblox/flagship/npc-production-map.webp',
+          alt: 'NPCs integrados dentro de un entorno industrial más completo en Roblox.',
+          label: 'Integración de NPCs en mapa de producción · IA probada dentro de un entorno más completo.',
         },
         {
-          src: flagshipPatrolPoints,
-          alt: 'Roblox Studio mostrando puntos de patrulla configurables para un NPC.',
-          label: 'Workflow configurable de patrol points dentro de Roblox Studio.',
+          src: '/images/roblox/flagship/surrender-arrest.webp',
+          alt: 'NPC rindiéndose mientras el jugador recibe la interacción para arrestarlo.',
+          label: 'Sistema de rendición y arresto · Estado del NPC, feedback de diálogo e interacción del jugador.',
+        },
+        {
+          src: '/images/roblox/flagship/fps-combat.webp',
+          alt: 'Escena de combate en primera persona disparando dentro de un entorno industrial.',
+          label: 'Integración de combate FPS · Comportamiento del arma integrado al loop de combate del proyecto.',
+        },
+        {
+          src: '/images/roblox/flagship/weapon-optics-hud.webp',
+          alt: 'Vista de arma con mira en primera persona, HUD de munición y slots de equipamiento.',
+          label: 'Óptica y HUD FPS · Apuntado, estado de equipamiento y feedback de combate.',
+        },
+        {
+          src: '/images/roblox/flagship/ragdoll-weapon-drop.webp',
+          alt: 'NPC derrotado en ragdoll con su arma caída a un lado.',
+          label: 'Ragdoll y caída de arma · Estado de derrota del NPC e interacción del objeto en el mundo.',
+        },
+        {
+          src: '/images/roblox/flagship/studio-workflow.webp',
+          alt: 'Vista de desarrollo en Roblox Studio mostrando setup de NPC y workflow de animación.',
+          label: 'Workflow de Studio y animación · Desarrollo e integración dentro de Roblox Studio.',
         },
       ],
     },
@@ -616,6 +668,36 @@ const previousStudy = () => {
 
 
 <style scoped>
+
+.flagship-media-frame {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  background: rgba(0, 0, 0, 0.72);
+  padding: 3px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 10px 30px rgba(0, 0, 0, 0.24);
+  clip-path: polygon(
+    10px 0,
+    calc(100% - 10px) 0,
+    100% 10px,
+    100% calc(100% - 10px),
+    calc(100% - 10px) 100%,
+    10px 100%,
+    0 calc(100% - 10px),
+    0 10px
+  );
+}
+
+.flagship-media-frame::after {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+}
+
 .case-study-scroller {
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.58) rgba(255, 255, 255, 0.07);
