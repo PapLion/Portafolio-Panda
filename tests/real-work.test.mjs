@@ -32,12 +32,21 @@ test('app renders a dedicated RobloxGameDev page for /roblox-gamedev', () => {
   assert.ok(existsSync(robloxPagePath), 'RobloxGameDev.vue should exist');
 });
 
-test('dedicated Roblox/Game Dev page contains public evidence and data-driven media slots', () => {
+test('dedicated Roblox/Game Dev page presents systems as case studies without GitHub links', () => {
   assert.ok(existsSync(robloxPagePath), 'RobloxGameDev.vue should exist');
   const source = readFileSync(robloxPagePath, 'utf8');
-  assert.match(source, /Roblox-Scripting-Work/);
-  assert.match(source, /media\?\.length/);
-  assert.match(source, /testimonials\.length/);
+
+  assert.match(source, /First-Person Shooter Combat/);
+  assert.match(source, /Advanced NPC & AI Systems/);
+  assert.match(source, /Cars & Aircraft/);
+  assert.match(source, /Quick-Time Events/);
+  assert.match(source, /Narrative & Dialogue Systems/);
+  assert.match(source, /Simulator Systems/);
+  assert.match(source, /Fighting Game Combat/);
+  assert.match(source, /caseStudies/);
+  assert.match(source, /study\.media\?\.length/);
+  assert.doesNotMatch(source, /github\.com/i);
+  assert.doesNotMatch(source, /Roblox-Scripting-Work/);
 });
 
 test('Vercel rewrites direct /roblox-gamedev visits to the SPA entry point', () => {
