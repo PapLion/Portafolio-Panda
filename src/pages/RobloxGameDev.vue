@@ -125,7 +125,7 @@
           </div>
         </div>
 
-        <div class="mt-3 overflow-x-auto pb-2">
+        <div class="case-study-scroller mt-3 overflow-x-auto pb-2">
           <div class="flex gap-2 min-w-max">
             <button
               v-for="(study, index) in caseStudies"
@@ -413,3 +413,35 @@ const previousStudy = () => {
   activeIndex.value = (activeIndex.value - 1 + caseStudies.value.length) % caseStudies.value.length;
 };
 </script>
+
+
+<style scoped>
+.case-study-scroller {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.58) rgba(255, 255, 255, 0.07);
+  scrollbar-gutter: stable;
+}
+
+.case-study-scroller::-webkit-scrollbar {
+  height: 7px;
+}
+
+.case-study-scroller::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.case-study-scroller::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.9);
+  border-radius: 0;
+}
+
+.case-study-scroller::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.case-study-scroller::-webkit-scrollbar-corner {
+  background: transparent;
+}
+</style>
