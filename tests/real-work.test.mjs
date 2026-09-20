@@ -104,3 +104,15 @@ test('Roblox/Game Dev case studies use a compact interactive carousel', () => {
   assert.match(source, /aria-live="polite"/);
   assert.doesNotMatch(source, /v-for="\(study, index\) in caseStudies"\s*\n\s*:key="study\.id"\s*\n\s*class="manga-panel/);
 });
+
+
+test('case study scroller uses portfolio-styled scrollbar', () => {
+  const source = readFileSync(robloxPagePath, 'utf8');
+
+  assert.match(source, /case-study-scroller/);
+  assert.match(source, /scrollbar-width:\s*thin/);
+  assert.match(source, /scrollbar-color:/);
+  assert.match(source, /::-webkit-scrollbar/);
+  assert.match(source, /::-webkit-scrollbar-thumb/);
+  assert.match(source, /::-webkit-scrollbar-track/);
+});
