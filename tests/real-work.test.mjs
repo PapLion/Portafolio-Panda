@@ -91,3 +91,16 @@ test('flagship project appears before My Knowledge on the home page', () => {
   assert.ok(knowledgeIndex !== -1, 'Skills should render on home');
   assert.ok(flagshipIndex < knowledgeIndex, 'Flagship Project should appear before My Knowledge');
 });
+
+
+test('Roblox/Game Dev case studies use a compact interactive carousel', () => {
+  const source = readFileSync(robloxPagePath, 'utf8');
+
+  assert.match(source, /activeIndex/);
+  assert.match(source, /activeStudy/);
+  assert.match(source, /nextStudy/);
+  assert.match(source, /previousStudy/);
+  assert.match(source, /selectStudy\(index\)/);
+  assert.match(source, /aria-live="polite"/);
+  assert.doesNotMatch(source, /v-for="\(study, index\) in caseStudies"\s*\n\s*:key="study\.id"\s*\n\s*class="manga-panel/);
+});
