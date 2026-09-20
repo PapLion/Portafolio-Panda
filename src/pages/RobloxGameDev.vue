@@ -34,9 +34,9 @@
       </header>
 
 
-      <section class="mb-10 sm:mb-12" aria-labelledby="roblox-flagship-title">
+      <section class="mb-8 sm:mb-10" aria-labelledby="roblox-flagship-title">
         <article class="manga-panel border border-white/35 overflow-hidden">
-          <header class="p-5 sm:p-6 md:p-8 border-b border-white/20">
+          <header class="p-4 sm:p-5 md:p-6 border-b border-white/20">
             <div class="flex flex-wrap items-center gap-2">
               <span class="text-[10px] sm:text-xs uppercase tracking-[0.24em] text-white/50">
                 {{ flagship.eyebrow }}
@@ -46,105 +46,104 @@
               </span>
             </div>
 
-            <p class="mt-4 text-xs uppercase tracking-[0.2em] text-white/45">{{ flagship.role }}</p>
-            <h2 id="roblox-flagship-title" class="mt-2 text-2xl sm:text-3xl md:text-4xl font-bold max-w-3xl">
-              {{ flagship.title }}
-            </h2>
-            <p class="mt-4 text-sm sm:text-base text-white/65 leading-relaxed max-w-3xl">
-              {{ flagship.description }}
-            </p>
+            <div class="mt-3 grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-3 lg:gap-8 items-end">
+              <div>
+                <p class="text-[10px] sm:text-xs uppercase tracking-[0.2em] text-white/45">{{ flagship.role }}</p>
+                <h2 id="roblox-flagship-title" class="mt-2 text-2xl sm:text-3xl md:text-4xl font-bold">
+                  {{ flagship.title }}
+                </h2>
+              </div>
+              <p class="text-xs sm:text-sm text-white/65 leading-relaxed">
+                {{ flagship.description }}
+              </p>
+            </div>
 
-            <div class="mt-5 flex flex-wrap gap-2">
+            <div class="mt-4 flex flex-wrap gap-2">
               <span
                 v-for="tag in flagship.tags"
                 :key="tag"
-                class="border border-white/20 px-2.5 py-1 text-xs text-white/55"
+                class="border border-white/20 px-2.5 py-1 text-[10px] sm:text-xs text-white/55"
               >
                 {{ tag }}
               </span>
             </div>
           </header>
 
-          <div class="grid grid-cols-1 lg:grid-cols-[1.22fr_0.78fr]">
-            <figure v-if="flagshipPrimaryEvidence" class="p-4 sm:p-5 lg:border-r border-white/20">
-              <a
-                :href="flagshipPrimaryEvidence.src"
-                target="_blank"
-                rel="noreferrer"
-                class="flagship-media-frame block hover:border-white/65 transition-colors"
-              >
-                <img
-                  :src="flagshipPrimaryEvidence.src"
-                  :alt="flagshipPrimaryEvidence.alt"
-                  class="w-full aspect-video object-contain bg-black"
-                  loading="eager"
-                />
-              </a>
-              <figcaption class="px-1 pt-3 text-[11px] sm:text-xs text-white/45 leading-relaxed">
-                {{ flagshipPrimaryEvidence.label }}
-              </figcaption>
-            </figure>
+          <div class="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr]">
+            <div class="p-4 sm:p-5 lg:border-r border-white/20 flex flex-col">
+              <figure v-if="flagshipPrimaryEvidence">
+                <div class="flagship-media-frame">
+                  <img
+                    :src="flagshipPrimaryEvidence.src"
+                    :alt="flagshipPrimaryEvidence.alt"
+                    class="w-full aspect-video object-contain bg-black"
+                    loading="eager"
+                  />
+                </div>
+                <figcaption class="px-1 pt-2 text-[10px] sm:text-[11px] text-white/45 leading-relaxed">
+                  {{ flagshipPrimaryEvidence.label }}
+                </figcaption>
+              </figure>
 
-            <div class="border-t lg:border-t-0 border-white/20 p-5 sm:p-6 bg-white/[0.02]">
+              <div
+                v-if="flagshipSecondaryEvidence.length"
+                class="flagship-evidence-thumbnails mt-4"
+                :aria-label="flagship.evidenceSummary"
+              >
+                <div class="flex items-center justify-between gap-3 mb-2">
+                  <p class="text-[9px] sm:text-[10px] uppercase tracking-[0.22em] text-white/40">
+                    {{ flagship.evidenceSummary }}
+                  </p>
+                </div>
+
+                <div class="flagship-evidence-strip overflow-x-auto pb-1">
+                  <div class="flex gap-2 min-w-max lg:grid lg:grid-cols-5 lg:min-w-0">
+                    <button
+                      v-for="(item, index) in flagshipSecondaryEvidence"
+                      :key="item.src"
+                      type="button"
+                      class="flagship-media-frame block w-28 sm:w-32 lg:w-auto hover:border-white/70 transition-colors cursor-zoom-in"
+                      :aria-label="item.label"
+                      @click="selectEvidence(index)"
+                    >
+                      <img
+                        :src="item.src"
+                        :alt="item.alt"
+                        class="w-full aspect-video object-cover bg-black"
+                        loading="lazy"
+                      />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="border-t lg:border-t-0 border-white/20 p-4 sm:p-5 bg-white/[0.02]">
               <p class="text-[10px] sm:text-xs uppercase tracking-[0.22em] text-white/45">
                 {{ flagship.scopeLabel }}
               </p>
 
-              <div class="mt-3 divide-y divide-white/15 border-y border-white/15">
+              <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 border border-white/15">
                 <div
                   v-for="area in flagshipAreas"
                   :key="area.title"
-                  class="py-3 first:pt-3 last:pb-3"
+                  class="p-3 border-white/15 odd:sm:border-r [&:nth-child(-n+2)]:sm:border-b border-b last:border-b-0 sm:last:border-b-0"
                 >
                   <h3 class="text-xs sm:text-sm font-semibold text-white/90">{{ area.title }}</h3>
-                  <p class="mt-1 text-[11px] sm:text-xs text-white/55 leading-relaxed">{{ area.description }}</p>
+                  <p class="mt-1 text-[10px] sm:text-[11px] text-white/55 leading-relaxed">{{ area.description }}</p>
                 </div>
               </div>
 
-              <blockquote class="mt-5 border-l border-white/35 pl-4">
-                <p class="text-sm sm:text-base text-white/80 leading-relaxed">
+              <blockquote class="mt-4 border-l border-white/35 pl-4">
+                <p class="text-xs sm:text-sm text-white/80 leading-relaxed">
                   “{{ flagship.quote }}”
                 </p>
-                <footer class="mt-2 text-[11px] sm:text-xs text-white/40">
+                <footer class="mt-2 text-[10px] sm:text-[11px] text-white/40">
                   — {{ flagship.quoteAuthor }}
                 </footer>
               </blockquote>
             </div>
           </div>
-
-          <section
-            v-if="flagshipSecondaryEvidence.length"
-            class="border-t border-white/20 p-4 sm:p-5"
-            :aria-label="flagship.evidenceSummary"
-          >
-            <div class="flex items-center justify-between gap-3 mb-3">
-              <p class="text-[10px] sm:text-xs uppercase tracking-[0.22em] text-white/45">
-                {{ flagship.evidenceSummary }}
-              </p>
-              <span class="text-[10px] text-white/30">{{ flagshipSecondaryEvidence.length }}</span>
-            </div>
-
-            <div class="flagship-evidence-strip overflow-x-auto pb-1">
-              <div class="flex gap-3 min-w-max lg:grid lg:grid-cols-5 lg:min-w-0">
-                <a
-                  v-for="item in flagshipSecondaryEvidence"
-                  :key="item.src"
-                  :href="item.src"
-                  target="_blank"
-                  rel="noreferrer"
-                  class="flagship-media-frame block w-44 sm:w-52 lg:w-auto hover:border-white/65 transition-colors"
-                  :aria-label="item.label"
-                >
-                  <img
-                    :src="item.src"
-                    :alt="item.alt"
-                    class="w-full aspect-video object-cover bg-black"
-                    loading="lazy"
-                  />
-                </a>
-              </div>
-            </div>
-          </section>
         </article>
       </section>
 
@@ -154,31 +153,8 @@
           <h2 id="experience-title" class="mt-2 text-2xl sm:text-3xl font-bold">{{ copy.caseStudiesTitle }}</h2>
         </div>
 
-        <div class="experience-selector overflow-x-auto sm:overflow-visible pb-2 sm:pb-0">
-          <div class="flex gap-2 min-w-max sm:min-w-0 sm:flex-wrap">
-            <button
-              v-for="(study, index) in caseStudies"
-              :key="study.id"
-              type="button"
-              class="text-left border px-3 py-2 min-w-[145px] sm:min-w-0 transition-colors"
-              :class="index === activeIndex
-                ? 'border-white bg-white text-black'
-                : 'border-white/20 text-white/55 hover:border-white/60 hover:text-white'"
-              :aria-pressed="index === activeIndex"
-              @click="selectStudy(index)"
-            >
-              <span class="block text-[9px] uppercase tracking-[0.2em] opacity-60">
-                {{ study.category }}
-              </span>
-              <span class="block mt-1 text-xs sm:text-sm font-medium whitespace-nowrap">
-                {{ study.shortTitle || study.title }}
-              </span>
-            </button>
-          </div>
-        </div>
-
         <div
-          class="manga-panel border border-white/35 p-5 sm:p-6 md:p-8 relative overflow-hidden mt-3"
+          class="manga-panel border border-white/35 p-5 sm:p-6 md:p-8 relative overflow-hidden"
           aria-live="polite"
         >
           <div class="flex items-center gap-3 mb-6">
@@ -235,7 +211,61 @@
             </div>
           </div>
         </div>
+
+        <div class="experience-selector mt-3 overflow-x-auto pb-2">
+          <div class="flex gap-2 min-w-max">
+            <button
+              v-for="(study, index) in caseStudies"
+              :key="study.id"
+              type="button"
+              class="text-left border min-w-[150px] px-3 py-2 transition-colors"
+              :class="index === activeIndex
+                ? 'border-white bg-white text-black'
+                : 'border-white/20 text-white/55 hover:border-white/60 hover:text-white'"
+              :aria-pressed="index === activeIndex"
+              @click="selectStudy(index)"
+            >
+              <span class="block text-[9px] uppercase tracking-[0.2em] opacity-60">
+                {{ study.category }}
+              </span>
+              <span class="block mt-1 text-xs sm:text-sm font-medium whitespace-nowrap">
+                {{ study.shortTitle || study.title }}
+              </span>
+            </button>
+          </div>
+        </div>
       </section>
+
+      <Teleport to="body">
+        <div
+          v-if="activeEvidence"
+          class="fixed inset-0 z-[100] bg-black/90 backdrop-blur-sm p-4 sm:p-8 flex items-center justify-center"
+          role="dialog"
+          aria-modal="true"
+          :aria-label="activeEvidence.label"
+          @click.self="closeEvidence"
+          @keydown.esc="closeEvidence"
+        >
+          <div class="w-full max-w-6xl relative" tabindex="-1">
+            <button
+              type="button"
+              class="absolute -top-10 right-0 text-xs uppercase tracking-[0.2em] text-white/60 hover:text-white"
+              @click="closeEvidence"
+            >
+              {{ copy.close }}
+            </button>
+
+            <div class="flagship-media-frame bg-black">
+              <img
+                :src="activeEvidence.src"
+                :alt="activeEvidence.alt"
+                class="w-full max-h-[78vh] object-contain bg-black"
+              />
+            </div>
+            <p class="mt-3 text-xs sm:text-sm text-white/55 text-center">{{ activeEvidence.label }}</p>
+          </div>
+        </div>
+      </Teleport>
 
       <section v-if="testimonials.length" class="mt-10 sm:mt-12" :aria-label="copy.testimonialsTitle">
         <h2 class="text-xl sm:text-2xl font-bold mb-5">{{ copy.testimonialsTitle }}</h2>
@@ -260,6 +290,7 @@ import { computed, inject, ref } from 'vue';
 const language = inject('language', { currentLanguage: ref('en') });
 const currentLanguage = language.currentLanguage ?? ref('en');
 const activeIndex = ref(0);
+const activeEvidenceIndex = ref(null);
 
 const content = {
   en: {
@@ -271,6 +302,7 @@ const content = {
     caseStudiesTitle: 'Game Development Experience',
     caseStudyLabel: 'Experience',
     testimonialsTitle: 'Client feedback',
+    close: 'Close',
     stack: ['Luau', 'Roblox Studio', 'Client / Server', 'Gameplay Systems', 'Game Development'],
     flagship: {
       eyebrow: 'Flagship Client Project',
@@ -446,6 +478,7 @@ const content = {
     caseStudiesTitle: 'Experiencia en desarrollo',
     caseStudyLabel: 'Experiencia',
     testimonialsTitle: 'Opiniones de clientes',
+    close: 'Cerrar',
     stack: ['Luau', 'Roblox Studio', 'Client / Server', 'Sistemas de Gameplay', 'Game Development'],
     flagship: {
       eyebrow: 'Proyecto insignia con cliente',
@@ -621,8 +654,20 @@ const flagshipAreas = computed(() => flagship.value.areas);
 const flagshipEvidence = computed(() => flagship.value.evidence);
 const flagshipPrimaryEvidence = computed(() => flagshipEvidence.value[0] ?? null);
 const flagshipSecondaryEvidence = computed(() => flagshipEvidence.value.slice(1));
+const activeEvidence = computed(() => {
+  if (activeEvidenceIndex.value === null) return null;
+  return flagshipSecondaryEvidence.value[activeEvidenceIndex.value] ?? null;
+});
 const caseStudies = computed(() => copy.value.caseStudies);
 const activeStudy = computed(() => caseStudies.value[activeIndex.value] ?? caseStudies.value[0]);
+
+const selectEvidence = (index) => {
+  activeEvidenceIndex.value = index;
+};
+
+const closeEvidence = () => {
+  activeEvidenceIndex.value = null;
+};
 
 const selectStudy = (index) => {
   activeIndex.value = index;
