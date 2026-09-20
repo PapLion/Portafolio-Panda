@@ -1,0 +1,24 @@
+name: Verify Roblox compact flagship
+
+on:
+  push:
+    branches:
+      - feature/roblox-gamedev-route
+    paths:
+      - .github/workflows/verify-roblox-compact-flagship.yml
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - run: node --test tests/real-work.test.mjs
+      - run: npm run build
