@@ -95,16 +95,18 @@ test('flagship project appears before My Knowledge on the home page', () => {
 });
 
 
-test('Roblox/Game Dev experience areas use a compact interactive carousel', () => {
+test('Roblox/Game Dev experience areas are selectable without numbering or implied order', () => {
   const source = readFileSync(robloxPagePath, 'utf8');
 
   assert.match(source, /activeIndex/);
   assert.match(source, /activeStudy/);
-  assert.match(source, /nextStudy/);
-  assert.match(source, /previousStudy/);
   assert.match(source, /selectStudy\(index\)/);
   assert.match(source, /aria-live="polite"/);
-  assert.doesNotMatch(source, /v-for="\(study, index\) in caseStudies"\s*\n\s*:key="study\.id"\s*\n\s*class="manga-panel/);
+  assert.doesNotMatch(source, /nextStudy/);
+  assert.doesNotMatch(source, /previousStudy/);
+  assert.doesNotMatch(source, /activeIndex \+ 1/);
+  assert.doesNotMatch(source, /String\(activeIndex \+ 1\)/);
+  assert.doesNotMatch(source, /String\(index \+ 1\)/);
 });
 
 
@@ -137,13 +139,14 @@ test('Roblox/Game Dev page leads with a compact paid-client flagship backed by s
   assert.match(source, /Paid client work/);
   assert.match(source, /flagshipAreas/);
   assert.match(source, /flagshipEvidence/);
-  assert.match(source, /flagship-evidence-gallery/);
+  assert.match(source, /flagshipPrimaryEvidence/);
+  assert.match(source, /flagshipSecondaryEvidence/);
   assert.match(source, /flagship-evidence-strip/);
-  assert.match(source, /activeEvidenceIndex/);
-  assert.match(source, /activeEvidence/);
-  assert.match(source, /selectEvidence\(index\)/);
-  assert.match(source, /previousEvidence/);
-  assert.match(source, /nextEvidence/);
+  assert.doesNotMatch(source, /activeEvidenceIndex/);
+  assert.doesNotMatch(source, /activeEvidence/);
+  assert.doesNotMatch(source, /selectEvidence\(index\)/);
+  assert.doesNotMatch(source, /previousEvidence/);
+  assert.doesNotMatch(source, /nextEvidence/);
   assert.match(source, /Development evidence/);
   assert.match(source, /exceeded my expectations/i);
   assert.doesNotMatch(source, /<details/);
