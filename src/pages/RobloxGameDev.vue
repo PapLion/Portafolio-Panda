@@ -1,7 +1,7 @@
 <template>
-  <section class="min-h-screen py-10 sm:py-14 md:py-16 bg-black/80" aria-labelledby="roblox-gamedev-title">
+  <section class="min-h-screen py-8 sm:py-10 md:py-12 bg-black/80" aria-labelledby="roblox-gamedev-title">
     <div class="container mx-auto px-4 max-w-6xl">
-      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-7 sm:mb-8">
         <a
           href="/"
           class="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors w-fit"
@@ -13,16 +13,16 @@
         <span class="text-xs uppercase tracking-[0.3em] text-white/40">Dani.Dev / Roblox & Game Dev</span>
       </div>
 
-      <header class="max-w-4xl mb-10 sm:mb-12">
+      <header class="max-w-4xl mb-7 sm:mb-8">
         <p class="text-xs sm:text-sm uppercase tracking-[0.35em] text-white/50 mb-3">{{ copy.eyebrow }}</p>
-        <h1 id="roblox-gamedev-title" class="text-3xl sm:text-4xl md:text-5xl font-bold manga-text">
+        <h1 id="roblox-gamedev-title" class="text-3xl sm:text-4xl md:text-[2.75rem] font-bold manga-text">
           {{ copy.title }}
         </h1>
-        <p class="mt-5 text-sm sm:text-base md:text-lg text-white/65 leading-relaxed max-w-3xl">
+        <p class="mt-4 text-sm sm:text-base text-white/65 leading-relaxed max-w-2xl">
           {{ copy.intro }}
         </p>
 
-        <div class="mt-6 flex flex-wrap gap-2">
+        <div class="mt-5 flex flex-wrap gap-2">
           <span
             v-for="tech in copy.stack"
             :key="tech"
@@ -35,113 +35,85 @@
 
 
       <section class="mb-8 sm:mb-10" aria-labelledby="roblox-flagship-title">
-        <article class="manga-panel border border-white/35 overflow-hidden">
-          <header class="p-4 sm:p-5 md:p-6 border-b border-white/20">
-            <div class="flex flex-wrap items-center gap-2">
-              <span class="text-[10px] sm:text-xs uppercase tracking-[0.24em] text-white/50">
-                {{ flagship.eyebrow }}
-              </span>
-              <span class="border border-white/25 px-2 py-1 text-[10px] sm:text-xs text-white/55">
-                {{ flagship.status }}
-              </span>
-            </div>
+        <article class="flagship-editorial manga-panel border-2 border-white p-5 sm:p-6 md:p-7">
+          <div class="grid grid-cols-1 lg:grid-cols-[0.78fr_1.22fr] gap-6 lg:gap-8 items-stretch">
+            <div class="flex flex-col">
+              <p class="text-[10px] sm:text-xs uppercase tracking-[0.24em] text-white/45">
+                {{ flagship.eyebrow }} · {{ flagship.status }}
+              </p>
 
-            <div class="mt-3 grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-3 lg:gap-8 items-end">
-              <div>
-                <p class="text-[10px] sm:text-xs uppercase tracking-[0.2em] text-white/45">{{ flagship.role }}</p>
-                <h2 id="roblox-flagship-title" class="mt-2 text-2xl sm:text-3xl md:text-4xl font-bold">
-                  {{ flagship.title }}
-                </h2>
-              </div>
-              <p class="text-xs sm:text-sm text-white/65 leading-relaxed">
+              <h2
+                id="roblox-flagship-title"
+                class="mt-3 text-2xl sm:text-3xl md:text-4xl font-bold manga-text"
+              >
+                {{ flagship.title }}
+              </h2>
+
+              <p class="mt-3 text-xs sm:text-sm text-white/45">
+                {{ flagship.role }}
+              </p>
+
+              <p class="mt-5 text-sm sm:text-base text-white/75 leading-relaxed">
                 {{ flagship.description }}
               </p>
+
+              <p class="mt-5 text-xs sm:text-sm text-white/50 leading-relaxed">
+                {{ flagship.scope }}
+              </p>
+
+              <blockquote class="mt-6 lg:mt-auto pt-5 border-t border-white/20">
+                <p class="text-sm text-white/75 leading-relaxed">
+                  “{{ flagship.quote }}”
+                </p>
+                <footer class="mt-2 text-[10px] sm:text-[11px] text-white/35">
+                  — {{ flagship.quoteAuthor }}
+                </footer>
+              </blockquote>
             </div>
 
-            <div class="mt-4 flex flex-wrap gap-2">
-              <span
-                v-for="tag in flagship.tags"
-                :key="tag"
-                class="border border-white/20 px-2.5 py-1 text-[10px] sm:text-xs text-white/55"
-              >
-                {{ tag }}
-              </span>
-            </div>
-          </header>
-
-          <div class="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr]">
-            <div class="p-4 sm:p-5 lg:border-r border-white/20 flex flex-col">
+            <div class="lg:border-l lg:border-white/20 lg:pl-8 min-w-0">
               <figure v-if="flagshipPrimaryEvidence">
-                <div class="flagship-media-frame">
+                <button
+                  type="button"
+                  class="flagship-media-frame block w-full text-left cursor-zoom-in hover:border-white/70 transition-colors"
+                  :aria-label="flagshipPrimaryEvidence.label"
+                  @click="openEvidence(0)"
+                >
                   <img
                     :src="flagshipPrimaryEvidence.src"
                     :alt="flagshipPrimaryEvidence.alt"
                     class="w-full aspect-video object-contain bg-black"
                     loading="eager"
                   />
-                </div>
-                <figcaption class="px-1 pt-2 text-[10px] sm:text-[11px] text-white/45 leading-relaxed">
+                </button>
+                <figcaption class="mt-2 text-[10px] sm:text-[11px] text-white/35 leading-relaxed">
                   {{ flagshipPrimaryEvidence.label }}
                 </figcaption>
               </figure>
 
               <div
                 v-if="flagshipSecondaryEvidence.length"
-                class="flagship-evidence-thumbnails mt-4"
-                :aria-label="flagship.evidenceSummary"
+                class="flagship-filmstrip mt-3 overflow-x-auto pb-1"
+                aria-label="Project screenshots"
               >
-                <div class="flex items-center justify-between gap-3 mb-2">
-                  <p class="text-[9px] sm:text-[10px] uppercase tracking-[0.22em] text-white/40">
-                    {{ flagship.evidenceSummary }}
-                  </p>
-                </div>
-
-                <div class="flagship-evidence-strip overflow-x-auto pb-1">
-                  <div class="flex gap-2 min-w-max lg:grid lg:grid-cols-5 lg:min-w-0">
-                    <button
-                      v-for="(item, index) in flagshipSecondaryEvidence"
-                      :key="item.src"
-                      type="button"
-                      class="flagship-media-frame block w-28 sm:w-32 lg:w-auto hover:border-white/70 transition-colors cursor-zoom-in"
-                      :aria-label="item.label"
-                      @click="selectEvidence(index)"
-                    >
-                      <img
-                        :src="item.src"
-                        :alt="item.alt"
-                        class="w-full aspect-video object-cover bg-black"
-                        loading="lazy"
-                      />
-                    </button>
-                  </div>
+                <div class="flex gap-2 min-w-max lg:grid lg:grid-cols-5 lg:min-w-0">
+                  <button
+                    v-for="(item, index) in flagshipSecondaryEvidence"
+                    :key="item.src"
+                    type="button"
+                    class="flagship-thumb block w-24 sm:w-28 lg:w-auto border border-white/20 bg-black/60 p-0.5 opacity-65 hover:opacity-100 hover:border-white/70 transition-all cursor-zoom-in"
+                    :aria-label="item.label"
+                    @click="openEvidence(index + 1)"
+                  >
+                    <img
+                      :src="item.src"
+                      :alt="item.alt"
+                      class="w-full aspect-video object-cover bg-black"
+                      loading="lazy"
+                    />
+                  </button>
                 </div>
               </div>
-            </div>
-
-            <div class="border-t lg:border-t-0 border-white/20 p-4 sm:p-5 bg-white/[0.02]">
-              <p class="text-[10px] sm:text-xs uppercase tracking-[0.22em] text-white/45">
-                {{ flagship.scopeLabel }}
-              </p>
-
-              <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 border border-white/15">
-                <div
-                  v-for="area in flagshipAreas"
-                  :key="area.title"
-                  class="p-3 border-white/15 odd:sm:border-r [&:nth-child(-n+2)]:sm:border-b border-b last:border-b-0 sm:last:border-b-0"
-                >
-                  <h3 class="text-xs sm:text-sm font-semibold text-white/90">{{ area.title }}</h3>
-                  <p class="mt-1 text-[10px] sm:text-[11px] text-white/55 leading-relaxed">{{ area.description }}</p>
-                </div>
-              </div>
-
-              <blockquote class="mt-4 border-l border-white/35 pl-4">
-                <p class="text-xs sm:text-sm text-white/80 leading-relaxed">
-                  “{{ flagship.quote }}”
-                </p>
-                <footer class="mt-2 text-[10px] sm:text-[11px] text-white/40">
-                  — {{ flagship.quoteAuthor }}
-                </footer>
-              </blockquote>
             </div>
           </div>
         </article>
@@ -245,6 +217,8 @@
           :aria-label="activeEvidence.label"
           @click.self="closeEvidence"
           @keydown.esc="closeEvidence"
+          @keydown.left.prevent="previousEvidence"
+          @keydown.right.prevent="nextEvidence"
         >
           <div class="w-full max-w-6xl relative" tabindex="-1">
             <button
@@ -255,14 +229,40 @@
               {{ copy.close }}
             </button>
 
-            <div class="flagship-media-frame bg-black">
-              <img
-                :src="activeEvidence.src"
-                :alt="activeEvidence.alt"
-                class="w-full max-h-[78vh] object-contain bg-black"
-              />
+            <div class="relative">
+              <button
+                type="button"
+                class="absolute left-2 sm:-left-12 top-1/2 -translate-y-1/2 z-10 h-9 w-9 border border-white/30 bg-black/70 hover:bg-white hover:text-black transition-colors"
+                :aria-label="copy.previousEvidence"
+                @click="previousEvidence"
+              >
+                ←
+              </button>
+
+              <div class="flagship-media-frame bg-black">
+                <img
+                  :src="activeEvidence.src"
+                  :alt="activeEvidence.alt"
+                  class="w-full max-h-[78vh] object-contain bg-black"
+                />
+              </div>
+
+              <button
+                type="button"
+                class="absolute right-2 sm:-right-12 top-1/2 -translate-y-1/2 z-10 h-9 w-9 border border-white/30 bg-black/70 hover:bg-white hover:text-black transition-colors"
+                :aria-label="copy.nextEvidence"
+                @click="nextEvidence"
+              >
+                →
+              </button>
             </div>
-            <p class="mt-3 text-xs sm:text-sm text-white/55 text-center">{{ activeEvidence.label }}</p>
+
+            <div class="mt-3 flex items-start justify-between gap-4">
+              <p class="text-xs sm:text-sm text-white/50">{{ activeEvidence.label }}</p>
+              <p class="text-[10px] sm:text-xs text-white/30 shrink-0">
+                {{ activeEvidenceIndex + 1 }} / {{ flagshipEvidence.length }}
+              </p>
+            </div>
           </div>
         </div>
       </Teleport>
@@ -297,47 +297,24 @@ const content = {
     back: 'Back to Dani.Dev',
     eyebrow: 'Roblox / Game Development',
     title: 'Roblox & Game Development Experience',
-    intro: 'A compact overview of gameplay systems I can build confidently across Roblox and game development, grounded in systems I have implemented over years of hands-on work.',
+    intro: 'Client work and gameplay systems I have built over the years in Roblox Studio.',
     caseStudiesEyebrow: 'Core capabilities',
     caseStudiesTitle: 'Game Development Experience',
     caseStudyLabel: 'Experience',
     testimonialsTitle: 'Client feedback',
     close: 'Close',
+    previousEvidence: 'Previous screenshot',
+    nextEvidence: 'Next screenshot',
     stack: ['Luau', 'Roblox Studio', 'Client / Server', 'Gameplay Systems', 'Game Development'],
     flagship: {
       eyebrow: 'Flagship Client Project',
       status: 'Paid client work · 2026',
       role: 'Full-stack Roblox Game Developer',
       title: 'Adaptive Tactical AI & Combat Systems',
-      description: 'A paid Roblox commission that grew from focused NPC improvements into an interconnected gameplay system spanning AI behavior, combat, player interactions, UI/audio feedback, animation integration, and production QA.',
+      description: 'Built and integrated NPC AI, combat, player interaction, feedback, and animation systems inside an existing Roblox project, iterating directly from client testing.',
       quote: "You've exceeded my expectations ... absolutely nailing the request.",
       quoteAuthor: 'Roblox client, after testing the NPC system',
-      evidenceSummary: 'Development evidence',
-      scopeLabel: 'What I built',
-      evidencePoints: [
-        'Iterative delivery through real client testing, revisions, and follow-up commissions.',
-        'Production work inside an existing game and codebase rather than an isolated portfolio demo.',
-        'Documented handoff and continued support around the systems delivered.',
-      ],
-      tags: ['Luau', 'State Machines', 'Pathfinding', 'Combat AI', 'RemoteEvents', 'UI / Audio'],
-      areas: [
-        {
-          title: 'AI & Behaviour',
-          description: 'State-driven NPCs with perception, pathfinding, patrol/search, behavior traits, surrender, arrest, and variable tactical decisions.',
-        },
-        {
-          title: 'Combat Systems',
-          description: 'Semi, automatic, and spread weapon modes, pre-fire, melee, flashbang/damage reactions, and weapon-state handling.',
-        },
-        {
-          title: 'Player Experience',
-          description: 'Intimidation and arrest flows, responsive subtitles, contextual audio, footsteps, ragdoll, and animation-state integration.',
-        },
-        {
-          title: 'Production Integration',
-          description: 'Worked inside an existing project, incorporated live client QA, documented the systems, and shipped revisions across the development cycle.',
-        },
-      ],
+      scope: 'NPC AI · patrol & search · surrender & arrest · FPS combat · weapon interactions · subtitles & audio · ragdoll · animation integration',
       evidence: [
         {
           src: '/images/roblox/flagship/npc-production-map.webp',
@@ -473,47 +450,24 @@ const content = {
     back: 'Volver a Dani.Dev',
     eyebrow: 'Roblox / Game Development',
     title: 'Experiencia en Roblox y Game Development',
-    intro: 'Una vista compacta de sistemas de gameplay que puedo construir con soltura, basada en años de trabajo práctico en Roblox y desarrollo de videojuegos.',
+    intro: 'Trabajo con clientes y sistemas de gameplay que he construido durante años en Roblox Studio.',
     caseStudiesEyebrow: 'Capacidades principales',
     caseStudiesTitle: 'Experiencia en desarrollo',
     caseStudyLabel: 'Experiencia',
     testimonialsTitle: 'Opiniones de clientes',
     close: 'Cerrar',
+    previousEvidence: 'Captura anterior',
+    nextEvidence: 'Captura siguiente',
     stack: ['Luau', 'Roblox Studio', 'Client / Server', 'Sistemas de Gameplay', 'Game Development'],
     flagship: {
       eyebrow: 'Proyecto insignia con cliente',
       status: 'Trabajo pagado · 2026',
       role: 'Full-stack Roblox Game Developer',
       title: 'IA Táctica Adaptativa y Sistemas de Combate',
-      description: 'Una comisión pagada de Roblox que pasó de mejoras concretas a NPCs a un sistema de gameplay conectado: comportamiento de IA, combate, interacciones del jugador, feedback UI/audio, integración de animaciones y QA de producción.',
+      description: 'Construí e integré IA de NPCs, combate, interacción del jugador, feedback y animaciones dentro de un proyecto existente de Roblox, iterando directamente con pruebas del cliente.',
       quote: 'Superaste mis expectativas ... clavaste por completo lo que pedí.',
       quoteAuthor: 'Cliente de Roblox, después de probar el sistema de NPCs',
-      evidenceSummary: 'Evidencia de desarrollo',
-      scopeLabel: 'Lo que construí',
-      evidencePoints: [
-        'Entrega iterativa con pruebas reales del cliente, revisiones y comisiones posteriores.',
-        'Trabajo de producción dentro de un juego y codebase existentes, no una demo aislada de portafolio.',
-        'Documentación, handoff y soporte posterior sobre los sistemas entregados.',
-      ],
-      tags: ['Luau', 'State Machines', 'Pathfinding', 'Combat AI', 'RemoteEvents', 'UI / Audio'],
-      areas: [
-        {
-          title: 'IA y comportamiento',
-          description: 'NPCs basados en estados con percepción, pathfinding, patrol/search, traits, surrender, arrest y decisiones tácticas variables.',
-        },
-        {
-          title: 'Sistemas de combate',
-          description: 'Armas semi, automáticas y spread, pre-fire, melee, reacciones a flashbang/daño y manejo de estados del arma.',
-        },
-        {
-          title: 'Experiencia del jugador',
-          description: 'Flujos de intimidación y arresto, subtítulos responsivos, audio contextual, footsteps, ragdoll e integración de estados de animación.',
-        },
-        {
-          title: 'Integración de producción',
-          description: 'Trabajo dentro de un proyecto existente, QA directo del cliente, documentación de sistemas y revisiones durante el ciclo de desarrollo.',
-        },
-      ],
+      scope: 'IA de NPCs · patrol & search · surrender & arrest · combate FPS · interacciones con armas · subtítulos y audio · ragdoll · integración de animaciones',
       evidence: [
         {
           src: '/images/roblox/flagship/npc-production-map.webp',
@@ -650,23 +604,34 @@ const content = {
 const testimonials = ref([]);
 const copy = computed(() => content[currentLanguage.value] ?? content.en);
 const flagship = computed(() => copy.value.flagship);
-const flagshipAreas = computed(() => flagship.value.areas);
 const flagshipEvidence = computed(() => flagship.value.evidence);
 const flagshipPrimaryEvidence = computed(() => flagshipEvidence.value[0] ?? null);
 const flagshipSecondaryEvidence = computed(() => flagshipEvidence.value.slice(1));
 const activeEvidence = computed(() => {
   if (activeEvidenceIndex.value === null) return null;
-  return flagshipSecondaryEvidence.value[activeEvidenceIndex.value] ?? null;
+  return flagshipEvidence.value[activeEvidenceIndex.value] ?? null;
 });
 const caseStudies = computed(() => copy.value.caseStudies);
 const activeStudy = computed(() => caseStudies.value[activeIndex.value] ?? caseStudies.value[0]);
 
-const selectEvidence = (index) => {
+const openEvidence = (index) => {
   activeEvidenceIndex.value = index;
 };
 
 const closeEvidence = () => {
   activeEvidenceIndex.value = null;
+};
+
+const nextEvidence = () => {
+  if (activeEvidenceIndex.value === null || !flagshipEvidence.value.length) return;
+  activeEvidenceIndex.value = (activeEvidenceIndex.value + 1) % flagshipEvidence.value.length;
+};
+
+const previousEvidence = () => {
+  if (activeEvidenceIndex.value === null || !flagshipEvidence.value.length) return;
+  activeEvidenceIndex.value = (
+    activeEvidenceIndex.value - 1 + flagshipEvidence.value.length
+  ) % flagshipEvidence.value.length;
 };
 
 const selectStudy = (index) => {
@@ -707,37 +672,37 @@ const selectStudy = (index) => {
 }
 
 .experience-selector,
-.flagship-evidence-strip {
+.flagship-filmstrip {
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.58) rgba(255, 255, 255, 0.07);
   scrollbar-gutter: stable;
 }
 
 .experience-selector::-webkit-scrollbar,
-.flagship-evidence-strip::-webkit-scrollbar {
+.flagship-filmstrip::-webkit-scrollbar {
   height: 7px;
 }
 
 .experience-selector::-webkit-scrollbar-track,
-.flagship-evidence-strip::-webkit-scrollbar-track {
+.flagship-filmstrip::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.05);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .experience-selector::-webkit-scrollbar-thumb,
-.flagship-evidence-strip::-webkit-scrollbar-thumb {
+.flagship-filmstrip::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.5);
   border: 1px solid rgba(0, 0, 0, 0.9);
   border-radius: 0;
 }
 
 .experience-selector::-webkit-scrollbar-thumb:hover,
-.flagship-evidence-strip::-webkit-scrollbar-thumb:hover {
+.flagship-filmstrip::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.9);
 }
 
 .experience-selector::-webkit-scrollbar-corner,
-.flagship-evidence-strip::-webkit-scrollbar-corner {
+.flagship-filmstrip::-webkit-scrollbar-corner {
   background: transparent;
 }
 </style>
