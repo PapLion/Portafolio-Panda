@@ -115,6 +115,8 @@ test('experience selector uses portfolio-styled scrollbar on compact screens', (
   const source = readFileSync(robloxPagePath, 'utf8');
 
   assert.match(source, /experience-selector/);
+  assert.match(source, /min-w-\[190px\]/);
+  assert.match(source, /min-w-max/);
   assert.match(source, /scrollbar-width:\s*thin/);
   assert.match(source, /scrollbar-color:/);
   assert.match(source, /::-webkit-scrollbar/);
