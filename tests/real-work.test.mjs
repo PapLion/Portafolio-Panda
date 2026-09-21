@@ -116,6 +116,7 @@ test('experience selector uses portfolio-styled scrollbar on compact screens', (
 
   assert.match(source, /experience-selector/);
   assert.match(source, /min-w-\[190px\]/);
+  assert.match(source, /overflow-x-scroll/);
   assert.match(source, /min-w-max/);
   assert.match(source, /scrollbar-width:\s*thin/);
   assert.match(source, /scrollbar-color:/);
