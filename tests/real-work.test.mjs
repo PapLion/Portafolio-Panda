@@ -123,7 +123,7 @@ test('experience selector uses portfolio-styled scrollbar on compact screens', (
 });
 
 
-test('Roblox/Game Dev flagship uses one editorial portfolio panel instead of an information dashboard', () => {
+test('Roblox/Game Dev flagship reads like portfolio work instead of a generated landing card', () => {
   const source = readFileSync(robloxPagePath, 'utf8');
   const assetPaths = [
     '/images/roblox/flagship/npc-production-map.webp',
@@ -134,38 +134,30 @@ test('Roblox/Game Dev flagship uses one editorial portfolio panel instead of an 
     '/images/roblox/flagship/studio-workflow.webp',
   ];
 
-  assert.match(source, /Flagship Client Project/);
-  assert.match(source, /Adaptive Tactical AI & Combat Systems/);
-  assert.match(source, /Full-stack Roblox Game Developer/);
-  assert.match(source, /Paid client work/);
   assert.match(source, /flagship-editorial/);
-  assert.match(source, /flagship-filmstrip/);
+  assert.match(source, /flagship-contact-sheet/);
   assert.match(source, /flagship\.scope/);
   assert.match(source, /flagshipEvidence/);
   assert.match(source, /flagshipPrimaryEvidence/);
   assert.match(source, /flagshipSecondaryEvidence/);
-  assert.match(source, /activeEvidenceIndex/);
-  assert.match(source, /activeEvidence/);
   assert.match(source, /openEvidence\(/);
   assert.match(source, /previousEvidence/);
   assert.match(source, /nextEvidence/);
   assert.match(source, /exceeded my expectations/i);
 
+  assert.doesNotMatch(source, /manga-panel border-2 border-white/);
+  assert.doesNotMatch(source, /flagship-filmstrip/);
   assert.doesNotMatch(source, /flagshipAreas/);
   assert.doesNotMatch(source, /scopeLabel/);
   assert.doesNotMatch(source, /Development evidence/);
   assert.doesNotMatch(source, /What I built/);
   assert.doesNotMatch(source, /v-for="tag in flagship\.tags"/);
-  assert.doesNotMatch(source, /<details/);
-  assert.doesNotMatch(source, /<summary/);
-  assert.doesNotMatch(source, /target="_blank"[^>]*flagship-media-frame/);
+  assert.doesNotMatch(source, /v-for="tech in copy\.stack"/);
 
   for (const assetPath of assetPaths) {
     assert.match(source, new RegExp(assetPath.replaceAll('/', '\\/')));
   }
 
-  assert.doesNotMatch(source, /robloxFlagshipMedia/);
-  assert.doesNotMatch(source, /data:image\/webp;base64,/);
   assert.doesNotMatch(source, /pdadraJb20o/i);
   assert.doesNotMatch(source, /1,?000\s+Robux/i);
 });
