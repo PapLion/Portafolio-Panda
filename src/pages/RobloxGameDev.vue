@@ -161,7 +161,7 @@
           </div>
         </div>
 
-        <div class="experience-selector mt-3 overflow-x-auto pb-2">
+        <div class="experience-selector mt-3 overflow-x-scroll pb-2">
           <div class="flex gap-2 min-w-max">
             <button
               v-for="(study, index) in caseStudies"
