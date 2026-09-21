@@ -167,7 +167,7 @@
               v-for="(study, index) in caseStudies"
               :key="study.id"
               type="button"
-              class="text-left border min-w-[150px] px-3 py-2 transition-colors"
+              class="text-left border min-w-[190px] px-4 py-2.5 transition-colors"
               :class="index === activeIndex
                 ? 'border-white bg-white text-black'
                 : 'border-white/20 text-white/55 hover:border-white/60 hover:text-white'"
