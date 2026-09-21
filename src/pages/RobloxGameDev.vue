@@ -274,7 +274,7 @@ const content = {
     back: 'Back to Dani.Dev',
     eyebrow: 'Roblox / Game Development',
     title: 'Roblox / Game Development',
-    intro: 'Client work, gameplay systems, and things I have built over the years in Roblox Studio.'
+    intro: 'Client work, gameplay systems, and things I have built over the years in Roblox Studio.',
     caseStudiesEyebrow: 'Core capabilities',
     caseStudiesTitle: 'Game Development Experience',
     caseStudyLabel: 'Experience',
@@ -427,7 +427,7 @@ const content = {
     back: 'Volver a Dani.Dev',
     eyebrow: 'Roblox / Game Development',
     title: 'Roblox / Game Development',
-    intro: 'Trabajo con clientes, sistemas de gameplay y cosas que he construido durante años en Roblox Studio.'
+    intro: 'Trabajo con clientes, sistemas de gameplay y cosas que he construido durante años en Roblox Studio.',
     caseStudiesEyebrow: 'Capacidades principales',
     caseStudiesTitle: 'Experiencia en desarrollo',
     caseStudyLabel: 'Experiencia',
