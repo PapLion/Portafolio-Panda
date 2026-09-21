@@ -1,4 +1,5 @@
 name: Verify hand-composed Roblox portfolio
+# rerun after syntax fix
 
 on:
   push:
