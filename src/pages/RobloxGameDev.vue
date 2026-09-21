@@ -13,110 +13,87 @@
         <span class="text-xs uppercase tracking-[0.3em] text-white/40">Dani.Dev / Roblox & Game Dev</span>
       </div>
 
-      <header class="max-w-4xl mb-7 sm:mb-8">
-        <p class="text-xs sm:text-sm uppercase tracking-[0.35em] text-white/50 mb-3">{{ copy.eyebrow }}</p>
+      <header class="max-w-3xl mb-7 sm:mb-8">
         <h1 id="roblox-gamedev-title" class="text-3xl sm:text-4xl md:text-[2.75rem] font-bold manga-text">
           {{ copy.title }}
         </h1>
-        <p class="mt-4 text-sm sm:text-base text-white/65 leading-relaxed max-w-2xl">
+        <p class="mt-3 text-sm sm:text-base text-white/60 leading-relaxed max-w-xl">
           {{ copy.intro }}
         </p>
-
-        <div class="mt-5 flex flex-wrap gap-2">
-          <span
-            v-for="tech in copy.stack"
-            :key="tech"
-            class="border border-white/25 px-2.5 py-1 text-xs text-white/70"
-          >
-            {{ tech }}
-          </span>
-        </div>
       </header>
 
 
-      <section class="mb-8 sm:mb-10" aria-labelledby="roblox-flagship-title">
-        <article class="flagship-editorial manga-panel border-2 border-white p-5 sm:p-6 md:p-7">
-          <div class="grid grid-cols-1 lg:grid-cols-[0.78fr_1.22fr] gap-6 lg:gap-8 items-stretch">
-            <div class="flex flex-col">
-              <p class="text-[10px] sm:text-xs uppercase tracking-[0.24em] text-white/45">
-                {{ flagship.eyebrow }} · {{ flagship.status }}
-              </p>
+      <section class="flagship-editorial mb-10 sm:mb-12 border-t border-white/20 pt-5 sm:pt-6" aria-labelledby="roblox-flagship-title">
+        <div class="grid grid-cols-1 lg:grid-cols-[0.72fr_1.28fr] gap-6 lg:gap-10 items-start">
+          <div class="lg:pt-2">
+            <p class="text-[10px] sm:text-xs uppercase tracking-[0.22em] text-white/40">
+              {{ flagship.status }} · {{ flagship.role }}
+            </p>
 
-              <h2
-                id="roblox-flagship-title"
-                class="mt-3 text-2xl sm:text-3xl md:text-4xl font-bold manga-text"
+            <h2
+              id="roblox-flagship-title"
+              class="mt-3 text-3xl sm:text-4xl md:text-[2.6rem] font-bold manga-text leading-[1.05]"
+            >
+              {{ flagship.title }}
+            </h2>
+
+            <p class="mt-5 text-sm sm:text-base text-white/72 leading-relaxed">
+              {{ flagship.description }}
+            </p>
+
+            <p class="mt-5 text-xs sm:text-sm text-white/42 leading-relaxed">
+              {{ flagship.scope }}
+            </p>
+
+            <blockquote class="mt-7 sm:mt-9 max-w-sm">
+              <p class="text-sm text-white/72 leading-relaxed">
+                “{{ flagship.quote }}”
+              </p>
+              <footer class="mt-2 text-[10px] sm:text-[11px] text-white/30">
+                — {{ flagship.quoteAuthor }}
+              </footer>
+            </blockquote>
+          </div>
+
+          <div class="min-w-0">
+            <button
+              v-if="flagshipPrimaryEvidence"
+              type="button"
+              class="project-shot block w-full text-left cursor-zoom-in"
+              :aria-label="flagshipPrimaryEvidence.label"
+              @click="openEvidence(0)"
+            >
+              <img
+                :src="flagshipPrimaryEvidence.src"
+                :alt="flagshipPrimaryEvidence.alt"
+                class="w-full aspect-video object-cover bg-black"
+                loading="eager"
+              />
+            </button>
+
+            <div
+              v-if="flagshipSecondaryEvidence.length"
+              class="flagship-contact-sheet mt-3"
+              aria-label="Project screenshots"
+            >
+              <button
+                v-for="(item, index) in flagshipSecondaryEvidence"
+                :key="item.src"
+                type="button"
+                class="contact-shot cursor-zoom-in"
+                :aria-label="item.label"
+                @click="openEvidence(index + 1)"
               >
-                {{ flagship.title }}
-              </h2>
-
-              <p class="mt-3 text-xs sm:text-sm text-white/45">
-                {{ flagship.role }}
-              </p>
-
-              <p class="mt-5 text-sm sm:text-base text-white/75 leading-relaxed">
-                {{ flagship.description }}
-              </p>
-
-              <p class="mt-5 text-xs sm:text-sm text-white/50 leading-relaxed">
-                {{ flagship.scope }}
-              </p>
-
-              <blockquote class="mt-6 lg:mt-auto pt-5 border-t border-white/20">
-                <p class="text-sm text-white/75 leading-relaxed">
-                  “{{ flagship.quote }}”
-                </p>
-                <footer class="mt-2 text-[10px] sm:text-[11px] text-white/35">
-                  — {{ flagship.quoteAuthor }}
-                </footer>
-              </blockquote>
-            </div>
-
-            <div class="lg:border-l lg:border-white/20 lg:pl-8 min-w-0">
-              <figure v-if="flagshipPrimaryEvidence">
-                <button
-                  type="button"
-                  class="flagship-media-frame block w-full text-left cursor-zoom-in hover:border-white/70 transition-colors"
-                  :aria-label="flagshipPrimaryEvidence.label"
-                  @click="openEvidence(0)"
-                >
-                  <img
-                    :src="flagshipPrimaryEvidence.src"
-                    :alt="flagshipPrimaryEvidence.alt"
-                    class="w-full aspect-video object-contain bg-black"
-                    loading="eager"
-                  />
-                </button>
-                <figcaption class="mt-2 text-[10px] sm:text-[11px] text-white/35 leading-relaxed">
-                  {{ flagshipPrimaryEvidence.label }}
-                </figcaption>
-              </figure>
-
-              <div
-                v-if="flagshipSecondaryEvidence.length"
-                class="flagship-filmstrip mt-3 overflow-x-auto pb-1"
-                aria-label="Project screenshots"
-              >
-                <div class="flex gap-2 min-w-max lg:grid lg:grid-cols-5 lg:min-w-0">
-                  <button
-                    v-for="(item, index) in flagshipSecondaryEvidence"
-                    :key="item.src"
-                    type="button"
-                    class="flagship-thumb block w-24 sm:w-28 lg:w-auto border border-white/20 bg-black/60 p-0.5 opacity-65 hover:opacity-100 hover:border-white/70 transition-all cursor-zoom-in"
-                    :aria-label="item.label"
-                    @click="openEvidence(index + 1)"
-                  >
-                    <img
-                      :src="item.src"
-                      :alt="item.alt"
-                      class="w-full aspect-video object-cover bg-black"
-                      loading="lazy"
-                    />
-                  </button>
-                </div>
-              </div>
+                <img
+                  :src="item.src"
+                  :alt="item.alt"
+                  class="w-full h-full object-cover bg-black"
+                  loading="lazy"
+                />
+              </button>
             </div>
           </div>
-        </article>
+        </div>
       </section>
 
       <section aria-labelledby="experience-title">
@@ -296,8 +273,8 @@ const content = {
   en: {
     back: 'Back to Dani.Dev',
     eyebrow: 'Roblox / Game Development',
-    title: 'Roblox & Game Development Experience',
-    intro: 'Client work and gameplay systems I have built over the years in Roblox Studio.',
+    title: 'Roblox / Game Development',
+    intro: 'Client work, gameplay systems, and things I have built over the years in Roblox Studio.'
     caseStudiesEyebrow: 'Core capabilities',
     caseStudiesTitle: 'Game Development Experience',
     caseStudyLabel: 'Experience',
@@ -307,9 +284,9 @@ const content = {
     nextEvidence: 'Next screenshot',
     stack: ['Luau', 'Roblox Studio', 'Client / Server', 'Gameplay Systems', 'Game Development'],
     flagship: {
-      eyebrow: 'Flagship Client Project',
-      status: 'Paid client work · 2026',
-      role: 'Full-stack Roblox Game Developer',
+      eyebrow: 'Client work',
+      status: 'Client work · 2026',
+      role: 'Full-stack Roblox developer',
       title: 'Adaptive Tactical AI & Combat Systems',
       description: 'Built and integrated NPC AI, combat, player interaction, feedback, and animation systems inside an existing Roblox project, iterating directly from client testing.',
       quote: "You've exceeded my expectations ... absolutely nailing the request.",
@@ -449,8 +426,8 @@ const content = {
   es: {
     back: 'Volver a Dani.Dev',
     eyebrow: 'Roblox / Game Development',
-    title: 'Experiencia en Roblox y Game Development',
-    intro: 'Trabajo con clientes y sistemas de gameplay que he construido durante años en Roblox Studio.',
+    title: 'Roblox / Game Development',
+    intro: 'Trabajo con clientes, sistemas de gameplay y cosas que he construido durante años en Roblox Studio.'
     caseStudiesEyebrow: 'Capacidades principales',
     caseStudiesTitle: 'Experiencia en desarrollo',
     caseStudyLabel: 'Experiencia',
@@ -460,9 +437,9 @@ const content = {
     nextEvidence: 'Captura siguiente',
     stack: ['Luau', 'Roblox Studio', 'Client / Server', 'Sistemas de Gameplay', 'Game Development'],
     flagship: {
-      eyebrow: 'Proyecto insignia con cliente',
-      status: 'Trabajo pagado · 2026',
-      role: 'Full-stack Roblox Game Developer',
+      eyebrow: 'Trabajo con cliente',
+      status: 'Trabajo con cliente · 2026',
+      role: 'Full-stack Roblox developer',
       title: 'IA Táctica Adaptativa y Sistemas de Combate',
       description: 'Construí e integré IA de NPCs, combate, interacción del jugador, feedback y animaciones dentro de un proyecto existente de Roblox, iterando directamente con pruebas del cliente.',
       quote: 'Superaste mis expectativas ... clavaste por completo lo que pedí.',
@@ -671,38 +648,102 @@ const selectStudy = (index) => {
   pointer-events: none;
 }
 
+.project-shot {
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  background: #000;
+}
+
+.project-shot img {
+  transition: transform 220ms ease, filter 220ms ease;
+}
+
+.project-shot:hover img {
+  transform: scale(1.008);
+  filter: brightness(1.04);
+}
+
+.flagship-contact-sheet {
+  display: grid;
+  grid-template-columns: 1.35fr 0.9fr 1.15fr 0.82fr 1fr;
+  gap: 0.45rem;
+  align-items: end;
+}
+
+.contact-shot {
+  overflow: hidden;
+  min-width: 0;
+  aspect-ratio: 16 / 9;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: #000;
+  opacity: 0.7;
+  transition: opacity 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.contact-shot:nth-child(2),
+.contact-shot:nth-child(4) {
+  transform: translateY(0.35rem);
+}
+
+.contact-shot:hover {
+  opacity: 1;
+  border-color: rgba(255, 255, 255, 0.62);
+}
+
+.contact-shot:nth-child(2):hover,
+.contact-shot:nth-child(4):hover {
+  transform: translateY(0.2rem);
+}
+
+@media (max-width: 1023px) {
+  .flagship-contact-sheet {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.58) rgba(255, 255, 255, 0.07);
+  }
+
+  .contact-shot {
+    width: 7rem;
+    flex: 0 0 auto;
+    transform: none !important;
+  }
+}
+
 .experience-selector,
-.flagship-filmstrip {
+.flagship-contact-sheet {
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.58) rgba(255, 255, 255, 0.07);
   scrollbar-gutter: stable;
 }
 
 .experience-selector::-webkit-scrollbar,
-.flagship-filmstrip::-webkit-scrollbar {
+.flagship-contact-sheet::-webkit-scrollbar {
   height: 7px;
 }
 
 .experience-selector::-webkit-scrollbar-track,
-.flagship-filmstrip::-webkit-scrollbar-track {
+.flagship-contact-sheet::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.05);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .experience-selector::-webkit-scrollbar-thumb,
-.flagship-filmstrip::-webkit-scrollbar-thumb {
+.flagship-contact-sheet::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.5);
   border: 1px solid rgba(0, 0, 0, 0.9);
   border-radius: 0;
 }
 
 .experience-selector::-webkit-scrollbar-thumb:hover,
-.flagship-filmstrip::-webkit-scrollbar-thumb:hover {
+.flagship-contact-sheet::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.9);
 }
 
 .experience-selector::-webkit-scrollbar-corner,
-.flagship-filmstrip::-webkit-scrollbar-corner {
+.flagship-contact-sheet::-webkit-scrollbar-corner {
   background: transparent;
 }
 </style>
