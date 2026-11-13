@@ -10,7 +10,10 @@
           <span>{{ copy.back }}</span>
         </a>
 
-        <span class="text-xs uppercase tracking-[0.3em] text-white/40">Dani.Dev / Roblox & Game Dev</span>
+        <div class="flex items-center gap-4 sm:gap-5">
+          <span class="hidden md:inline text-xs uppercase tracking-[0.3em] text-white/40">Dani.Dev / Roblox & Game Dev</span>
+          <a href="/3d-modeling" class="text-xs sm:text-sm text-white/60 hover:text-white transition-colors">{{ copy.modelingLink }} →</a>
+        </div>
       </div>
 
       <header class="max-w-3xl mb-7 sm:mb-8">
@@ -185,6 +188,10 @@
         </div>
       </section>
 
+      <section class="mt-10 sm:mt-12 border-t border-white/20 pt-6 sm:pt-8" aria-labelledby="roblox-models-title">
+        <ModelingShowcase :slugs="robloxHighlights" :content="modelingContent" heading-id="roblox-models-title" />
+      </section>
+
       <Teleport to="body">
         <div
           v-if="activeEvidence"
@@ -263,6 +270,8 @@
 
 <script setup>
 import { computed, inject, ref } from 'vue';
+import ModelingShowcase from '../components/modeling/ModelingShowcase.vue';
+import { robloxHighlights } from '../data/models3d.js';
 
 const language = inject('language', { currentLanguage: ref('en') });
 const currentLanguage = language.currentLanguage ?? ref('en');
@@ -272,6 +281,7 @@ const activeEvidenceIndex = ref(null);
 const content = {
   en: {
     back: 'Back to Dani.Dev',
+    modelingLink: '3D Modeling',
     eyebrow: 'Roblox / Game Development',
     title: 'Roblox / Game Development',
     intro: 'Client work, gameplay systems, and things I have built over the years in Roblox Studio.',
@@ -425,6 +435,7 @@ const content = {
   },
   es: {
     back: 'Volver a Dani.Dev',
+    modelingLink: 'Modelado 3D',
     eyebrow: 'Roblox / Game Development',
     title: 'Roblox / Game Development',
     intro: 'Trabajo con clientes, sistemas de gameplay y cosas que he construido durante años en Roblox Studio.',
@@ -575,6 +586,23 @@ const content = {
         media: [],
       },
     ],
+  },
+};
+
+const modelingContent = {
+  en: {
+    eyebrow: '3D modeling for Roblox',
+    title: 'Models built for Roblox projects',
+    text: 'Props, characters and weapons split into one-material parts (one MeshPart each), with pivots placed for animation and real triangle counts. Personal portfolio pieces.',
+    cta: 'Full 3D gallery',
+    open: 'open in the 3D gallery',
+  },
+  es: {
+    eyebrow: 'Modelado 3D para Roblox',
+    title: 'Modelos pensados para proyectos Roblox',
+    text: 'Props, personajes y armas divididos en piezas de un solo material (una MeshPart cada una), con pivotes colocados para animar y conteos reales de triángulos. Piezas personales de portafolio.',
+    cta: 'Galería 3D completa',
+    open: 'abrir en la galería 3D',
   },
 };
 

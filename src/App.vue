@@ -29,12 +29,14 @@
 
     <div :class="`relative z-10 transition-opacity duration-500 ${isLoading ? 'opacity-0' : 'opacity-100'}`">
       <RobloxGameDev v-if="isRobloxGameDevRoute" />
+      <Modeling3D v-else-if="isModelingRoute" />
 
       <template v-else>
         <Navbar />
         <Hero />
         <About />
         <RealWork />
+        <ModelingTeaser />
         <Skills />
         <Projects />
         <Contact />
@@ -56,6 +58,8 @@ import Contact from './components/Contact.vue';
 import Footer from './components/Footer.vue';
 import SpaceBackground from './components/SpaceBackground.vue';
 import RobloxGameDev from './pages/RobloxGameDev.vue';
+import Modeling3D from './pages/Modeling3D.vue';
+import ModelingTeaser from './components/ModelingTeaser.vue';
 
 // Provide default value to prevent errors in tests or isolated rendering
 const language = inject('language', { t: (key) => key });
@@ -70,6 +74,7 @@ const currentPath = typeof window !== 'undefined'
   ? (window.location.pathname.replace(/\/+$/, '') || '/')
   : '/';
 const isRobloxGameDevRoute = currentPath === '/roblox-gamedev';
+const isModelingRoute = currentPath === '/3d-modeling';
 
 // Store references for cleanup
 let loadingTimer = null;
