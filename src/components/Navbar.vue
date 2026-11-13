@@ -6,7 +6,7 @@
     role="banner"
   >
     <div class="container mx-auto px-4">
-      <div class="flex justify-between items-center py-3 sm:py-4">
+      <div class="flex justify-between items-center gap-6 py-3 sm:py-4">
         <div class="text-lg sm:text-xl font-bold header-logo">
           <a href="/" class="hover:text-gray-300 transition-colors">
             Dani.Dev
@@ -14,12 +14,12 @@
         </div>
 
         <!-- Desktop Navigation -->
-        <nav class="hidden md:flex items-center" role="navigation" aria-label="Main navigation">
-          <ul class="flex space-x-3 lg:space-x-6 mr-4 lg:mr-6">
+        <nav class="hidden lg:flex items-center" role="navigation" aria-label="Main navigation">
+          <ul class="flex space-x-4 xl:space-x-6 mr-4 xl:mr-6">
             <li v-for="item in menuItems" :key="item.name">
               <a
                 :href="item.href"
-                class="nav-link hover:text-gray-300 transition-colors px-1 py-1 text-sm lg:text-base"
+                class="nav-link hover:text-gray-300 transition-colors px-1 py-1 text-sm xl:text-base whitespace-nowrap"
               >
                 {{ item.name }}
               </a>
@@ -32,7 +32,7 @@
             <a
               href="/danilo-lopez-cv.pdf"
               download
-              class="flex items-center gap-1 sm:gap-2 border-2 border-white px-3 py-1 sm:px-4 sm:py-2 transition-all duration-300 hover:bg-white hover:text-black text-sm lg:text-base"
+              class="flex items-center gap-1 sm:gap-2 border-2 border-white px-3 py-1 sm:px-4 sm:py-2 transition-all duration-300 hover:bg-white hover:text-black text-sm xl:text-base"
             >
               <FileDown class="w-3 h-3 sm:w-4 sm:h-4" aria-hidden="true" />
               <span class="font-medium">{{ t('nav.cv') }}</span>
@@ -41,7 +41,7 @@
         </nav>
 
         <!-- Mobile Menu Button -->
-        <div class="flex items-center gap-2 md:hidden">
+        <div class="flex items-center gap-2 lg:hidden">
           <LanguageSelector />
           <button 
             class="text-white p-1" 
@@ -62,7 +62,7 @@
       v-if="isOpen"
       id="mobile-menu"
       ref="mobileMenuRef"
-      class="md:hidden bg-black/95 border-t border-white/20"
+      class="lg:hidden bg-black/95 border-t border-white/20"
       role="navigation"
       aria-label="Mobile navigation"
     >
@@ -136,6 +136,7 @@ const menuItems = computed(() => [
   { name: t('nav.skills'), href: "#skills" },
   { name: t('nav.projects'), href: "#projects" },
   { name: 'Roblox / Game Dev', href: "/roblox-gamedev" },
+  { name: t('nav.modeling'), href: "/3d-modeling" },
   { name: t('nav.contact'), href: "#contact" },
 ]);
 
