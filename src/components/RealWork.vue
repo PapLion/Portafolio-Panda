@@ -45,7 +45,8 @@
               <p class="text-[10px] sm:text-xs uppercase tracking-[0.2em] text-white/45 mb-3">{{ copy.galleryTitle }}</p>
               <ProjectGallery
                 :shots="project.gallery"
-                base-path="/images/pucket"
+                :base-path="project.galleryPath"
+                :featured="project.featuredShot === true"
                 :label="project.title + ' — ' + copy.galleryTitle"
                 :open-label="copy.enlarge"
                 :prev-label="copy.prev"
@@ -212,5 +213,33 @@ const content = {
 
 const testimonials = ref([]);
 const copy = computed(() => content[currentLanguage.value] ?? content.en);
-const projects = computed(() => [copy.value.project, copy.value.pucket]);
+const wide = { thumbW: 480, thumbH: 300, largeW: 1200, largeH: 750, wide: true };
+const tall = { thumbW: 240, thumbH: 519, largeW: 390, largeH: 844 };
+const bloxtopShots = {
+  en: [
+    { id: 'home-hero-desktop', caption: 'BloxTop home page: hero, store entry point and live sales ticker', ...wide },
+    { id: 'home-live-sales-how-it-works-desktop', caption: 'Home page: live sales feed and the three-step purchase flow', ...wide },
+    { id: 'market-catalog-filters-desktop', caption: 'Blox Fruits catalog with category tabs, price range, rarity filters and sorting', ...wide },
+    { id: 'market-search-desktop', caption: 'Catalog search narrowing results across categories', ...wide },
+    { id: 'product-detail-desktop', caption: 'Product detail page with pricing, discount, description and add-to-cart', ...wide },
+    { id: 'market-catalog-mobile', caption: 'Mobile catalog with filters, search and bottom navigation', ...tall },
+    { id: 'product-detail-mobile', caption: 'Mobile product detail page', ...tall },
+  ],
+  es: [
+    { id: 'home-hero-desktop', caption: 'Página de inicio de BloxTop: portada, acceso a la tienda y ventas en vivo', ...wide },
+    { id: 'home-live-sales-how-it-works-desktop', caption: 'Inicio: ventas en vivo y el proceso de compra en tres pasos', ...wide },
+    { id: 'market-catalog-filters-desktop', caption: 'Catálogo de Blox Fruits con categorías, rango de precio, filtros de rareza y orden', ...wide },
+    { id: 'market-search-desktop', caption: 'Búsqueda en el catálogo filtrando resultados por categoría', ...wide },
+    { id: 'product-detail-desktop', caption: 'Ficha de producto con precio, descuento, descripción y botón de carrito', ...wide },
+    { id: 'market-catalog-mobile', caption: 'Catálogo móvil con filtros, búsqueda y navegación inferior', ...tall },
+    { id: 'product-detail-mobile', caption: 'Ficha de producto en móvil', ...tall },
+  ],
+};
+const projects = computed(() => {
+  const lang = currentLanguage.value in bloxtopShots ? currentLanguage.value : 'en';
+  return [
+    { ...copy.value.project, gallery: bloxtopShots[lang], galleryPath: '/images/bloxtop', featuredShot: true },
+    { ...copy.value.pucket, galleryPath: '/images/pucket' },
+  ];
+});
 </script>

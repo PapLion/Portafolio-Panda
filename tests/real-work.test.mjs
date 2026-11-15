@@ -190,3 +190,26 @@ test('home features Pucket with an accurate real/simulated split and an optimize
     }
   }
 });
+
+
+test('BloxTop shows real screenshots through the shared gallery, with optimized assets', async () => {
+  const { existsSync } = await import('node:fs');
+  const source = readFileSync(componentPath, 'utf8');
+
+  assert.match(source, /galleryPath: '\/images\/bloxtop'/);
+  assert.match(source, /featuredShot: true/);
+  assert.match(source, /galleryPath: '\/images\/pucket'/);
+
+  const block = source.slice(source.indexOf('const bloxtopShots'), source.indexOf('const projects'));
+  const shots = [...block.matchAll(/\{ id: '([a-z0-9-]+)', caption: '[^']+', \.\.\.(wide|tall) \}/g)];
+  assert.ok(shots.length >= 10, 'BloxTop should list its screenshots in both languages');
+  const sizes = { wide: [480, 1200], tall: [240, 390] };
+  for (const [, id, shape] of shots) {
+    for (const width of sizes[shape]) {
+      assert.ok(
+        existsSync(new URL(`../public/images/bloxtop/${id}-${width}.webp`, import.meta.url)),
+        `missing ${id}-${width}.webp`,
+      );
+    }
+  }
+});
