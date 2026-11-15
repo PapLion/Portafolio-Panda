@@ -164,3 +164,30 @@ test('Roblox/Game Dev flagship reads like portfolio work instead of a generated 
   assert.doesNotMatch(source, /pdadraJb20o/i);
   assert.doesNotMatch(source, /1,?000\s+Robux/i);
 });
+
+
+test('home features Pucket with an accurate real/simulated split and an optimized screenshot gallery', async () => {
+  const { existsSync } = await import('node:fs');
+  const source = readFileSync(componentPath, 'utf8');
+  const gallery = readFileSync(new URL('../src/components/ProjectGallery.vue', import.meta.url), 'utf8');
+
+  assert.match(source, /title: 'Pucket'/);
+  assert.match(source, /Testnets only/);
+  assert.match(source, /Simulated:/);
+  assert.match(source, /Solo testnets/);
+  assert.match(source, /Simulado:/);
+  assert.match(source, /<ProjectGallery/);
+  assert.match(gallery, /loading="lazy"/);
+  assert.match(gallery, /role="dialog"/);
+
+  const ids = [...source.matchAll(/\{ id: '(\d\d-[a-z0-9-]+)', caption/g)].map((m) => m[1]);
+  assert.ok(ids.length >= 10, 'Pucket gallery should list its screenshots');
+  for (const id of new Set(ids)) {
+    for (const width of [360, 900]) {
+      assert.ok(
+        existsSync(new URL(`../public/images/pucket/${id}-${width}.webp`, import.meta.url)),
+        `missing ${id}-${width}.webp`,
+      );
+    }
+  }
+});
