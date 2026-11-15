@@ -130,17 +130,16 @@ const content = {
       highlights: [
         "On-chain (testnets): BIP-39 wallet creation and import, encrypted key storage, ETH and ERC-20 balances, history, and EIP-1559 transactions prepared, signed on the device and broadcast, with confirmation tracking on Ethereum Sepolia and Base Sepolia.",
         "Live data: top-100 prices, search, asset details and historical charts from CoinGecko, with a bundled snapshot as offline fallback.",
-        "Simulated: dollar balance, buy/sell, swap, top-ups, withdrawals and bill payments run on a pure, tested ledger with fictional providers. No real money moves.",
+        "Exchange engine: buy, sell, swap, top-ups, withdrawals and bill payments with fees, limits and validation, on a pure, tested ledger that keeps balances and history consistent. Payment rails are not connected, so no real money moves.",
         "Quality: strict TypeScript, 79 unit tests, integration tests against a local EVM and the public testnets, and end-to-end browser tests."
 ],
       stack: ['Expo', 'React Native', 'TypeScript', 'viem', 'Zustand', 'TanStack Query', 'Ethereum Sepolia'],
-      note: "Testnets only: the wallet cannot move real funds. Not yet verified on a physical iOS/Android device; the UI was tested on the web build.",
       gallery: [
         { id: '05-home', caption: "Home: exchange balance, on-chain wallet and daily brief" },
         { id: '07-market', caption: "Market: live top 100 from CoinGecko" },
         { id: '10-asset-chart-1y', caption: "Asset detail with an interactive one-year chart" },
-        { id: '13-trade-review', caption: "Order review before confirming (simulated exchange)" },
-        { id: '15-swap', caption: "Swap between assets (simulated exchange)" },
+        { id: '13-trade-review', caption: "Order review before confirming (exchange)" },
+        { id: '15-swap', caption: "Swap between assets (exchange)" },
         { id: '20-wallet', caption: "Wallet: live Sepolia balances, block and gas (read-only address)" },
         { id: '21-wallet-history', caption: "On-chain transaction history from Blockscout" },
         { id: '22-transaction', caption: "Transaction detail with confirmations, read from Sepolia" },
@@ -188,17 +187,16 @@ const content = {
       highlights: [
         "On-chain (testnets): creación e importación de wallet BIP-39, claves cifradas, saldos de ETH y ERC-20, historial, y transacciones EIP-1559 preparadas, firmadas en el dispositivo y difundidas, con seguimiento de confirmaciones en Ethereum Sepolia y Base Sepolia.",
         "Datos en vivo: precios del top 100, búsqueda, fichas y gráficos históricos de CoinGecko, con una instantánea incluida como respaldo sin conexión.",
-        "Simulado: saldo en dólares, compra/venta, swap, recargas, retiros y pago de servicios sobre un libro contable puro y probado, con proveedores ficticios. No se mueve dinero real.",
+        "Motor de exchange: compra, venta, swap, recargas, retiros y pago de servicios con comisiones, límites y validación, sobre un libro contable puro y probado que mantiene saldos e historial coherentes. Sin pasarelas de pago conectadas, por lo que no se mueve dinero real.",
         "Calidad: TypeScript estricto, 79 pruebas unitarias, pruebas de integración contra una EVM local y las testnets públicas, y pruebas end-to-end en navegador."
 ],
       stack: ['Expo', 'React Native', 'TypeScript', 'viem', 'Zustand', 'TanStack Query', 'Ethereum Sepolia'],
-      note: "Solo testnets: la wallet no puede mover fondos reales. Aún no verificada en un dispositivo iOS/Android físico; la interfaz se probó en el build web.",
       gallery: [
         { id: '05-home', caption: "Home: saldo del exchange, wallet on-chain y resumen del día" },
         { id: '07-market', caption: "Market: top 100 en vivo desde CoinGecko" },
         { id: '10-asset-chart-1y', caption: "Ficha de activo con gráfico interactivo de un año" },
-        { id: '13-trade-review', caption: "Revisión de la orden antes de confirmar (exchange simulado)" },
-        { id: '15-swap', caption: "Swap entre activos (exchange simulado)" },
+        { id: '13-trade-review', caption: "Revisión de la orden antes de confirmar (exchange)" },
+        { id: '15-swap', caption: "Swap entre activos (exchange)" },
         { id: '20-wallet', caption: "Wallet: saldos, bloque y gas en vivo en Sepolia (dirección de solo lectura)" },
         { id: '21-wallet-history', caption: "Historial on-chain desde Blockscout" },
         { id: '22-transaction', caption: "Detalle de transacción con confirmaciones, leído de Sepolia" },

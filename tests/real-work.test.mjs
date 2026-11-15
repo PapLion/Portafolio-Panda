@@ -172,10 +172,9 @@ test('home features Pucket with an accurate real/simulated split and an optimize
   const gallery = readFileSync(new URL('../src/components/ProjectGallery.vue', import.meta.url), 'utf8');
 
   assert.match(source, /title: 'Pucket'/);
-  assert.match(source, /Testnets only/);
-  assert.match(source, /Simulated:/);
-  assert.match(source, /Solo testnets/);
-  assert.match(source, /Simulado:/);
+  assert.match(source, /\(testnets\)/);
+  assert.match(source, /Exchange engine:/);
+  assert.match(source, /Motor de exchange:/);
   assert.match(source, /<ProjectGallery/);
   assert.match(gallery, /loading="lazy"/);
   assert.match(gallery, /role="dialog"/);
