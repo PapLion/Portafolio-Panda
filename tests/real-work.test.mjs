@@ -213,3 +213,26 @@ test('BloxTop shows real screenshots through the shared gallery, with optimized 
     }
   }
 });
+
+
+test('home features Chimero with factual copy and every gallery image in both sizes', async () => {
+  const { existsSync } = await import('node:fs');
+  const source = readFileSync(componentPath, 'utf8');
+  const caseStudies = readFileSync(new URL('../src/components/Projects.vue', import.meta.url), 'utf8');
+
+  assert.match(source, /title: 'Chimero'/);
+  assert.match(source, /galleryPath: '\/images\/chimero'/);
+  assert.match(source, /https:\/\/github\.com\/PapLion\/Chimero/);
+  assert.match(source, /fictional profile/);
+  assert.match(source, /perfil ficticio/);
+  assert.doesNotMatch(caseStudies, /dnd-kit/);
+
+  const block = source.slice(source.indexOf('chimero: {'), source.indexOf('pucket: {', source.indexOf('chimero: {')));
+  const ids = [...block.matchAll(/\{ id: '([a-z-]+)', caption: "[^"]+", \.\.\.chimeroShot \}/g)].map((m) => m[1]);
+  assert.ok(ids.length >= 10, 'Chimero gallery should list its screenshots');
+  for (const id of ids) {
+    for (const width of [480, 1200]) {
+      assert.ok(existsSync(new URL(`../public/images/chimero/${id}-${width}.webp`, import.meta.url)), `missing ${id}-${width}.webp`);
+    }
+  }
+});

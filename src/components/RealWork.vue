@@ -94,6 +94,9 @@ import ProjectGallery from './ProjectGallery.vue';
 const language = inject('language', { currentLanguage: ref('en') });
 const currentLanguage = language.currentLanguage ?? ref('en');
 
+// Chimero captures are 1584×852, exported at 480 and 1200 px wide.
+const chimeroShot = { thumbW: 480, thumbH: 258, largeW: 1200, largeH: 646, wide: true };
+
 const content = {
   en: {
     eyebrow: 'Selected work',
@@ -149,6 +152,37 @@ const content = {
         { id: '26-account', caption: "Account and settings" },
       ],
       links: [],
+      media: [],
+    },
+    chimero: {
+      category: 'Desktop / Data',
+      badge: 'Open source',
+      title: 'Chimero',
+      role: 'Solo developer · Local-first desktop app',
+      description: "Desktop app for tracking anything about your life: mood, sleep, weight, training, food, symptoms, the people you see, and variables you define yourself. Everything lives in one SQLite file on your machine, with no accounts and no cloud.",
+      highlights: [
+        "Dashboard you compose: a 12-column grid where widgets drag, resize, make room for each other and come back exactly as you left them, built on pure, unit-tested layout functions.",
+        "A form fitted to each kind of record (weigh-ins, workouts with sets and routines, meals, symptoms, books, people) plus a builder for your own trackers with templates, units, goals and custom fields. Quick Entry opens from anywhere with Alt+Q.",
+        "Honest statistics: a day without a record is unknown, not zero. Comparisons report the sample size and p-value, and the pattern scan corrects for testing thousands of pairs so chance results are not presented as findings.",
+        "Data safety: additive migrations, a copy before every upgrade, backup, restore and JSON/CSV export, all checked by end-to-end tests on the packaged app, including an upgrade from the previous release's database.",
+      ],
+      note: "Screenshots show a fictional profile generated through the app's own API. No personal data.",
+      stack: ['Electron', 'React', 'TypeScript', 'SQLite', 'Drizzle ORM', 'TanStack Query', 'Tailwind CSS', 'Vitest'],
+      gallery: [
+        { id: 'today-dashboard', caption: "Today: a dashboard of widgets arranged by the user", ...chimeroShot },
+        { id: 'dashboard-edit-mode', caption: "Edit mode: drag to move, drag a corner to resize", ...chimeroShot },
+        { id: 'quick-entry-mood', caption: "Quick Entry (Alt+Q): a mood check-in in a few keystrokes", ...chimeroShot },
+        { id: 'insights-dairy-bloating', caption: "Insights: dairy and next-day bloating, with the split behind the number", ...chimeroShot },
+        { id: 'insights-sleep-mood', caption: "Insights: sleep and mood, and the patterns found across all trackers", ...chimeroShot },
+        { id: 'tracker-weight', caption: "Weight: fitted trend, goal line and editable history", ...chimeroShot },
+        { id: 'workout-entry', caption: "Logging a workout started from a saved routine", ...chimeroShot },
+        { id: 'tracker-builder', caption: "Tracker builder, started from the Meditation template", ...chimeroShot },
+        { id: 'custom-tracker-sleep', caption: "A custom Sleep tracker with its own statistics and goal", ...chimeroShot },
+        { id: 'journal', caption: "Journal: every record, by day", ...chimeroShot },
+        { id: 'people', caption: "People: birthdays, notes and reminders to get back in touch", ...chimeroShot },
+        { id: 'today-light-theme', caption: "Light theme", ...chimeroShot },
+      ],
+      links: [{ label: 'Source on GitHub', href: 'https://github.com/PapLion/Chimero' }],
       media: [],
     },
   },
@@ -208,6 +242,37 @@ const content = {
       links: [],
       media: [],
     },
+    chimero: {
+      category: 'Escritorio / Datos',
+      badge: 'Código abierto',
+      title: 'Chimero',
+      role: 'Desarrollador en solitario · App de escritorio local',
+      description: "App de escritorio para registrar cualquier aspecto de tu vida: ánimo, sueño, peso, entrenamiento, comida, síntomas, las personas que ves y variables que defines tú. Todo vive en un archivo SQLite en tu equipo, sin cuentas ni nube.",
+      highlights: [
+        "Un dashboard que compones tú: una cuadrícula de 12 columnas donde los widgets se arrastran, cambian de tamaño, se hacen sitio entre sí y vuelven tal como los dejaste, sobre funciones de layout puras y probadas.",
+        "Un formulario a la medida de cada tipo de registro (pesajes, entrenamientos con series y rutinas, comidas, síntomas, libros, personas) y un constructor de trackers propios con plantillas, unidades, metas y campos personalizados. Quick Entry se abre desde cualquier sitio con Alt+Q.",
+        "Estadísticas honestas: un día sin registro es desconocido, no cero. Las comparaciones muestran el tamaño de la muestra y el p-valor, y el escaneo de patrones corrige por probar miles de pares para no presentar casualidades como hallazgos.",
+        "Datos a salvo: migraciones solo aditivas, una copia antes de cada actualización, copia de seguridad, restauración y exportación JSON/CSV, todo comprobado con pruebas end-to-end sobre la app empaquetada, incluida la actualización desde la base de datos de la versión anterior.",
+      ],
+      note: "Las capturas muestran un perfil ficticio generado con la propia API de la app. Sin datos personales.",
+      stack: ['Electron', 'React', 'TypeScript', 'SQLite', 'Drizzle ORM', 'TanStack Query', 'Tailwind CSS', 'Vitest'],
+      gallery: [
+        { id: 'today-dashboard', caption: "Hoy: un dashboard de widgets ordenado por el usuario", ...chimeroShot },
+        { id: 'dashboard-edit-mode', caption: "Modo edición: arrastra para mover, arrastra una esquina para redimensionar", ...chimeroShot },
+        { id: 'quick-entry-mood', caption: "Quick Entry (Alt+Q): registrar el ánimo en unas pocas teclas", ...chimeroShot },
+        { id: 'insights-dairy-bloating', caption: "Insights: lácteos e hinchazón al día siguiente, con el desglose detrás del número", ...chimeroShot },
+        { id: 'insights-sleep-mood', caption: "Insights: sueño y ánimo, y los patrones encontrados entre todos los trackers", ...chimeroShot },
+        { id: 'tracker-weight', caption: "Peso: tendencia ajustada, línea de meta e historial editable", ...chimeroShot },
+        { id: 'workout-entry', caption: "Registro de un entrenamiento a partir de una rutina guardada", ...chimeroShot },
+        { id: 'tracker-builder', caption: "Constructor de trackers, desde la plantilla Meditation", ...chimeroShot },
+        { id: 'custom-tracker-sleep', caption: "Un tracker de sueño propio con sus estadísticas y meta", ...chimeroShot },
+        { id: 'journal', caption: "Diario: todos los registros, día a día", ...chimeroShot },
+        { id: 'people', caption: "Personas: cumpleaños, notas y avisos para volver a hablar", ...chimeroShot },
+        { id: 'today-light-theme', caption: "Tema claro", ...chimeroShot },
+      ],
+      links: [{ label: 'Código en GitHub', href: 'https://github.com/PapLion/Chimero' }],
+      media: [],
+    },
   },
 };
 
@@ -239,6 +304,7 @@ const projects = computed(() => {
   const lang = currentLanguage.value in bloxtopShots ? currentLanguage.value : 'en';
   return [
     { ...copy.value.project, gallery: bloxtopShots[lang], galleryPath: '/images/bloxtop', featuredShot: true },
+    { ...copy.value.chimero, galleryPath: '/images/chimero', featuredShot: true },
     { ...copy.value.pucket, galleryPath: '/images/pucket' },
   ];
 });
