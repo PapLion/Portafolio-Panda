@@ -209,18 +209,18 @@ const caseStudies = [
   },
   {
     id: 5,
-    category: 'Desktop / Productivity',
-    title: 'Habit Flows — Privacy-First Life Tracking System',
-    role: 'Sole Developer · Local-Only Architecture',
+    category: 'Desktop / Data',
+    title: 'Chimero — Local-First Life Tracking',
+    role: 'Solo Developer · Open Source (formerly Habit Flows)',
     description:
-      'Designed a personal productivity system with a hard constraint: no network calls, no cloud sync, no telemetry. Habit Flows operates as a local-first Electron application that serves as an all-in-one tracker for nutrition, social interactions, and personal CRM. The interface is modular and highly configurable — users compose their own dashboard by dragging and dropping widget panels, enabling a deeply personalized tracking experience.',
+      'A local-first Electron app for tracking anything about your life (mood, sleep, weight, training, food, symptoms, people, and variables you define), with no accounts, no cloud and no telemetry. The second version rebuilt the interface on top of the existing SQLite services and added an analytics engine designed not to overclaim: missing days stay unknown instead of becoming zeros, and the pattern scan controls the false-discovery rate across thousands of comparisons.',
     highlights: [
-      'Drag-and-drop dashboard built with dnd-kit; layout state persisted locally to SQLite',
-      'Social CRM module: track relationships, interactions, and personal notes per contact',
-      'Nutrition tracker with custom food entries and historical trend visualization',
-      'All data remains on-device — zero external API calls by design',
+      'Composable 12-column dashboard: drag, resize, collision handling and keyboard moves, built on a pure, unit-tested grid engine and persisted to SQLite',
+      'Custom tracker builder with templates, units, goals and up to twelve fields, plus structured forms for workouts, meals, symptoms, books and a personal CRM',
+      'Found and fixed a runtime failure in every structured write that mocked tests had hidden; covered since by integration tests against real SQLite',
+      'Additive migrations with a copy before each upgrade; end-to-end tests on the packaged app cover UI CRUD, restarts, backup/restore and an upgrade from the previous release',
     ],
-    stack: ['Electron', 'React', 'dnd-kit', 'SQLite', 'TypeScript', 'TailwindCSS'],
+    stack: ['Electron', 'React', 'TypeScript', 'SQLite', 'Drizzle ORM', 'TanStack Query', 'Vitest', 'Playwright'],
   },
   {
     id: 6,
