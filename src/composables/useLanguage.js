@@ -191,7 +191,7 @@ const translations = {
 
 export function createLanguageProvider() {
   const localeFromPath = typeof window !== 'undefined'
-    ? window.location.pathname.match(/^\\/(en|es)\\/?$/)?.[1]
+    ? window.location.pathname.match(/^\/(en|es)\/?$/)?.[1]
     : undefined;
   const currentLanguage = ref(localeFromPath || 'en');
 
@@ -207,7 +207,7 @@ export function createLanguageProvider() {
       currentLanguage.value = lang;
       if (typeof document !== 'undefined') document.documentElement.lang = lang;
       // Keep shared URLs and crawler-visible metadata aligned with the selected language.
-      if (typeof window !== 'undefined' && /^\\/(?:en|es)?\\/?$/.test(window.location.pathname)) {
+      if (typeof window !== 'undefined' && /^\/(?:en|es)?\/?$/.test(window.location.pathname)) {
         const targetPath = '/' + lang;
         if (window.location.pathname !== targetPath) {
           try { window.localStorage.setItem('language', lang); } catch (e) { /* optional preference */ }
