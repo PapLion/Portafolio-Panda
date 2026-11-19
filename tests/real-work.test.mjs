@@ -252,7 +252,7 @@ test('Chimero and Pucket appear only in flagship client work, not in Case Studie
   assert.doesNotMatch(studies, /Chimero|Pucket/);
   assert.match(featured, /title: 'Chimero'/);
   assert.match(featured, /title: 'Pucket'/);
-  assert.match(featured, /Client Chamero/);
+  assert.match(featured, /Chamero client/);
   assert.match(featured, /recurring paid work/);
   assert.match(featured, /contributed to backend work/);
   assert.match(featured, /Proyecto para cliente/);
