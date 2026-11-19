@@ -99,6 +99,10 @@
         </div>
       </section>
 
+      <div class="mb-10 sm:mb-12">
+        <PivotShowcase />
+      </div>
+
       <section aria-labelledby="experience-title">
         <div class="mb-4">
           <p class="text-xs uppercase tracking-[0.3em] text-white/40">{{ copy.caseStudiesEyebrow }}</p>
@@ -271,6 +275,7 @@
 <script setup>
 import { computed, inject, ref } from 'vue';
 import ModelingShowcase from '../components/modeling/ModelingShowcase.vue';
+import PivotShowcase from '../components/roblox/PivotShowcase.vue';
 import { robloxHighlights } from '../data/models3d.js';
 
 const language = inject('language', { currentLanguage: ref('en') });
