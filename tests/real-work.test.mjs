@@ -173,6 +173,10 @@ test('home features Pucket with an accurate real/simulated split and an optimize
 
   assert.match(source, /title: 'Pucket'/);
   assert.match(source, /\(testnets\)/);
+  assert.match(source, /badge: "Client project"/);
+  assert.match(source, /badge: "Proyecto para cliente"/);
+  assert.match(source, /contributed to backend work/);
+  assert.match(source, /parte del backend/);
   assert.match(source, /Exchange engine:/);
   assert.match(source, /Motor de exchange:/);
   assert.match(source, /<ProjectGallery/);
@@ -221,6 +225,10 @@ test('home features Chimero with factual copy and every gallery image in both si
   const caseStudies = readFileSync(new URL('../src/components/Projects.vue', import.meta.url), 'utf8');
 
   assert.match(source, /title: 'Chimero'/);
+  assert.match(source, /Client Chamero/);
+  assert.match(source, /cliente Chamero/);
+  assert.match(source, /six months/);
+  assert.match(source, /seis meses/);
   assert.match(source, /galleryPath: '\/images\/chimero'/);
   assert.match(source, /https:\/\/github\.com\/PapLion\/Chimero/);
   assert.match(source, /fictional profile/);
@@ -235,4 +243,15 @@ test('home features Chimero with factual copy and every gallery image in both si
       assert.ok(existsSync(new URL(`../public/images/chimero/${id}-${width}.webp`, import.meta.url)), `missing ${id}-${width}.webp`);
     }
   }
+});
+
+
+test('case studies identify Chimero and Pucket as paid client engagements with accurate scope', () => {
+  const source = readFileSync(new URL('../src/components/Projects.vue', import.meta.url), 'utf8');
+  assert.match(source, /Client Chamero/);
+  assert.match(source, /recurring paid work/);
+  assert.match(source, /Pucket Client Engagement/);
+  assert.match(source, /part of the backend/);
+  assert.match(source, /simulated exchange/);
+  assert.doesNotMatch(source, /two production crypto wallet mobile applications/);
 });
