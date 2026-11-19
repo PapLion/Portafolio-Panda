@@ -1,9 +1,34 @@
 {
   "framework": "vite",
   "rewrites": [
-    { "source": "/roblox-gamedev", "destination": "/index.html" },
-    { "source": "/3d-modeling", "destination": "/index.html" },
-    { "source": "/api/(.*)", "destination": "/api/$1" }
+    {
+      "source": "/en",
+      "destination": "/en/index.html"
+    },
+    {
+      "source": "/es",
+      "destination": "/es/index.html"
+    },
+    {
+      "source": "/en/",
+      "destination": "/en/index.html"
+    },
+    {
+      "source": "/es/",
+      "destination": "/es/index.html"
+    },
+    {
+      "source": "/roblox-gamedev",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/3d-modeling",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    }
   ],
   "headers": [
     {

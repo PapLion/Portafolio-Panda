@@ -190,7 +190,10 @@ const translations = {
 };
 
 export function createLanguageProvider() {
-  const currentLanguage = ref('en');
+  const localeFromPath = typeof window !== 'undefined'
+    ? window.location.pathname.match(/^\/(en|es)\/?$/)?.[1]
+    : undefined;
+  const currentLanguage = ref(localeFromPath || 'en');
 
   // Translation function - reads reactive ref internally
   const t = (key) => {
@@ -202,6 +205,16 @@ export function createLanguageProvider() {
   const setLanguage = (lang) => {
     if (lang === 'es' || lang === 'en') {
       currentLanguage.value = lang;
+      if (typeof document !== 'undefined') document.documentElement.lang = lang;
+      // Keep shared URLs and crawler-visible metadata aligned with the selected language.
+      if (typeof window !== 'undefined' && /^\/(?:en|es)?\/?$/.test(window.location.pathname)) {
+        const targetPath = '/' + lang;
+        if (window.location.pathname !== targetPath) {
+          try { window.localStorage.setItem('language', lang); } catch (e) { /* optional preference */ }
+          window.location.assign(targetPath);
+          return;
+        }
+      }
       // SSR guard for localStorage
       if (typeof window !== 'undefined' && window.localStorage) {
         try {
@@ -218,7 +231,7 @@ export function createLanguageProvider() {
   if (typeof window !== 'undefined' && window.localStorage) {
     try {
       const savedLanguage = localStorage.getItem('language');
-      if (savedLanguage && (savedLanguage === 'es' || savedLanguage === 'en')) {
+      if (!localeFromPath && savedLanguage && (savedLanguage === 'es' || savedLanguage === 'en')) {
         currentLanguage.value = savedLanguage;
       }
     } catch (e) {
