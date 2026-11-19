@@ -13,7 +13,7 @@ for (const [locale, html] of Object.entries(htmlPages)) {
     assert.match(html, new RegExp(`<meta property="og:url" content="https://danipp\\.tech/${locale}">`));
     assert.match(html, new RegExp(`<meta name="twitter:url" content="https://danipp\\.tech/${locale}">`));
     assert.match(html, /<meta name="twitter:card" content="summary">/);
-    assert.doesNotMatch(html, /(?:og:image|twitter:image|og-image\\.jpg|danidev\\.vercel\\.app)/);
+    assert.doesNotMatch(html, /(?:og:image|twitter:image|og-image\.jpg|danidev\.vercel\.app)/);
     assert.match(html, /href="https:\/\/danipp\.tech\/en"/);
     assert.match(html, /href="https:\/\/danipp\.tech\/es"/);
   });
