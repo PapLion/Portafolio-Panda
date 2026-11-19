@@ -225,7 +225,7 @@ test('home features Chimero with factual copy and every gallery image in both si
   const caseStudies = readFileSync(new URL('../src/components/Projects.vue', import.meta.url), 'utf8');
 
   assert.match(source, /title: 'Chimero'/);
-  assert.match(source, /Client Chamero/);
+  assert.match(source, /Chamero client/);
   assert.match(source, /cliente Chamero/);
   assert.match(source, /six months/);
   assert.match(source, /seis meses/);
