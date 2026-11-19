@@ -1,7 +1,37 @@
 <template>
   <div class="project-gallery">
+    <!-- grid: captioned tiles (component libraries); a `span` of 2 or 3 widens a tile on larger screens -->
+    <ul v-if="layout === 'grid'" class="gallery-grid" :aria-label="label">
+      <li
+        v-for="(shot, i) in shots"
+        :key="shot.id"
+        class="gallery-cell"
+        :class="shot.span === 3 ? 'gallery-cell--3' : shot.span === 2 ? 'gallery-cell--2' : ''"
+      >
+        <button
+          type="button"
+          class="gallery-tile"
+          :aria-label="`${openLabel}: ${shot.caption}`"
+          @click="open(i)"
+        >
+          <img
+            :src="thumb(shot)"
+            :srcset="`${thumb(shot)} ${shot.thumbW ?? 360}w, ${large(shot)} ${shot.largeW ?? 900}w`"
+            :sizes="shot.span ? '(min-width: 1024px) 760px, 92vw' : '(min-width: 1024px) 380px, (min-width: 640px) 46vw, 92vw'"
+            :alt="shot.caption"
+            :width="shot.thumbW ?? 360"
+            :height="shot.thumbH ?? 779"
+            loading="lazy"
+            decoding="async"
+          />
+        </button>
+        <p v-if="shot.title" class="gallery-cell-title">{{ shot.title }}</p>
+        <p v-if="shot.note" class="gallery-cell-note">{{ shot.note }}</p>
+      </li>
+    </ul>
+
     <button
-      v-if="featured && shots.length"
+      v-if="layout !== 'grid' && featured && shots.length"
       type="button"
       class="gallery-featured"
       :aria-label="`${openLabel}: ${shots[0].caption}`"
@@ -19,7 +49,7 @@
       />
     </button>
 
-    <div class="gallery-strip" :class="{ 'mt-3': featured }" role="list" :aria-label="label">
+    <div v-if="layout !== 'grid'" class="gallery-strip" :class="{ 'mt-3': featured }" role="list" :aria-label="label">
       <button
         v-for="(shot, i) in stripShots"
         :key="shot.id"
@@ -89,6 +119,7 @@ const props = defineProps({
   shots: { type: Array, required: true }, // [{ id, caption }]
   basePath: { type: String, required: true }, // e.g. /images/pucket
   featured: { type: Boolean, default: false },
+  layout: { type: String, default: 'strip' }, // 'strip' (thumbnail row) | 'grid' (captioned tiles)
   label: { type: String, default: 'Screenshots' },
   openLabel: { type: String, default: 'Enlarge' },
   prevLabel: { type: String, default: 'Previous' },
@@ -196,6 +227,80 @@ onBeforeUnmount(() => lock(false));
   display: block;
   width: 100%;
   height: auto;
+}
+.gallery-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.gallery-cell {
+  min-width: 0;
+}
+.gallery-tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: #0a0a0a;
+  padding: 0.6rem;
+  cursor: zoom-in;
+  transition: border-color 0.2s;
+}
+.gallery-tile:hover,
+.gallery-tile:focus-visible {
+  border-color: #fff;
+}
+.gallery-tile img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+.gallery-cell-title {
+  margin-top: 0.55rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.88);
+}
+.gallery-cell-note {
+  margin-top: 0.2rem;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.5);
+}
+@media (min-width: 640px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  /* fixed tile heights so every row lines up; wide tiles span the row */
+  .gallery-tile {
+    aspect-ratio: 16 / 10;
+  }
+  .gallery-cell--2,
+  .gallery-cell--3 {
+    grid-column: span 2;
+  }
+  .gallery-cell--2 .gallery-tile,
+  .gallery-cell--3 .gallery-tile {
+    aspect-ratio: 33 / 10;
+  }
+}
+@media (min-width: 1024px) {
+  .gallery-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .gallery-cell--3 {
+    grid-column: span 3;
+  }
+  .gallery-cell--3 .gallery-tile {
+    aspect-ratio: 50 / 10;
+  }
 }
 .icon-btn {
   display: flex;
