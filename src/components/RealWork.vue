@@ -127,10 +127,10 @@ const content = {
     },
     pucket: {
       category: "Mobile / Web3",
-      badge: "Personal project",
+      badge: "Client project",
       title: 'Pucket',
-      role: "Mobile and Web3 developer · Solo project",
-      description: "Crypto finance app for iOS, Android and web built with Expo and React Native. It combines a self-custody wallet on Ethereum testnets, live market data from CoinGecko and a local exchange ledger that keeps balances consistent.",
+      role: "Mobile & Web3 developer · Client engagement (~2 months)",
+      description: "Commissioned for a real client over approximately two months. I developed the mobile frontend, Web3 wallet and blockchain integration, and contributed to backend work. The portfolio version for iOS, Android and web demonstrates a self-custody wallet on Ethereum testnets, live CoinGecko market data and a local exchange ledger.",
       highlights: [
         "On-chain (testnets): BIP-39 wallet creation and import, encrypted key storage, ETH and ERC-20 balances, history, and EIP-1559 transactions prepared, signed on the device and broadcast, with confirmation tracking on Ethereum Sepolia and Base Sepolia.",
         "Live data: top-100 prices, search, asset details and historical charts from CoinGecko, with a bundled snapshot as offline fallback.",
@@ -156,10 +156,10 @@ const content = {
     },
     chimero: {
       category: 'Desktop / Data',
-      badge: 'Open source',
+      badge: 'Client project',
       title: 'Chimero',
-      role: 'Solo developer · Local-first desktop app',
-      description: "Desktop app for tracking anything about your life: mood, sleep, weight, training, food, symptoms, the people you see, and variables you define yourself. Everything lives in one SQLite file on your machine, with no accounts and no cloud.",
+      role: 'Sole developer · Chamero client · ~6 months of recurring paid development',
+      description: "Built and iterated on for client Chamero through approximately six months of recurring paid work, rather than as a one-off personal app. Desktop app for tracking anything about your life: mood, sleep, weight, training, food, symptoms, the people you see, and variables you define yourself. Everything lives in one SQLite file on your machine, with no accounts and no cloud.",
       highlights: [
         "Dashboard you compose: a 12-column grid where widgets drag, resize, make room for each other and come back exactly as you left them, built on pure, unit-tested layout functions.",
         "A form fitted to each kind of record (weigh-ins, workouts with sets and routines, meals, symptoms, books, people) plus a builder for your own trackers with templates, units, goals and custom fields. Quick Entry opens from anywhere with Alt+Q.",
@@ -215,10 +215,10 @@ const content = {
     },
     pucket: {
       category: "Móvil / Web3",
-      badge: "Proyecto personal",
+      badge: "Proyecto para cliente",
       title: 'Pucket',
-      role: "Desarrollador móvil y Web3 · Proyecto en solitario",
-      description: "App de finanzas cripto para iOS, Android y web hecha con Expo y React Native. Combina una wallet de autocustodia sobre testnets de Ethereum, datos de mercado en vivo de CoinGecko y un libro contable de exchange local que mantiene los saldos coherentes.",
+      role: "Desarrollador móvil y Web3 · Encargo de cliente (~2 meses)",
+      description: "Encargo real para un cliente durante aproximadamente dos meses. Desarrollé el frontend móvil, la wallet y sus integraciones Web3 y blockchain, y contribuí también a parte del backend. La versión mostrada en el portafolio, hecha con Expo y React Native, incluye una wallet sobre testnets de Ethereum, datos de CoinGecko y un exchange local de demostración.",
       highlights: [
         "On-chain (testnets): creación e importación de wallet BIP-39, claves cifradas, saldos de ETH y ERC-20, historial, y transacciones EIP-1559 preparadas, firmadas en el dispositivo y difundidas, con seguimiento de confirmaciones en Ethereum Sepolia y Base Sepolia.",
         "Datos en vivo: precios del top 100, búsqueda, fichas y gráficos históricos de CoinGecko, con una instantánea incluida como respaldo sin conexión.",
@@ -244,10 +244,10 @@ const content = {
     },
     chimero: {
       category: 'Escritorio / Datos',
-      badge: 'Código abierto',
+      badge: 'Proyecto para cliente',
       title: 'Chimero',
-      role: 'Desarrollador en solitario · App de escritorio local',
-      description: "App de escritorio para registrar cualquier aspecto de tu vida: ánimo, sueño, peso, entrenamiento, comida, síntomas, las personas que ves y variables que defines tú. Todo vive en un archivo SQLite en tu equipo, sin cuentas ni nube.",
+      role: 'Desarrollador principal en solitario · Cliente Chamero · ~6 meses remunerados',
+      description: "Desarrollada y ampliada para el cliente Chamero durante aproximadamente seis meses de trabajo remunerado recurrente, no como un proyecto personal de una sola entrega. App de escritorio para registrar cualquier aspecto de tu vida: ánimo, sueño, peso, entrenamiento, comida, síntomas, las personas que ves y variables que defines tú. Todo vive en un archivo SQLite en tu equipo, sin cuentas ni nube.",
       highlights: [
         "Un dashboard que compones tú: una cuadrícula de 12 columnas donde los widgets se arrastran, cambian de tamaño, se hacen sitio entre sí y vuelven tal como los dejaste, sobre funciones de layout puras y probadas.",
         "Un formulario a la medida de cada tipo de registro (pesajes, entrenamientos con series y rutinas, comidas, síntomas, libros, personas) y un constructor de trackers propios con plantillas, unidades, metas y campos personalizados. Quick Entry se abre desde cualquier sitio con Alt+Q.",

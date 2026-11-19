@@ -211,9 +211,9 @@ const caseStudies = [
     id: 5,
     category: 'Desktop / Data',
     title: 'Chimero — Local-First Life Tracking',
-    role: 'Solo Developer · Open Source (formerly Habit Flows)',
+    role: 'Sole Developer · Client Chamero · ~6 Months of Recurring Paid Development (formerly Habit Flows)',
     description:
-      'A local-first Electron app for tracking anything about your life (mood, sleep, weight, training, food, symptoms, people, and variables you define), with no accounts, no cloud and no telemetry. The second version rebuilt the interface on top of the existing SQLite services and added an analytics engine designed not to overclaim: missing days stay unknown instead of becoming zeros, and the pattern scan controls the false-discovery rate across thousands of comparisons.',
+      'A client-commissioned desktop application developed and iterated on for Chamero over approximately six months of recurring paid work. Built local-first life tracking for mood, sleep, weight, training, food, symptoms, people and custom variables, without requiring accounts or cloud services. A later version rebuilt the interface on existing SQLite services and added analytics that distinguish missing records from zero values and control false discoveries across many comparisons.',
     highlights: [
       'Composable 12-column dashboard: drag, resize, collision handling and keyboard moves, built on a pure, unit-tested grid engine and persisted to SQLite',
       'Custom tracker builder with templates, units, goals and up to twelve fields, plus structured forms for workouts, meals, symptoms, books and a personal CRM',
@@ -226,14 +226,14 @@ const caseStudies = [
     id: 6,
     category: 'Blockchain / Mobile',
     title: 'Web3 Crypto Wallets — Pucket & PNK',
-    role: 'Frontend Architect & Web3 Integration Lead',
+    role: 'Mobile & Web3 Developer · Pucket Client Engagement (~2 Months) · PNK Frontend Work',
     description:
-      'Led the frontend architecture and initial smart contract integration for two production crypto wallet mobile applications. Responsibilities spanned UI component system design, wallet connection flows, and the critical bridge between React Native and on-chain state via Web3 providers. Established the EVM transaction signing pattern that the rest of the team extended.',
+      'Pucket was a real client commission developed together for approximately two months, not a self-initiated personal project. My work covered its mobile frontend, wallet and Web3/blockchain integration, plus part of the backend. Separately, I worked on the initial frontend for PNK. The showcased Pucket build uses Ethereum testnets for real on-chain demonstrations and a local simulated exchange; it is not presented as a live-money production service.',
     highlights: [
-      'Architected the component hierarchy and navigation system for both wallet applications',
-      'Implemented Wallet Connect + MetaMask SDK integration for multi-wallet support',
-      'Built the initial smart contract event listener layer with ethers.js',
-      'Designed secure transaction confirmation UX to minimize user error on irreversible operations',
+      'Pucket: delivered client-facing mobile UI and integrated self-custody wallet flows on Ethereum testnets',
+      'Integrated Web3 providers, wallet balances, on-chain transaction preparation, signing and confirmation tracking',
+      'Contributed to backend development during the client engagement; exchange features in the portfolio build remain local simulations',
+      'PNK: contributed to initial mobile frontend implementation as a separate project',
     ],
     stack: ['React Native', 'ethers.js', 'WalletConnect', 'Solidity (ABI)', 'TypeScript', 'Web3'],
   },
