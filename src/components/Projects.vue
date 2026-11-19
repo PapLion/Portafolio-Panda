@@ -209,36 +209,6 @@ const caseStudies = [
   },
   {
     id: 5,
-    category: 'Desktop / Data',
-    title: 'Chimero — Local-First Life Tracking',
-    role: 'Sole Developer · Client Chamero · ~6 Months of Recurring Paid Development (formerly Habit Flows)',
-    description:
-      'A client-commissioned desktop application developed and iterated on for Chamero over approximately six months of recurring paid work. Built local-first life tracking for mood, sleep, weight, training, food, symptoms, people and custom variables, without requiring accounts or cloud services. A later version rebuilt the interface on existing SQLite services and added analytics that distinguish missing records from zero values and control false discoveries across many comparisons.',
-    highlights: [
-      'Composable 12-column dashboard: drag, resize, collision handling and keyboard moves, built on a pure, unit-tested grid engine and persisted to SQLite',
-      'Custom tracker builder with templates, units, goals and up to twelve fields, plus structured forms for workouts, meals, symptoms, books and a personal CRM',
-      'Found and fixed a runtime failure in every structured write that mocked tests had hidden; covered since by integration tests against real SQLite',
-      'Additive migrations with a copy before each upgrade; end-to-end tests on the packaged app cover UI CRUD, restarts, backup/restore and an upgrade from the previous release',
-    ],
-    stack: ['Electron', 'React', 'TypeScript', 'SQLite', 'Drizzle ORM', 'TanStack Query', 'Vitest', 'Playwright'],
-  },
-  {
-    id: 6,
-    category: 'Blockchain / Mobile',
-    title: 'Web3 Crypto Wallets — Pucket & PNK',
-    role: 'Mobile & Web3 Developer · Pucket Client Engagement (~2 Months) · PNK Frontend Work',
-    description:
-      'Pucket was a real client commission developed together for approximately two months, not a self-initiated personal project. My work covered its mobile frontend, wallet and Web3/blockchain integration, plus part of the backend. Separately, I worked on the initial frontend for PNK. The showcased Pucket build uses Ethereum testnets for real on-chain demonstrations and a local simulated exchange; it is not presented as a live-money production service.',
-    highlights: [
-      'Pucket: delivered client-facing mobile UI and integrated self-custody wallet flows on Ethereum testnets',
-      'Integrated Web3 providers, wallet balances, on-chain transaction preparation, signing and confirmation tracking',
-      'Contributed to backend development during the client engagement; exchange features in the portfolio build remain local simulations',
-      'PNK: contributed to initial mobile frontend implementation as a separate project',
-    ],
-    stack: ['React Native', 'ethers.js', 'WalletConnect', 'Solidity (ABI)', 'TypeScript', 'Web3'],
-  },
-  {
-    id: 7,
     category: 'Fullstack / E-commerce',
     title: 'E-commerce Ecosystems — Multi-Platform Suite',
     role: 'Fullstack Developer · 4+ Platforms including HomeStyle',
@@ -253,7 +223,7 @@ const caseStudies = [
     stack: ['Next.js', 'TypeScript', 'FastAPI', 'Python', 'SQLite', 'TailwindCSS', 'Stripe'],
   },
   {
-    id: 8,
+    id: 6,
     category: 'EdTech / AI',
     title: 'AI Academy — Adaptive Learning Platform',
     role: 'Fullstack Developer · EdTech',
@@ -268,7 +238,7 @@ const caseStudies = [
     stack: ['Next.js', 'TypeScript', 'FastAPI', 'Python', 'TailwindCSS', 'LLM API'],
   },
   {
-    id: 9,
+    id: 7,
     category: 'Event Tech / EdTech',
     title: 'SoftCo Live — Course Delivery Platform for Limited-Time Events',
     role: 'Frontend Developer · 3-Person Team',
@@ -283,7 +253,7 @@ const caseStudies = [
     stack: ['React', 'Node.js', 'WebSockets', 'PostgreSQL', 'TailwindCSS', 'TypeScript'],
   },
   {
-    id: 10,
+    id: 8,
     category: 'Community / DevTools',
     title: 'A1-DevHub Bot — Multi-Purpose Discord Bot',
     role: 'Team Developer · 3-Person Indie Study Group',
@@ -297,7 +267,7 @@ const caseStudies = [
     stack: ['Node.js', 'Discord.js', 'TypeScript', 'SQLite'],
   },
   {
-    id: 11,
+    id: 9,
     category: 'Consulting / Architecture',
     title: 'Technical Consulting & Architecture Advisory',
     role: 'Independent Consultant · Multiple Clients',
