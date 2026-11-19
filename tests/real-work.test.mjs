@@ -246,12 +246,14 @@ test('home features Chimero with factual copy and every gallery image in both si
 });
 
 
-test('case studies identify Chimero and Pucket as paid client engagements with accurate scope', () => {
-  const source = readFileSync(new URL('../src/components/Projects.vue', import.meta.url), 'utf8');
-  assert.match(source, /Client Chamero/);
-  assert.match(source, /recurring paid work/);
-  assert.match(source, /Pucket Client Engagement/);
-  assert.match(source, /part of the backend/);
-  assert.match(source, /simulated exchange/);
-  assert.doesNotMatch(source, /two production crypto wallet mobile applications/);
+test('Chimero and Pucket appear only in flagship client work, not in Case Studies', () => {
+  const studies = readFileSync(new URL('../src/components/Projects.vue', import.meta.url), 'utf8');
+  const featured = readFileSync(componentPath, 'utf8');
+  assert.doesNotMatch(studies, /Chimero|Pucket/);
+  assert.match(featured, /title: 'Chimero'/);
+  assert.match(featured, /title: 'Pucket'/);
+  assert.match(featured, /Client Chamero/);
+  assert.match(featured, /recurring paid work/);
+  assert.match(featured, /contributed to backend work/);
+  assert.match(featured, /Proyecto para cliente/);
 });
