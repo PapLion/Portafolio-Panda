@@ -30,6 +30,7 @@
     <div :class="`relative z-10 transition-opacity duration-500 ${isLoading ? 'opacity-0' : 'opacity-100'}`">
       <RobloxGameDev v-if="isRobloxGameDevRoute" />
       <Modeling3D v-else-if="isModelingRoute" />
+      <UiLibrary v-else-if="isUiRoute" />
 
       <template v-else>
         <Navbar />
@@ -59,6 +60,7 @@ import Footer from './components/Footer.vue';
 import SpaceBackground from './components/SpaceBackground.vue';
 import RobloxGameDev from './pages/RobloxGameDev.vue';
 import Modeling3D from './pages/Modeling3D.vue';
+import UiLibrary from './pages/UiLibrary.vue';
 import ModelingTeaser from './components/ModelingTeaser.vue';
 
 // Provide default value to prevent errors in tests or isolated rendering
@@ -75,6 +77,7 @@ const currentPath = typeof window !== 'undefined'
   : '/';
 const isRobloxGameDevRoute = currentPath === '/roblox-gamedev';
 const isModelingRoute = currentPath === '/3d-modeling';
+const isUiRoute = currentPath === '/ui';
 
 // Store references for cleanup
 let loadingTimer = null;

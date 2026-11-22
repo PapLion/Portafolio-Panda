@@ -99,9 +99,15 @@
         </div>
       </section>
 
-      <div class="mb-10 sm:mb-12">
-        <PivotShowcase />
-      </div>
+      <a href="/ui" class="ui-teaser mb-10 sm:mb-12" aria-label="UI component library">
+        <img src="/images/ui/hero-1280.webp" srcset="/images/ui/hero-640.webp 640w, /images/ui/hero-1280.webp 1280w" sizes="(min-width: 1024px) 560px, 100vw" width="1280" height="800" alt="" loading="lazy" decoding="async" />
+        <span class="ui-teaser-text">
+          <span class="block text-[10px] uppercase tracking-[0.22em] text-white/40">UI · Roblox</span>
+          <span class="block mt-2 text-xl sm:text-2xl font-bold">{{ copy.uiTitle }}</span>
+          <span class="block mt-2 text-sm text-white/60 leading-relaxed">{{ copy.uiText }}</span>
+          <span class="block mt-4 text-xs text-white/80">{{ copy.uiCta }} →</span>
+        </span>
+      </a>
 
       <section aria-labelledby="experience-title">
         <div class="mb-4">
@@ -275,7 +281,6 @@
 <script setup>
 import { computed, inject, ref } from 'vue';
 import ModelingShowcase from '../components/modeling/ModelingShowcase.vue';
-import PivotShowcase from '../components/roblox/PivotShowcase.vue';
 import { robloxHighlights } from '../data/models3d.js';
 
 const language = inject('language', { currentLanguage: ref('en') });
@@ -287,6 +292,9 @@ const content = {
   en: {
     back: 'Back to Dani.Dev',
     modelingLink: '3D Modeling',
+    uiTitle: 'Roblox UI component library',
+    uiText: 'Buttons and their states, controls, dialogs, cards, HUD widgets and responsive variants, shown as standalone pieces.',
+    uiCta: 'Open the UI library',
     eyebrow: 'Roblox / Game Development',
     title: 'Roblox / Game Development',
     intro: 'Client work, gameplay systems, and things I have built over the years in Roblox Studio.',
@@ -441,6 +449,9 @@ const content = {
   es: {
     back: 'Volver a Dani.Dev',
     modelingLink: 'Modelado 3D',
+    uiTitle: 'Librería de componentes de UI en Roblox',
+    uiText: 'Botones y sus estados, controles, diálogos, tarjetas, widgets de HUD y variantes responsive, como piezas sueltas.',
+    uiCta: 'Abrir la librería de UI',
     eyebrow: 'Roblox / Game Development',
     title: 'Roblox / Game Development',
     intro: 'Trabajo con clientes, sistemas de gameplay y cosas que he construido durante años en Roblox Studio.',
@@ -651,6 +662,11 @@ const selectStudy = (index) => {
 
 
 <style scoped>
+.ui-teaser { display: grid; grid-template-columns: 1fr; border: 1px solid rgba(255,255,255,.3); background: rgba(0,0,0,.6); transition: border-color .2s; }
+.ui-teaser:hover { border-color: #fff; }
+.ui-teaser img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+.ui-teaser-text { display: block; padding: 1.25rem; align-self: center; }
+@media (min-width: 768px) { .ui-teaser { grid-template-columns: 1.1fr 0.9fr; } .ui-teaser-text { padding: 2rem; } }
 
 .flagship-media-frame {
   position: relative;
