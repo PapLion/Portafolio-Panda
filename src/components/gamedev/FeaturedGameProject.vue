@@ -38,27 +38,9 @@
         </p>
       </div>
 
-      <!-- Actions & Verification Summary -->
+      <!-- Verification Summary -->
       <div class="flex flex-col gap-3 lg:w-72 shrink-0">
-        <a
-          :href="project.repoUrl"
-          target="_blank"
-          rel="noreferrer"
-          class="cta-primary w-full justify-center text-center"
-        >
-          {{ labels.viewSource }} ↗
-        </a>
-        <a
-          v-if="project.docsUrl"
-          :href="project.docsUrl"
-          target="_blank"
-          rel="noreferrer"
-          class="cta-secondary w-full justify-center text-center"
-        >
-          {{ labels.viewDocs }} ↗
-        </a>
-
-        <div class="mt-1 border border-white/20 bg-white/[0.03] p-3">
+        <div class="border border-white/20 bg-white/[0.03] p-3">
           <p class="text-[10px] uppercase tracking-[0.22em] text-white/45 mb-2">
             {{ labels.verification }}
           </p>
@@ -307,8 +289,6 @@ watch(
 const labels = computed(() =>
   props.lang === 'es'
     ? {
-        viewSource: 'Ver Código en GitHub',
-        viewDocs: 'Documentación Técnica',
         verification: 'Verificación',
         primaryShowcase: 'Video Principal de Gameplay',
         videoFallback: 'Tu navegador no soporta video HTML5.',
@@ -319,8 +299,6 @@ const labels = computed(() =>
         filterClips: 'Filtrar clips por sistema',
       }
     : {
-        viewSource: 'View Source on GitHub',
-        viewDocs: 'Architecture Docs',
         verification: 'Verification',
         primaryShowcase: 'Primary Gameplay Video',
         videoFallback: 'Your browser does not support HTML5 video.',
@@ -332,38 +310,3 @@ const labels = computed(() =>
       }
 );
 </script>
-
-<style scoped>
-.cta-primary {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.65rem 1.25rem;
-  font-size: 0.875rem;
-  font-weight: 700;
-  background: #fff;
-  color: #000;
-  border: 1px solid #fff;
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.cta-primary:hover {
-  background: transparent;
-  color: #fff;
-}
-
-.cta-secondary {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.65rem 1.25rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  transition: border-color 0.2s ease, background-color 0.2s ease;
-}
-
-.cta-secondary:hover {
-  border-color: #fff;
-  background: rgba(255, 255, 255, 0.08);
-}
-</style>

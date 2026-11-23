@@ -64,4 +64,5 @@ test('video delivery avoids eager downloading of secondary clips and autoplay wi
   assert.match(featured, /loading="lazy"/);
   assert.match(featured, /muted/);
   assert.doesNotMatch(featured, /autoplay/i);
+  assert.doesNotMatch(featured, /View Source on GitHub|Architecture Docs/);
 });
