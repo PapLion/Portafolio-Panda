@@ -135,6 +135,7 @@ const menuItems = computed(() => [
   { name: t('nav.about'), href: "#about" },
   { name: t('nav.skills'), href: "#skills" },
   { name: t('nav.projects'), href: "#projects" },
+  { name: t('nav.gamedev'), href: "/game-dev" },
   { name: 'Roblox / Game Dev', href: "/roblox-gamedev" },
   { name: t('nav.modeling'), href: "/3d-modeling" },
   { name: t('nav.contact'), href: "#contact" },

@@ -12,6 +12,7 @@
 
         <div class="flex items-center gap-4 sm:gap-5">
           <span class="hidden md:inline text-xs uppercase tracking-[0.3em] text-white/40">Dani.Dev / Roblox & Game Dev</span>
+          <a href="/game-dev" class="text-xs sm:text-sm text-white/60 hover:text-white transition-colors">Game Dev →</a>
           <a href="/3d-modeling" class="text-xs sm:text-sm text-white/60 hover:text-white transition-colors">{{ copy.modelingLink }} →</a>
         </div>
       </div>
